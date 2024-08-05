@@ -1,24 +1,36 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Icon from '../assets/svg/Icon'
+import "../App.css"
+
+import { NavLink } from 'react-router-dom'
 
 const NavBar = () => {
   return (
-    <nav>
-        <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
-            <li>
-                <Link to="/about">About</Link>
-            </li>
-            <li>
-                <Link to="/contact">Contact</Link>
-            </li>
-            <li>
-                <Link to="/plans">Plans</Link>
-            </li>
-        </ul>
-    </nav>
+   <nav>
+    <ul className="left-links">
+        <li>
+            <NavLink to="/about">About</NavLink>
+        </li>
+        <li>
+            <NavLink to="/contact">Contact</NavLink>
+        </li>
+        <li>
+            <NavLink to="/plans">Plans</NavLink>
+        </li>
+    </ul>
+    <ul className="center-links">
+        <li>
+            <NavLink to="/">
+               <Icon />
+            </NavLink>
+        </li>
+    </ul>
+    <ul className='right-link'>
+        <li>
+            <a href="#">Entrar</a>
+        </li>
+    </ul>
+   </nav>
   )
 }
 
