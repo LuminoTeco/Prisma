@@ -7,9 +7,8 @@ import ReactDOM from 'react-dom/client'
 import Contact from './routes/Contact.jsx'
 import Plans from './routes/pages/Public/Plans.jsx'
 import ErrorElement from './routes/ErrorElement.jsx'
-import Cadastre from './routes/pages/Public/Cadastre.jsx'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Units from './routes/pages/Private/Units.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,11 +32,11 @@ const router = createBrowserRouter([
       path: "/plans",
       element: <Plans />
     },
-    {
-      path: "/register", 
-      element: <Cadastre />
-    }
    ]
+  }, 
+  {
+    path: "/units",
+    element: <Units />
   }
   
 ])
