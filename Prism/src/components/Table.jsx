@@ -1,50 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useQuery } from 'react-query'
+import "./CSS/Table.css"
 
 const Table = () => {
-  const [units, setUnits] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchUnits = async () => {
-      try {
-        const response = await axios.get('http://localhost:8081/api/usersList');
-        if (Array.isArray(response.data)) {
-          setUnits(response.data);
-        } else {
-          throw new Error('Dados recebidos não são um array');
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Não esquecer de colocar o useMutation dps
 
-    fetchUnits();
-  }, []);
+  const {data, isLoading, error} = useQuery("usersList", () => {
+      return axios.get("http://localhost:8081/api/usersList")
+        .then((response) => response.data)
+  }, {
+    retry: 5,
+    refetchOnWindowFocus: true,
+    refetchInterval: 10000
+  })
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Erro ao carregar dados: {error.message}</p>;
+  if(isLoading) {
+    return <p>Carregando...</p>
+  }
+
+  if(error) {
+    return <p>Algo deu errado! :(</p>
+  }
 
   return (
     <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Código Escolar</th>
-        </tr>
-      </thead>
-      <tbody>
-        {units && units.length > 0 ? (
-          units.map(unit => (
-            <tr key={unit.IuD}>
-              <td>{unit.IuD}</td>
-              <td>{unit.NameInstitute}</td>
-              <td>{unit.CE}</td>
-            </tr>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Código Escolar</th>
+        <th>Ações</th> 
+      </tr>
+    </thead>
+    <tbody>
+      {data && data.length > 0 ? (
+        data.map((units) => (
+          <tr key={units.IdU}>
+            <td>{units.IdU}</td>
+            <td>{units.NameInstitute}</td>
+            <td>{units.CE}</td>
+            <td className='buttonColumn'>
+              <button onClick={() => handleEdit(units.IdU)}>Alterar</button>
+              <button onClick={() => handleDelete(units.IdU)}>Excluir</button>
+            </td>
+          </tr>
           ))
         ) : (
           <tr>
