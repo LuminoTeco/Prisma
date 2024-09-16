@@ -1,3 +1,28 @@
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+
+    margin: 0 ; 
+}
+
+.esquerda{
+    margin-top: 100px;
+    flex: 1;
+}
+
+.card-imagem{
+    margin-top: 10px;
+}
+
+.direita{
+    margin-top: 100px;
+    flex: 1;
+    
+}
+
+
 button{
     background-color: #97E0F8;
     color: white;
