@@ -1,31 +1,72 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [values, setValues] = useState({
+    emailInstitute: '',
+    password: ''
+  });
+
+  const [error, setError] = useState(''); // Para exibir erros de login
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:8081/api/usersList', values); 
+      if (response.data.message === "Login bem-sucedido") {
+        alert("Entrou");
+        navigate("/initial");
+      } else {
+        setError(response.data.message || "Deu erro");
+      }
+    } catch (err) {
+      console.error("Erro no login:", err);
+      setError("Erro no servidor");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues(prevValues => ({
+      ...prevValues,
+      [name]: value
+    }));
+  };
 
   return (
     <div>
-      <h1>Cadastro de unidades</h1>
+      <h1>Login</h1>
       <div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email">E-mail</label>
+            <label htmlFor="emailInstitute">E-mail</label>
             <input
               type="email"
+              id="emailInstitute"
+              name="emailInstitute"
               placeholder="example@xxx.com"
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.emailInstitute}
+              onChange={handleChange}
+              required
             />
           </div>
           <div>
-            <label htmlFor="pwd">Senha</label>
+            <label htmlFor="password">Senha</label>
             <input
               type="password"
+              id="password"
+              name="password"
               placeholder="*********"
-              onChange={(e) => setPwd(e.target.value)}
+              value={values.password}
+              onChange={handleChange}
+              required
             />
           </div>
-          <button>Entrar</button>
+          {error && <div className="error">{error}</div>}
+          <button type="submit">Entrar</button>
         </form>
       </div>
     </div>

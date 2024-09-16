@@ -21,14 +21,14 @@ exports.createInstitute = async (userData) => {
   }
 };
 
-exports.getInstitueUser = async () => {
-  const query = "SELECT IdU, NameInstitute, CE FROM registerUnits";
+exports.getInstituteUser = async (emailInstitute) => {
+  const query = "SELECT NameInstitute, pwd FROM registerUnits WHERE emailInstitute = ?";
 
   try {
-    const [results] = await db.query(query);
-    return results;
+    const [results] = await db.query(query, [emailInstitute]);
+    return results.length > 0 ? results[0] : null;
   } catch (err) {
     console.error("Erro ao procurar o usuário:", err);
-    throw err; // Propaga o erro para o controlador
+    throw err;
   }
 };

@@ -1,21 +1,28 @@
 import React from 'react'
-import Icon from '../assets/svg/Icon'
+import Icon from './svg/Icon'
 import "../App.css"
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 const NavBar = () => {
+    const handleClick = () => {
+        window.scrollTo({
+          top: 2250, 
+          behavior: 'smooth'
+        });
+      };
+
   return (
    <nav>
     <ul className="left-links">
         <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/about">Sobre</NavLink>
         </li>
         <li>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/contact">Contato</NavLink>
         </li>
         <li>
-            <NavLink to="/plans">Plans</NavLink>
+            <Link onClick={handleClick}>Planos</Link>
         </li>
     </ul>
     <ul className="center-links">

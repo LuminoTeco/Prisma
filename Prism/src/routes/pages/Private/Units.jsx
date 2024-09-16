@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import styles from './CSS/Units.module.css'
 import axios from 'axios';
-import Table from '../../../components/Table';
 
 const Units = () => {
   const [values, setValues] = useState({
@@ -15,10 +15,9 @@ const Units = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Faz a requisição POST para o servidor Node.js
-    axios.post('http://localhost:8081/api/users', values) // URL atualizada
+    axios.post('http://localhost:8081/api/users', values) 
       .then(response => {
-        console.log(response.data); // Exibe a resposta no console
+        console.log(response.data); 
         alert("Cadastro realizado com sucesso!");
       })
       .catch(error => {
@@ -28,56 +27,65 @@ const Units = () => {
   };
 
   return (
-    <div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Nome da Unidade: </label>
-            <input
-              type="text"
-              onChange={(e) => setValues({ ...values, NameInstitute: e.target.value })}
-            />
+     <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h1 className={styles.title}>Cadastro de unidades</h1>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.formRow}>
+            <div className={`${styles.formGroup} ${styles.largeInput}`}>
+              <label className={styles.label}>Nome da Unidade:</label>
+              <input
+                className={styles.input}
+                type="text"
+                onChange={(e) => setValues({ ...values, NameInstitute: e.target.value })}
+              />
+            </div>
+            <div className={`${styles.formGroup} ${styles.largeInput}`}>
+              <label className={styles.label}>E-mail:</label>
+              <input
+                className={styles.input}
+                type="email"
+                onChange={(e) => setValues({ ...values, emailInstitute: e.target.value })}
+              />
+            </div>
+            <div className={`${styles.formGroup} ${styles.largeInput}`}>
+              <label className={styles.label}>Cidade:</label>
+              <input
+                className={styles.input}
+                type="text"
+                onChange={(e) => setValues({ ...values, city: e.target.value })}
+              />
+            </div>
           </div>
-          <div>
-            <label>E-mail: </label>
-            <input
-              type="email"
-              onChange={(e) => setValues({ ...values, emailInstitute: e.target.value })}
-            />
+          <div className={styles.formRow}>
+            <div className={`${styles.formGroup} ${styles.mediumInput}`}>
+              <label className={styles.label}>Código Escolar:</label>
+              <input
+                className={styles.input}
+                type="number"
+                onChange={(e) => setValues({ ...values, CE: e.target.value })}
+              />
+            </div>
+            <div className={`${styles.formGroup} ${styles.mediumInput}`}>
+              <label className={styles.label}>Número de alunos:</label>
+              <input
+                className={styles.input}
+                type="number"
+                onChange={(e) => setValues({ ...values, qtdStudents: e.target.value })}
+              />
+            </div>
+            <div className={`${styles.formGroup} ${styles.largeInput}`}>
+              <label className={styles.label}>Senha:</label>
+              <input
+                className={styles.input}
+                type="password"
+                onChange={(e) => setValues({ ...values, password: e.target.value })}
+              />
+            </div>
           </div>
-          <div>
-            <label>Cidade: </label>
-            <input
-              type="text"
-              onChange={(e) => setValues({ ...values, city: e.target.value })}
-            />
-            {/* Trocar por um options cidades de SP */}
-          </div>
-          <div>
-            <label>Código Escolar: </label>
-            <input
-              type="number"
-              onChange={(e) => setValues({ ...values, CE: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Número de alunos: </label>
-            <input
-              type="number"
-              onChange={(e) => setValues({ ...values, qtdStudents: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Senha: </label>
-            <input
-              type="password"
-              onChange={(e) => setValues({ ...values, password: e.target.value })}
-            />
-          </div>
-          <button type="submit">Cadastrar</button>
+          <button className={styles.button} type="submit">Cadastrar</button>
         </form>
       </div>
-      <Table />
     </div>
   );
 };

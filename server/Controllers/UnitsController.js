@@ -26,12 +26,25 @@ exports.createInstitute = async (req, res) => {
   }
 };
 
-exports.getAllInstitute = async (req, res) => {
+exports.login = async (req, res) => {
+  const { emailInstitute, password } = req.body;
+
+  // Validação básica
+  if (!emailInstitute || !password) {
+    return res.status(400).json({ message: "Email e senha são obrigatórios" });
+  }
+
   try {
-    const institutes = await InstituteModel.getInstitueUser();
-    res.status(200).json(institutes);
-  } catch (err) {
-    console.error("Erro ao procurar institutos:", err);
-    res.status(500).json({ Error: "Erro ao procurar institutos" });
+    const user = await InstituteModel.getInstituteUser(emailInstitute);
+
+    // Verifica se o usuário existe e se a senha está correta
+    if (!user || !(await bcrypt.compare(password, user.pwd))) {
+      return res.status(401).json({ message: "Usuário ou senha incorretos" });
+    }
+
+    res.json({ message: "Login bem-sucedido", user: user.NameInstitute });
+  } catch (error) {
+    console.error("Erro no login:", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
   }
 };

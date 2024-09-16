@@ -1,9 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import "../App.css";
 import TecoHome from "../assets/svg/TecoHome.jsx";
 import line from "../assets/imgs/vector-line.png";
-import CardTeco from "../assets/imgs/teco-card.png"
+import CardTeco from "../assets/imgs/teco-card.png";
 import PurpleTeco from "../assets/svg/PurpleTeco.jsx";
-import "../App.css";
+import Trinkets from "../assets/imgs/trinkets.png";
+import Anchor from "../components/Anchor.jsx";
 
 const Home = () => {
   return (
@@ -14,12 +17,13 @@ const Home = () => {
         </div>
         <div className="letter-box">
           <h1>A Conexão</h1>
-          <h1>Reflete</h1>
+          <h1>Reflete o</h1>
           <h1>Conhecimento</h1>
         </div>
         <div className="letter-button-box">
           <button>Saiba Mais</button>
         </div>
+        <Anchor />
       </div>
       <div className="second-section">
         <div className="sector-cicle-1"></div>
@@ -50,32 +54,36 @@ const Home = () => {
         <div className="container-center">
           <div className="container-white">
             <h1>
-              Juntos somos mais <span className="spotlight">forte!</span>
+              A <span className="spotlight">colaboração</span> é o principal!
             </h1>
             <p>
-              Dentro do Prisma, você não apenas trabalha, você transforma. 🌟
-              Aqui, a colaboração não é apenas uma opção; é a essência do
-              sucesso! 🚀 Ajude seu amigo e crie algo verdadeiramente incrível
-              juntos. Com o poder da colaboração e o potencial do Prisma, o
-              impossível se torna possível. Juntos, vocês vão além dos limites,
-              inovando e conquistando novas alturas! 💪✨
+              Você tambem é recompensado por ajudar seus amigos! É assim que se
+              ganha experiencias e novos cohecimentos
             </p>
           </div>
         </div>
       </div>
-      <div className="fourth-section">
-        <div className="line-container">
-          <img src={line} alt="" />
+      <div class="fourth-section">
+        <div class="line-container">
+          <img src={line} alt="Linha" />
         </div>
         <div className="container-plan">
           <h1>Planos</h1>
           <div className="plans">
-          <img src={CardTeco} alt="" />
-            <div className="plan-1"></div>
-            <div className="plan-2"></div>
+            <Link to="/plans/school" className="plan-1">
+              <h2>Escola</h2>
+            </Link>
+            <Link to="/plans/institution" className="plan-2">
+              <h2>Instituição</h2>
+            </Link>
           </div>
+          <img src={CardTeco} alt="Card Teco" className="card-teco" />
+        </div>
+        <div className="container-trinkets">
+          <img src={Trinkets} alt="coisinhas" />
         </div>
       </div>
+      <div className="fifth-container">oi</div>
     </div>
   );
 };

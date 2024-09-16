@@ -1,9 +1,25 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+import School from '../../../components/School'
+import Institute from '../../../components/Institute'
+
 
 const Plans = () => {
+  
+  const { plan } = useParams()
+
+  const renderPlan = () => {
+    switch (plan) { 
+      case 'school': 
+        return <School />
+      case 'institution': 
+        return <Institute />
+    }
+  }
+
   return (
     <div>
-      <h1>Planos</h1>
+      {renderPlan()}
     </div>
   )
 }
