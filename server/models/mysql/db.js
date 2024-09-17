@@ -7,6 +7,7 @@ const pool = mysql.createPool({
   database: "prisma",
 });
 
+
 const promisePool = pool.promise(); 
 
 module.exports = promisePool;

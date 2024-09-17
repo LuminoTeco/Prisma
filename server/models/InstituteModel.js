@@ -21,6 +21,12 @@ exports.createInstitute = async (userData) => {
   }
 };
 
+/* 
+Isso tá funcionando!
+
+:Caique
+*/
+
 exports.getInstituteUser = async (emailInstitute) => {
   const query = "SELECT NameInstitute, pwd FROM registerUnits WHERE emailInstitute = ?";
 
@@ -32,3 +38,4 @@ exports.getInstituteUser = async (emailInstitute) => {
     throw err;
   }
 };
+

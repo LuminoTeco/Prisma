@@ -1,3 +1,11 @@
+/* 
+Esse dashboard, deve ser feito depois OK? 
+Vamos primeiro fazer o login e cadastro para ter um banco de dados bom!
+
+:Caique
+*/
+
+
 import React, { useState } from "react"
 import Dash from "../../../components/Dash"
 import User from "../../../components/User"

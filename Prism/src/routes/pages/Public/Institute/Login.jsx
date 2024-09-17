@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import ImgTeco from '../../../../assets/imgs/IMG_LOGIN.png';
+import styles from './Login.module.css'; // Importando como CSS Modules
 import axios from 'axios';
 
 const Login = () => {
@@ -36,12 +38,16 @@ const Login = () => {
     }));
   };
 
+  /* O login ainda n está funcionando. */
+
   return (
-    <div>
-      <h1>Login</h1>
-      <div>
+    <div className={styles.loginContainer}>
+      <div className={styles.containerImgTecoLogin}>
+        <img src={ImgTeco} alt="imagem do teco login" />
+      </div>
+      <div className={styles.formContainer}>
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className={styles.formGroup}>
             <label htmlFor="emailInstitute">E-mail</label>
             <input
               type="email"
@@ -53,7 +59,7 @@ const Login = () => {
               required
             />
           </div>
-          <div>
+          <div className={styles.formGroup}>
             <label htmlFor="password">Senha</label>
             <input
               type="password"
@@ -65,8 +71,8 @@ const Login = () => {
               required
             />
           </div>
-          {error && <div className="error">{error}</div>}
-          <button type="submit">Entrar</button>
+          {error && <div className={styles.error}>{error}</div>}
+          <button type="submit" className={styles.button}>Entrar</button>
         </form>
       </div>
     </div>

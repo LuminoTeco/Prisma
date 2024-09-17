@@ -1,10 +1,11 @@
-import React  from "react";
+import React from 'react'
 
 const unitsAdmin = () => {
+  return (
     <div>
       
     </div>
- )
+  )
 }
 
-export default unitsAdmin;
+export default unitsAdmin

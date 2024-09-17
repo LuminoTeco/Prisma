@@ -26,6 +26,11 @@ exports.createInstitute = async (req, res) => {
   }
 };
 
+/* 
+Ainda não consegui achar o erro que está dando... Mas enfim, 
+o cadastro pelo menos tá funcionando.
+*/
+
 exports.login = async (req, res) => {
   const { emailInstitute, password } = req.body;
 
