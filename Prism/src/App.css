@@ -29,6 +29,7 @@ nav .center-link,
 nav .right-link {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 nav .left-links li,
@@ -38,13 +39,16 @@ nav .right-link li {
 }
 
 
-nav .right-link a {
+.login-button {
   background-color: black;
   color: white;
   font-weight: bold;
+  font-size: 1.1em;
   padding: 5px 20px;
   border-radius: 15px;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
 .left-links a.active {

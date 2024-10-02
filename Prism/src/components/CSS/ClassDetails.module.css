@@ -1,0 +1,130 @@
+/* ClassDetails.module.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  h1 {
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-top: 30px;
+    color: #333;
+  }
+  
+  p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .dropdown:hover .dropdownContent {
+    display: block;
+  }
+  
+  .actions {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .actionButton {
+    background-color: #007bff; /* Bootstrap Primary */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .actionButton:hover {
+    background-color: #0056b3; /* Darker blue */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .editButton, .deleteButton {
+    background-color: #ffc107; /* Yellow */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .editButton:hover {
+    background-color: #e0a800; /* Darker yellow */
+  }
+  
+  .deleteButton {
+    background-color: #dc3545; /* Red */
+  }
+  
+  .deleteButton:hover {
+    background-color: #c82333; /* Darker red */
+  }
+  

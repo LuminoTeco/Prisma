@@ -10,8 +10,10 @@ app.use(cors({
   credentials: true 
 }));
 
-app.use('/api', InstituteRouter)
+app.use('/prisma', InstituteRouter)
 
 app.listen(8081, () => {
   console.log("The server is running...");
 });
+
+/* Lembrar de fazer a blacklist de Tokens! */

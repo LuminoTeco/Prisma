@@ -6,9 +6,16 @@ import line from "../assets/imgs/vector-line.png";
 import CardTeco from "../assets/imgs/teco-card.png";
 import PurpleTeco from "../assets/svg/PurpleTeco.jsx";
 import Trinkets from "../assets/imgs/trinkets.png";
-import Anchor from "../components/Anchor.jsx";
 
 const Home = () => {
+
+  const handleClick = () => {
+    window.scrollTo({
+      top: 800, 
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <div>
       <div className="home-container-f">
@@ -21,9 +28,8 @@ const Home = () => {
           <h1>Conhecimento</h1>
         </div>
         <div className="letter-button-box">
-          <button>Saiba Mais</button>
+          <button onClick={handleClick}>Saiba Mais</button>
         </div>
-        <Anchor />
       </div>
       <div className="second-section">
         <div className="sector-cicle-1"></div>
