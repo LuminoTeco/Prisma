@@ -3,7 +3,6 @@ const express = require("express");
 const session = require("express-session")
 const cookie = require("cookie-parser")
 const InstituteRouter = require("./Routers/InstituteRoutes")
-
 const app = express();
 app.use(express.json());
 app.use(cookie());
@@ -17,6 +16,8 @@ app.use(session({
   }
 }));
 
+const port = 8081
+
 app.use(cors({
   origin: "http://localhost:5173", 
   allowedHeaders: "Content-Type,Authorization", 
@@ -26,8 +27,8 @@ app.use(cors({
 
 app.use('/prisma', InstituteRouter)
 
-app.listen(8081, () => {
-  console.log("The server is running...");
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}!`);
 });
 
 /* Lembrar de fazer a blacklist de Tokens! */
