@@ -50,37 +50,34 @@ exports.createInstitute = [
     }
   },
 ];
-exports.login = async (req, res) => {
-  const { emailInstitute, password } = req.body;
 
-  // Validação básica
-  if (!emailInstitute || !password) {
-    return res.status(400).json({ message: "Email e senha são obrigatórios" });
-  }
+exports.login = async (req, res) => {
+  const {emailInstitute, password} = req.body;
 
   try {
     const user = await InstituteModel.getInstituteUser(emailInstitute);
-
-    if (!user || !(await bcrypt.compare(password, user.pwd))) {
-      return res.status(401).json({ message: "Usuário ou senha incorretos" });
+    if(!user) {
+      return res.status(401).json({ message: "Usuário não encontrado" });
     }
 
-    const token = jwt.sign(
-      { Cod_Escolar: user.Cod_Escolar, email: user.emailInstitute },
-      secret,
-      { expiresIn: "1h" }
-    );
+    const paswMathc = await bcrypt.compare(password, user.pwd);
+    if(!paswMathc) {
+      return res.status(401).json({ message: "Email ou senha inválido" });
+    }
 
-    res.json({
-      message: "Login bem-sucedido",
-      user: user.NameInstitute,
-      token,
-    });
-  } catch (error) {
-    console.error("Erro no login:", error);
-    res.status(500).json({ message: "Erro interno do servidor" });
+    req.session.user = {
+      name: user.NameInstitute, 
+      email: user.emailInstitute,
+      city: user.city,
+      id: user.Cod_Escolar
+    } 
+
+    return res.json({ message: "Login bem-sucedido!", user: req.session.user });
+  } catch (err) {
+    console.error("erro", err)
+    return res.status(500).json9({ message: "Erro interno" })
   }
-};
+}
 
 //Class
 
@@ -143,26 +140,27 @@ exports.getClass = async (req, res) => {
   }
 
   try {
-    const results = await InstituteModel.getClass(instituicao_id_fk); 
-    res.status(200).json(results); 
+    const results = await InstituteModel.getClass(instituicao_id_fk);
+    res.status(200).json(results);
   } catch (err) {
     console.error("Erro ao procurar as turmas:", err);
     res.status(500).json({ Error: "Erro ao procurar as turmas" });
   }
 };
 
-
 exports.getClassById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const turma = await InstituteModel.getClassById(id)
+    const turma = await InstituteModel.getClassById(id);
     if (turma) {
-      return res.status(200).json(turma)
+      return res.status(200).json(turma);
     } else {
-      return res.status(404).json({ Error: "Turma não encontrada" })
+      return res.status(404).json({ Error: "Turma não encontrada" });
     }
   } catch (err) {
-    return res.status(500).json({ message: "Erro ao buscar a turma"}, err.message)
+    return res
+      .status(500)
+      .json({ message: "Erro ao buscar a turma" }, err.message);
   }
-}
+};

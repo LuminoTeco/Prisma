@@ -22,7 +22,8 @@ exports.createInstitute = async (userData) => {
 }
 
 exports.getInstituteUser = async (emailInstitute) => {
-  const query = "SELECT NameInstitute, pwd FROM registerUnits WHERE emailInstitute = ?";
+  const query = "SELECT NameInstitute, emailInstitute, pwd, city, Cod_Escolar FROM registerUnits WHERE emailInstitute = ?";
+
 
   try {
     const [results] = await db.query(query, [emailInstitute]);
