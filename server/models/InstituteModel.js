@@ -55,29 +55,3 @@ exports.createClass = async (userData) => {
   }
 };
 
-exports.getClass = async (instituicao_id_fk) => {
-  const query = "SELECT * FROM tb_turmas WHERE instituicao_id_fk = ?";
-
-  try {
-    const [results] = await db.query(query, [instituicao_id_fk]);
-    return results.length > 0 ? results : [];
-  } catch (err) {
-    console.error("Erro ao procurar as turmas:", err);
-    throw err;
-  }
-};
-
-
-
-exports.getClassById = async(id) => {
-  const query = "SELECT * FROM tb_turmas WHERE turma_id = ?";
-
-  try {
-    const [results] = await db.query(query, [id]);
-    return results.length > 0 ? results[0] : null;
-  } catch (err) {
-    console.error("Erro ao procurar a turma:", err);
-    throw err;
-  }
-}
-

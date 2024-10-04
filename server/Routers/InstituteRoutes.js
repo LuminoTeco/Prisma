@@ -13,7 +13,6 @@ router.get('/protected-route', authSession.isAuthenticated, (req, res) => {
     res.json({ message: "Você acessou uma rota protegida!" });
   });
   
-router.get("/classList", UnitsController.getClass);
-router.get("/classList/:id", UnitsController.getClassById);
+router.post('/logout', UnitsController.logout)
 
 module.exports = router;

@@ -1,66 +1,89 @@
-/* 
-Esse dashboard, deve ser feito depois OK? 
-Vamos primeiro fazer o login e cadastro para ter um banco de dados bom!
-
-:Caique
-*/
-
-
-import React, { useState } from "react"
-import Dash from "../../../../components/DashComponents/Dash"
-import TableClass from "../../../../components/DashComponents/TableClass"
-import Utils from "../../../../components/DashComponents/Utils"
-import styles from "../../CSS/Dashboard.module.css"
-import { Navigate } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Dash from "../../../../components/DashComponents/Dash";
+import TableClass from "../../../../components/DashComponents/TableClass";
+import Utils from "../../../../components/DashComponents/Utils";
+import styles from "../../CSS/Dashboard.module.css";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
+  const [page, setPage] = useState("dash");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-const [page, setPage] = useState('dash')
-const changePage = (newPage) => {
-    setPage(newPage)
-}
-
-const handleLogout = async () => {
-    const token = localStorage.getItem("token");
-    if (token) {
+  useEffect(() => {
+    const checkAuth = async () => {
       try {
-        await axios.post("http://localhost:8081/logout", { token });
-      } catch (error) {
-        console.error("Erro ao deslogar:", error);
+        const res = await axios.get("http://localhost:8081/prisma/protected-route", { withCredentials: true });
+        if (res.data.valid) {
+          setIsAuthenticated(true);
+        } else {
+          navigate("/login");
+        }
+      } catch (err) {
+        navigate("/login");
       }
-    }
-    localStorage.removeItem("token");
-    window.location.href = "/login";
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+  const changePage = (newPage) => {
+    setPage(newPage);
   };
 
-const renderAtual = () => {
-    switch (page) {
-        case "dashboard":
-            return <Dash/>
-        case "usuario":
-            return<TableClass/>
-        case "util":
-            return<Utils/>
-            
-        default: return <Dash/>
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:8081/prisma/logout", {}, { withCredentials: true });
 
+      localStorage.removeItem("userEmail");
+
+      toast.success("Logout realizado com sucesso!", {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Erro ao realizar logout:", error);
+      toast.error("Erro ao realizar logout!", {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     }
-}
-    return (
-        <div className={styles.container}>
-        <div className={styles.sidebar}>
-           <div className={styles.buttons}>
-               <button onClick={() => changePage('dash')}>Quadros</button>
-               <button onClick={() => changePage('util')}>Utilidades</button>
-               <button onClick={() => changePage('usuario')}>Usuários</button>
-               <button onClick={handleLogout}>Sair</button>
-           </div>
-        </div>
-        <div className={styles.content}>
-            {renderAtual()}
-        </div>
-    </div>
-    )
-} 
+  };
 
-export default Dashboard
+  const renderAtual = () => {
+    switch (page) {
+      case "dash":
+        return <Dash />;
+      case "usuario":
+        return <TableClass />;
+      case "util":
+        return <Utils />;
+      default:
+        return <Dash />;
+    }
+  };
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.sidebar}>
+        <div className={styles.buttons}>
+          <button onClick={() => changePage("dash")}>Quadros</button>
+          <button onClick={() => changePage("util")}>Utilidades</button>
+          <button onClick={() => changePage("usuario")}>Usuários</button>
+          <button onClick={handleLogout}>Sair</button>
+        </div>
+      </div>
+      <div className={styles.content}>{renderAtual()}</div>
+    </div>
+  );
+};
+
+export default Dashboard;

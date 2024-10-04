@@ -1,56 +1,70 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
 import ImgTeco from '../../../../assets/imgs/IMG_LOGIN.png';
 import styles from './Login.module.css'; 
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Importando Toastify
+import 'react-toastify/dist/ReactToastify.css'; // Importando o estilo
 
 const Login = () => {
-  const [values, setValues] = useState({
-    emailInstitute: '',  // Mudança: emailInstitute em vez de email
-    password: ''  // Mudança: password em vez de senha
-  });
-
-  const [error, setError] = useState(''); // Para exibir erros de login
+  const [values, setValues] = useState({ emailInstitute: '', password: '' });
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('Valores enviados:', values);
-
-    try {
-      const response = await axios.post('http://localhost:8081/prisma/usersList', values);
-
-      console.log('Resposta da API:', response.data);
-
-      if (response.data.message === "Login bem-sucedido") {
-        // Salvar o token no localStorage
-        localStorage.setItem('token', response.data.token); // Salva o token recebido
-        
-        alert("Entrou");
-        navigate("/dashboard");
-      } else {
-        // Se não, mostra o erro
-        setError(response.data.message || "Deu erro");
-      }
-    } catch (err) {
-      // Se houver um erro no servidor, mostra o erro
-      console.error("Erro no login:", err);
-      setError("Erro no servidor");
-    }
-  };
-
+  // Manipula as alterações nos campos de entrada
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues(prevValues => ({
-      ...prevValues,
-      [name]: value
-    }));
+    setValues({ ...values, [name]: value });
+  };
+
+  // Manipula o envio do formulário
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Envia a requisição de login para o servidor
+      const response = await axios.post('http://localhost:8081/prisma/login', {
+        emailInstitute: values.emailInstitute,
+        password: values.password,
+      }, { withCredentials: true });
+
+      // Verifica se a resposta contém os dados do usuário
+      if (response.data && response.data.user) {
+        const userName = response.data.user.name;
+
+        // Usando Toastify para mostrar o sucesso
+        toast.success(`Bem-vindo, ${userName}`, {
+          position: "bottom-center",
+          autoClose: 1000,
+          onClose: () => {
+            navigate('/dashboard'); // Redireciona para o dashboard após o login
+          }
+        });
+
+        console.log(response.data);
+      } else {
+        // Caso a resposta não contenha os dados esperados
+        toast.error("Erro inesperado no login.", {
+          position: "bottom-center",
+          autoClose: 2000
+        });
+      }
+    } catch (err) {
+      console.error("Erro no login:", err);
+      setError("E-mail ou senha incorretos");
+
+      // Usando Toastify para mostrar o erro
+      toast.error("E-mail ou senha incorretos.", {
+        position: "bottom-center",
+        autoClose: 2000
+      });
+    }
   };
 
   return (
     <div className={styles.loginContainer}>
       <div className={styles.containerImgTecoLogin}>
-        <img src={ImgTeco} alt="imagem do teco login" />
+        <img src={ImgTeco} alt="imagem do login" />
       </div>
       <div className={styles.formContainer}>
         <form onSubmit={handleSubmit}>
@@ -79,9 +93,9 @@ const Login = () => {
             />
           </div>
           <button type="submit" className={styles.button}>Entrar</button>
-          {error && <p style={{ color: 'red' }}>{error}</p>} {/* Exibe mensagem de erro se existir */}
         </form>
       </div>
+      <ToastContainer /> 
     </div>
   );
 };

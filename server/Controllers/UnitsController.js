@@ -1,7 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const InstituteModel = require("../models/InstituteModel");
 const db = require("../models/mysql/db");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const secret = "ECKSWG";
@@ -72,12 +71,30 @@ exports.login = async (req, res) => {
       id: user.Cod_Escolar
     } 
 
-    return res.json({ message: "Login bem-sucedido!", user: req.session.user });
+    return res.json({ message: "Login bem-sucedido!", user: req.session.user});
   } catch (err) {
     console.error("erro", err)
     return res.status(500).json9({ message: "Erro interno" })
   }
 }
+
+exports.logout = (req, res) => {
+  // Verifica se existe uma sessão ativa
+  if (req.session) {
+    // Destrói a sessão
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).send('Erro ao realizar logout');
+      } else {
+        res.clearCookie('connect.sid'); 
+        return res.status(200).send({ message: 'Logout realizado com sucesso' });
+      }
+    });
+  } else {
+    return res.status(400).send({ message: 'Nenhuma sessão ativa encontrada' });
+  }
+};
+
 
 //Class
 
@@ -132,35 +149,3 @@ exports.createClass = [
   },
 ];
 
-exports.getClass = async (req, res) => {
-  const { instituicao_id_fk } = req.query; // Extraindo o ID da consulta
-
-  if (!instituicao_id_fk) {
-    return res.status(400).json({ error: "instituicao_id_fk é obrigatório." });
-  }
-
-  try {
-    const results = await InstituteModel.getClass(instituicao_id_fk);
-    res.status(200).json(results);
-  } catch (err) {
-    console.error("Erro ao procurar as turmas:", err);
-    res.status(500).json({ Error: "Erro ao procurar as turmas" });
-  }
-};
-
-exports.getClassById = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const turma = await InstituteModel.getClassById(id);
-    if (turma) {
-      return res.status(200).json(turma);
-    } else {
-      return res.status(404).json({ Error: "Turma não encontrada" });
-    }
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Erro ao buscar a turma" }, err.message);
-  }
-};

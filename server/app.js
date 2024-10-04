@@ -1,11 +1,13 @@
 const cors = require("cors");
 const express = require("express");
 const session = require("express-session")
+const bodyParser = require("body-parser")
 const cookie = require("cookie-parser")
 const InstituteRouter = require("./Routers/InstituteRoutes")
 const app = express();
 app.use(express.json());
 app.use(cookie());
+app.use(bodyParser.json())
 app.use(session({
   secret: 'SJKAHRJKLHASDFKLJSHAD', 
   resave: false,
