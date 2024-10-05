@@ -3,8 +3,8 @@ import ImgTeco from '../../../../assets/imgs/IMG_LOGIN.png';
 import styles from './Login.module.css'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify'; // Importando Toastify
-import 'react-toastify/dist/ReactToastify.css'; // Importando o estilo
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const Login = () => {
   const [values, setValues] = useState({ emailInstitute: '', password: '' });
@@ -31,12 +31,16 @@ const Login = () => {
       // Verifica se a resposta contém os dados do usuário
       if (response.data && response.data.user) {
         const userName = response.data.user.name;
+        const institutionId = response.data.user.id; // Captura o ID da instituição
 
         // Usando Toastify para mostrar o sucesso
         toast.success(`Bem-vindo, ${userName}`, {
           position: "bottom-center",
           autoClose: 1000,
+          pauseOnHover: false, 
           onClose: () => {
+            // Armazena o ID da instituição no localStorage
+            localStorage.setItem('instituicao_id_fk', institutionId);
             navigate('/dashboard'); // Redireciona para o dashboard após o login
           }
         });
@@ -44,9 +48,10 @@ const Login = () => {
         console.log(response.data);
       } else {
         // Caso a resposta não contenha os dados esperados
-        toast.error("Erro inesperado no login.", {
+        toast.error("E-mail ou senha incorretos.", {
           position: "bottom-center",
-          autoClose: 2000
+          autoClose: 2000,
+          pauseOnHover: false, 
         });
       }
     } catch (err) {

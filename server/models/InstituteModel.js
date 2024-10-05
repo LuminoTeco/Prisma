@@ -48,10 +48,24 @@ exports.createClass = async (userData) => {
 
   try {
     const [result] = await db.query(query, values);
-    return { turma_id: result.insertId };
+    return { turma_id: result.insertId, instituicao_id_fk: userData.instituicao_id_fk };
   } catch (err) {
     console.error("Erro ao criar a turma:", err);
     throw err;
   }
 };
+
+exports.getClassByID = async(instituicao_id_fk) => {
+  const query = "SELECT * FROM tb_turmas WHERE instituicao_id_fk = ?";
+
+  try {
+    const [results] = await db.query(query, [instituicao_id_fk]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar a turma:", err);
+    throw err;
+  }
+}
+
+
 

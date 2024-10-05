@@ -42,7 +42,7 @@ exports.createInstitute = [
       };
 
       const result = await InstituteModel.createInstitute(newInstitute);
-      res.status(201).json(result);
+      res.status(201).json({message: "Instituto criado com sucesso", id: newInstitute.Cod_Escolar});
     } catch (err) {
       console.error("Erro ao criar o instituto:", err);
       res.status(500).json({ Error: "Erro ao criar o instituto" });
@@ -71,7 +71,7 @@ exports.login = async (req, res) => {
       id: user.Cod_Escolar
     } 
 
-    return res.json({ message: "Login bem-sucedido!", user: req.session.user});
+    return res.json({ message: "Login bem-sucedido!", user: req.session.user, id: req.session.user.id });
   } catch (err) {
     console.error("erro", err)
     return res.status(500).json9({ message: "Erro interno" })
@@ -148,4 +148,16 @@ exports.createClass = [
     }
   },
 ];
+
+exports.getClass = async (req, res) => {
+  const { instituicao_id_fk } = req.params; // Obtém o ID da instituição a partir dos parâmetros da URL
+
+  try {
+    const classes = await InstituteModel.getClassByID(instituicao_id_fk);
+    res.json(classes);
+  } catch (error) {
+    console.error('Erro ao buscar turmas:', error);
+    res.status(500).json({ message: 'Erro ao buscar turmas.' });
+  }
+};
 
