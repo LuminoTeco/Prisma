@@ -1,13 +1,13 @@
 CREATE DATABASE IF NOT EXISTS prisma;
 USE prisma;
 
-CREATE TABLE registerUnits(
-    Cod_Escolar INT PRIMARY KEY UNIQUE, 
-    NameInstitute VARCHAR(150) NOT NULL,
-    emailInstitute VARCHAR(150) NOT NULL,
+CREATE TABLE registerUnits (
+    Cod_Escolar INT PRIMARY KEY UNIQUE,
+    NameInstitute VARCHAR(150) NOT NULL UNIQUE,
+    emailInstitute VARCHAR(150) NOT NULL UNIQUE,
     city VARCHAR(100) NOT NULL,
-    qtdStudents INT NOT NULL, 
-    pwd VARCHAR(50) NOT NULL 
+    qtdStudents INT NOT NULL,
+    pwd VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE tb_turmas (
@@ -29,7 +29,7 @@ CREATE TABLE tb_adm (
     nome VARCHAR(30) NOT NULL,
     cargo VARCHAR(20) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
-    senha VARCHAR(8) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     instituicao_id_fk INT NOT NULL,
     CONSTRAINT FK_instituicao_adm FOREIGN KEY (instituicao_id_fk) REFERENCES registerUnits(Cod_Escolar)
 );
@@ -38,11 +38,11 @@ CREATE TABLE tb_alunos (
     aluno_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
     nome VARCHAR(30) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
-    senha VARCHAR(8) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     ano_serie INT NOT NULL,
     nivel VARCHAR(3) NOT NULL,
-    data_cadastro DATETIME NOT NULL,
-    foto_perfil VARCHAR(100) NOT NULL, 
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    foto_perfil VARCHAR(100) DEFAULT 'src/assets/imgs/default_user.jpeg',
     turma_id_fk INT NOT NULL,
     instituicao_id_fk INT NOT NULL,
     conquistas_id_fk INT,
@@ -81,7 +81,7 @@ CREATE TABLE tb_tarefas (
     titulo VARCHAR(30) NOT NULL,
     descricao VARCHAR(50) NOT NULL,
     nivel_dificuldade VARCHAR(10) NOT NULL,
-    senha VARCHAR(8) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     pontuacao_max INT NOT NULL,
     disciplina_id_fk INT NOT NULL,
     progresso_id_fk INT,
@@ -137,3 +137,36 @@ CREATE TABLE tb_amizade (
 );
 
 SHOW TABLES;
+
+SELECT * FROM registerUnits;
+SELECT * FROM tb_turmas;
+SELECT * FROM tb_alunos;
+
+SELECT 
+    ru.Cod_Escolar AS instituicao_id_fk, 
+    t.turma_id AS turma_id_fk,
+    t.nome_turma,
+    t.ano_letivo
+FROM 
+    registerUnits ru
+JOIN 
+    tb_turmas t ON ru.Cod_Escolar = t.instituicao_id_fk;
+
+SELECT * FROM tb_turmas WHERE instituicao_id_fk = 215;
+
+SELECT * FROM tb_alunos;
+
+SELECT 
+    a.aluno_id,
+    a.nome AS nome_aluno,
+    ru.Cod_Escolar AS instituicao_id_fk, 
+    ru.NameInstitute AS nome_instituicao,
+    t.turma_id AS turma_id_fk,
+    t.nome_turma
+FROM 
+    tb_alunos a
+JOIN 
+    tb_turmas t ON a.turma_id_fk = t.turma_id
+JOIN 
+    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar;
+    

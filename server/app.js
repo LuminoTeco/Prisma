@@ -4,6 +4,8 @@ const session = require("express-session")
 const bodyParser = require("body-parser")
 const cookie = require("cookie-parser")
 const InstituteRouter = require("./Routers/InstituteRoutes")
+const studentRoutes = require("./Routers/studentRoutes")
+
 const app = express();
 app.use(express.json());
 app.use(cookie());
@@ -28,6 +30,7 @@ app.use(cors({
 }));
 
 app.use('/prisma', InstituteRouter)
+app.use('/prisma', studentRoutes)
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}!`);
