@@ -35,7 +35,7 @@ Para utilizar nossa aplicação, siga os passos abaixo:
    Se o problema persistir, reinstale também:
 
     ```bash
-    npm install cors bcrypt jsonwebtoken mysql2
+    npm install cors bcrypt express-validator mysql2
     ```
 
 5. **Atualize o npm (se necessário)**: Se você encontrar problemas relacionados ao npm, atualize-o com o comando:
