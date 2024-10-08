@@ -22,6 +22,18 @@ exports.createStudent = async (studentData) => {
   }
 }
 
+exports.LoginStudent = async (email) => {
+  const query = "SELECT * FROM tb_alunos WHERE email = ?";
+  
+  try {
+      const [results] = await db.query(query, [email]); 
+      return results.length > 0 ? results[0] : null; // Retorna o primeiro aluno ou null se não encontrado
+  } catch (err) {
+      console.error("Erro ao buscar o email do aluno", err);
+      throw err;
+  }
+};
+
 exports.getStudents = async (turma_id_fk) => {
   const query = "SELECT * FROM tb_alunos WHERE turma_id_fk = ?"
 

@@ -14,6 +14,8 @@ import Dashboard from "./routes/pages/Authenticated/Escola/Dashboard.jsx";
 import ClassDetails from "./components/DashComponents/ClassDetails.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Divisor from "./routes/Divisor.jsx";
+import LoginEstudante from "./routes/pages/Public/Login/LoginEstudante.jsx";
 
 const queryClient = new QueryClient();
 
@@ -42,9 +44,18 @@ const router = createBrowserRouter([
     element: <ClassDetails />,
   },
   {
+    path: "/choice", 
+    element: <Divisor />
+  },
+  {
     path: "/login",
     element: <Login />,
   },
+  {
+    path: "/login_estudante", 
+    element: <LoginEstudante />
+  }
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

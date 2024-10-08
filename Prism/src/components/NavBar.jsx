@@ -18,7 +18,7 @@ const NavBar = () => {
         if (token) {
             navigate('/dashboard'); // Redireciona para a página inicial
         } else {
-            navigate('/login'); // Redireciona para a página de login
+            navigate('/choice'); // Redireciona para a página de escolha
         }
     };
 

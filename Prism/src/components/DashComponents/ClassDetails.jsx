@@ -3,11 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "../CSS/ClassDetails.module.css"; // CSS Modules
 import { useSpring, animated } from "@react-spring/web";
-import { ToastContainer, toast } from "react-toastify"; // Para notificações
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ClassDetails = () => {
-  const { id } = useParams();
+  const { id: turma_id_fk } = useParams(); // Pega turma_id_fk dos parâmetros
   const navigate = useNavigate();
   const [studentsData, setStudentsData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,38 +16,52 @@ const ClassDetails = () => {
     email: "",
     ano_serie: "",
     nivel: "",
+    turma_id_fk, // Definir direto no estado
+    instituicao_id_fk: localStorage.getItem("instituicao_id_fk") || "", // Puxa do localStorage
+    senha: "", // Adicione um campo para a senha
   });
-  const [editMode, setEditMode] = useState(false); // Controle para edição
-  const [currentStudentId, setCurrentStudentId] = useState(null); // ID do aluno atual sendo editado
-  const [loading, setLoading] = useState(false); // Estado de carregamento
+  const [editMode, setEditMode] = useState(false);
+  const [currentStudentId, setCurrentStudentId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchStudents = async () => {
-      setLoading(true); // Inicia o carregamento
+      setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8081/prisma/students/${id}`);
+        const response = await axios.get(`http://localhost:8081/prisma/students/${turma_id_fk}`);
         setStudentsData(response.data.students);
       } catch (error) {
         console.error("Erro ao buscar dados dos alunos:", error);
         toast.error("Erro ao buscar dados dos alunos.");
       } finally {
-        setLoading(false); // Termina o carregamento
+        setLoading(false);
       }
     };
 
     fetchStudents();
-  }, [id]);
+  }, [turma_id_fk]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+      senha: name === "nome" ? generatePassword(value) : prevData.senha, // Atualiza a senha se o nome mudar
+    }));
+  };
+
+  const generatePassword = (nome) => {
+    const firstTwoLetters = nome.slice(0, 6).toUpperCase(); 
+    return `${turma_id_fk}${firstTwoLetters}`; 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Inicia o carregamento
+    setLoading(true);
+
+    // Adiciona um log para verificar os dados que estão sendo enviados
+    console.log("Dados enviados:", formData);
+
     try {
       let response;
       if (editMode) {
@@ -78,9 +92,13 @@ const ClassDetails = () => {
       resetForm();
     } catch (error) {
       console.error("Erro ao salvar aluno:", error);
+      // Log adicional para verificar a resposta do erro
+      if (error.response) {
+        console.error("Detalhes do erro:", error.response.data);
+      }
       toast.error("Erro ao salvar aluno.");
     } finally {
-      setLoading(false); // Termina o carregamento
+      setLoading(false);
     }
   };
 
@@ -90,6 +108,9 @@ const ClassDetails = () => {
       email: "",
       ano_serie: "",
       nivel: "",
+      turma_id_fk, // Mantém o valor fixo
+      instituicao_id_fk: localStorage.getItem("instituicao_id_fk") || "", // Atualiza o valor
+      senha: "", // Reinicia a senha
     });
     setIsModalOpen(false);
     setEditMode(false);
@@ -104,7 +125,7 @@ const ClassDetails = () => {
   };
 
   const handleDelete = async (studentId) => {
-    setLoading(true); // Inicia o carregamento
+    setLoading(true);
     try {
       await toast.promise(
         axios.delete(`http://localhost:8081/prisma/students/${studentId}`),
@@ -112,33 +133,36 @@ const ClassDetails = () => {
           pending: "Excluindo aluno...",
           success: "Aluno excluído com sucesso!",
           error: "Erro ao excluir aluno.",
-        }, 
+        }
       );
       setStudentsData((prevStudents) => prevStudents.filter((student) => student.id !== studentId));
     } catch (error) {
       console.error("Erro ao excluir aluno:", error);
       toast.error("Erro ao excluir aluno.");
     } finally {
-      setLoading(false); // Termina o carregamento
+      setLoading(false);
     }
   };
 
   const modalAnimation = useSpring({
     opacity: isModalOpen ? 1 : 0,
     transform: isModalOpen ? "translateY(0)" : "translateY(-100%)",
+    config: { tension: 220, friction: 20 }, // Transição suave
   });
 
   return (
     <div>
       <ToastContainer />
       <h1>Detalhes da Turma</h1>
-      <button onClick={() => setIsModalOpen(true)} className={styles.buttonCreate}>
-        Adicionar Aluno
-      </button>
-      <button onClick={() => navigate(-1)} className={styles.buttonBack}>
-        Voltar
-      </button>
-      {loading ? ( // Condicional de carregamento
+      <div className={styles.actions}>
+        <button onClick={() => setIsModalOpen(true)} className={styles.buttonCreate}>
+          Adicionar Aluno
+        </button>
+        <button onClick={() => navigate(-1)} className={styles.buttonBack}>
+          Voltar
+        </button>
+      </div>
+      {loading ? (
         <p>Carregando alunos...</p>
       ) : studentsData && studentsData.length > 0 ? (
         <table className={styles.table}>
@@ -226,7 +250,19 @@ const ClassDetails = () => {
                   required
                 />
               </div>
-              <button type="submit">{editMode ? "Atualizar" : "Adicionar"}</button>
+              <div>
+                <label htmlFor="senha">Senha:</label>
+                <input
+                  type="text"
+                  id="senha"
+                  name="senha"
+                  value={formData.senha} // Mostra a senha gerada
+                  readOnly // Campo somente leitura
+                />
+              </div>
+              <button type="submit" className={styles.buttonSubmit}>
+                {editMode ? "Salvar Alterações" : "Adicionar Aluno"}
+              </button>
             </form>
           </div>
         </animated.div>

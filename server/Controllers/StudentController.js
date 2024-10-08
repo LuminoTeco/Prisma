@@ -1,6 +1,5 @@
 const { body, validationResult } = require("express-validator");
 const StudentModel = require("../models/StudentModels");
-const db = require("../models/mysql/db");
 const bcrypt = require("bcrypt");
 
 const secret = "ECKSWG";
@@ -24,12 +23,6 @@ exports.createStudent = [
         }
 
         try {
-            // Verificar se o e-mail já está em uso
-            const existingStudent = await StudentModel.findByEmail(req.body.email);
-            if (existingStudent) {
-                return res.status(400).json({ error: "E-mail já está em uso." });
-            }
-
             // Hash da senha
             const hash = await bcrypt.hash(req.body.senha.toString(), 10);
             const newStudent = {
@@ -49,7 +42,42 @@ exports.createStudent = [
             res.status(500).json({ error: "Erro ao criar o estudante" });
         }
     }
-];
+]; 
+
+exports.LoginStudents = async (req, res) => {
+    const { email, senha } = req.body;
+
+    try {
+        // Encontre o estudante pelo email
+        const student = await StudentModel.LoginStudent(email);
+        
+        // Verifique se o estudante existe
+        if (!student) {
+            return res.status(404).json({ message: 'Estudante não encontrado' });
+        }
+
+        // Verifique a senha
+        const isPasswordValid = await bcrypt.compare(senha, student.senha);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Senha incorreta' });
+        }
+
+        // Armazene os dados do estudante na sessão
+        req.session.user = {
+            name: student.nome, 
+            email: student.email, 
+            nivel: student.nivel, 
+            foto_perfil: student.foto_perfil, 
+            conquistas: student.conquistas_id_fk 
+        };
+
+        return res.status(200).json({ message: 'Login realizado com sucesso', student });
+    } catch (err) {
+        console.error('Erro no login do estudante:', err);
+        return res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+};
+
 
 exports.getStudents = async (req, res) =>  {
     try {

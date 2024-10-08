@@ -1,5 +1,4 @@
 import React from "react";
-import Rainbow from "../assets/imgs/rainbow.png"
 import "./CSS/School.css";
 
 const School = () => {
@@ -16,9 +15,6 @@ const School = () => {
             entre eles!
           </p>
           <button className="button-sign-school">Assinar</button>
-          <div className="container-rainbow">
-            <img src={Rainbow} alt="" />
-          </div>
         </div>
         <div className="container-plan-card">
           <div className="part-text-h1">

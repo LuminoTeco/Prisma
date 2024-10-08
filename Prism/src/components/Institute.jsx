@@ -1,6 +1,5 @@
 import React from "react";
 import "./CSS/Institute.css"
-import Rainbow from "../assets/imgs/rainbow.png"
 
 const Institute = () => {
   return (
@@ -16,9 +15,6 @@ const Institute = () => {
           todas as unidades criarem conexões e colaborarem entre si!
         </p>
         <button className="subscribe-button">Assinar</button>
-        <div className="rainbow-overlay">
-          <img src={Rainbow} alt="Rainbow decoration" />
-        </div>
       </div>
       <div className="plan-card">
         <div className="card-title">
