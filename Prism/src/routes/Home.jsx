@@ -11,7 +11,7 @@ const Home = () => {
 
   const handleClick = () => {
     window.scrollTo({
-      top: 800, 
+      top: 800,
       behavior: 'smooth'
     });
   };
@@ -89,9 +89,24 @@ const Home = () => {
           <img src={Trinkets} alt="coisinhas" />
         </div>
       </div>
-      <div className="fifth-container">oi</div>
+      <div className="fifth-container">
+        <div className="container-text-footer">
+          <h1>
+          ilumine suas ideias
+          </h1> 
+          <h2>
+          Reflita novas
+          </h2>
+          <h1>
+            <span className="spotlight">conexões</span>
+          </h1>
+        </div>
+        <footer className="container-fifth">
+
+        </footer>
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default Home
