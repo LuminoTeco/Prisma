@@ -1,22 +1,97 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './LoginEstudante.module.css';
-import tecologin from "../imagens/teco_login.png";
+import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const LoginEstudante = () => {
-  return (
-    <div className={styles.loginContainer}>
-      <form className={styles.loginForm}>
-        <label htmlFor="email">Email:</label>
-        <input type="email" name="email" id="email" required className={styles.input} />
+    const [values, setValues] = useState({ email: "", senha: "" });
+    const navigate = useNavigate(); // Use useNavigate ao invés de Navigate
 
-        <label htmlFor="password">Senha:</label>
-        <input type="password" name="password" id="password" required className={styles.input} />
+    // Atualiza o estado dos campos de entrada
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setValues(prevValues => ({
+            ...prevValues,
+            [name]: value
+        }));
+    };
 
-        <button type="submit" className={styles.submitButton}>Enviar</button>
-      </form>
-      <img src={tecologin} alt="Tela de Login" className={styles.loginImage} />
-    </div>
-  );
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const response = await axios.post("http://localhost:8081/prisma/loginAlunos", {
+                email: values.email,
+                senha: values.senha
+            }, { withCredentials: true });
+    
+            console.log(response.data);
+    
+            if (response.data && response.data.student) { 
+                const userInfo = {
+                    nome: response.data.student.nome, 
+                    aluno_id: response.data.student.aluno_id,
+                    email: values.email,
+                };
+
+                // Armazena o objeto no localStorage
+                localStorage.setItem('user_info', JSON.stringify(userInfo));
+    
+                toast.success(`Bem-vindo, ${userInfo.nome}`, {
+                    position: "bottom-center",
+                    autoClose: 1000,
+                    pauseOnHover: false,
+                    onClose: () => {
+                        navigate("/inicio");
+                    }
+                });
+            } else {
+                toast.error("E-mail ou senha incorretos.", {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    pauseOnHover: false,
+                });
+            }
+        } catch (err) {
+            console.error("Erro no login:", err);
+            toast.error("E-mail ou senha incorretos.", {
+                position: "bottom-center",
+                autoClose: 2000
+            });
+        }
+    };
+    
+    return (
+        <div className={styles.loginContainer}>
+            <ToastContainer /> {/* Adicione o ToastContainer aqui */}
+            <form className={styles.loginForm} onSubmit={handleSubmit}>
+                <label htmlFor="email">Email:</label>
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="email" 
+                    value={values.email} // Valor do input
+                    onChange={handleChange} // Atualiza o estado ao mudar
+                    required 
+                    className={styles.input} 
+                />
+
+                <label htmlFor="senha">Senha:</label>
+                <input 
+                    type="password" 
+                    name="senha" 
+                    id="senha" 
+                    value={values.senha} // Valor do input
+                    onChange={handleChange} // Atualiza o estado ao mudar
+                    required 
+                    className={styles.input} 
+                />
+
+                <button type="submit" className={styles.submitButton}>Enviar</button>
+            </form>
+        </div>
+    );
 };
 
 export default LoginEstudante;

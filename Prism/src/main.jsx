@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Divisor from "./routes/Divisor.jsx";
 import LoginEstudante from "./routes/pages/Public/Login/LoginEstudante.jsx";
+import Initial from "./routes/pages/Authenticated/Aluno/Initial.jsx";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/login_estudante", 
     element: <LoginEstudante />
+  }, 
+  {
+    path: "/inicio",
+    element: <Initial />
   }
   
 ]);

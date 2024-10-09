@@ -54,6 +54,7 @@
     height: 200px;
     background-color: #faf9f9;
     border: 2px solid #ccc;
+    border-radius: 3%;
     padding: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

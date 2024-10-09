@@ -1,5 +1,6 @@
 const express = require('express');
 const StudentController = require('../Controllers/StudentController')
+const authSession = require("../middlewares/authSession");
 const router = express.Router();
 
 router.post('/students', StudentController.createStudent)
