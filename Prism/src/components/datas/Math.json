@@ -1,0 +1,137 @@
+[
+    {
+        "pergunta": "Qual é a soma de 8 e 5?",
+        "alternativas": ["10", "12", "13", "14"],
+        "resposta_correta": "13"
+    },
+    {
+        "pergunta": "Qual é o produto de 6 e 7?",
+        "alternativas": ["42", "36", "48", "54"],
+        "resposta_correta": "42"
+    },
+    {
+        "pergunta": "Qual é 15% de 200?",
+        "alternativas": ["20", "25", "30", "35"],
+        "resposta_correta": "30"
+    },
+    {
+        "pergunta": "Qual é a raiz quadrada de 81?",
+        "alternativas": ["7", "8", "9", "10"],
+        "resposta_correta": "9"
+    },
+    {
+        "pergunta": "Qual é o valor de 9 + 10?",
+        "alternativas": ["18", "19", "20", "21"],
+        "resposta_correta": "19"
+    },
+    {
+        "pergunta": "Qual é a diferença entre 100 e 45?",
+        "alternativas": ["50", "55", "60", "65"],
+        "resposta_correta": "55"
+    },
+    {
+        "pergunta": "Qual é a soma de 23 e 34?",
+        "alternativas": ["56", "57", "58", "59"],
+        "resposta_correta": "57"
+    },
+    {
+        "pergunta": "Quantos lados tem um triângulo?",
+        "alternativas": ["2", "3", "4", "5"],
+        "resposta_correta": "3"
+    },
+    {
+        "pergunta": "Qual é 25 dividido por 5?",
+        "alternativas": ["3", "4", "5", "6"],
+        "resposta_correta": "5"
+    },
+    {
+        "pergunta": "Qual é o resultado de 3^3?",
+        "alternativas": ["6", "9", "27", "30"],
+        "resposta_correta": "27"
+    },
+    {
+        "pergunta": "Qual é a soma de 1, 2 e 3?",
+        "alternativas": ["5", "6", "7", "8"],
+        "resposta_correta": "6"
+    },
+    {
+        "pergunta": "Qual é a fração equivalente a 50%?",
+        "alternativas": ["1/2", "1/3", "1/4", "1/5"],
+        "resposta_correta": "1/2"
+    },
+    {
+        "pergunta": "Qual é o próximo número na sequência: 2, 4, 6, ...?",
+        "alternativas": ["7", "8", "9", "10"],
+        "resposta_correta": "8"
+    },
+    {
+        "pergunta": "Qual é a soma dos ângulos internos de um triângulo?",
+        "alternativas": ["90 graus", "180 graus", "270 graus", "360 graus"],
+        "resposta_correta": "180 graus"
+    },
+    {
+        "pergunta": "Quantos segundos há em uma hora?",
+        "alternativas": ["3600", "600", "60", "7200"],
+        "resposta_correta": "3600"
+    },
+    {
+        "pergunta": "Qual é a área de um quadrado com lado 4?",
+        "alternativas": ["8", "12", "16", "20"],
+        "resposta_correta": "16"
+    },
+    {
+        "pergunta": "Qual é o menor número primo?",
+        "alternativas": ["0", "1", "2", "3"],
+        "resposta_correta": "2"
+    },
+    {
+        "pergunta": "Qual é a distância entre 10 e 15?",
+        "alternativas": ["2", "3", "4", "5"],
+        "resposta_correta": "5"
+    },
+    {
+        "pergunta": "Qual é o valor de π (pi) arredondado para duas casas decimais?",
+        "alternativas": ["3.12", "3.14", "3.16", "3.18"],
+        "resposta_correta": "3.14"
+    },
+    {
+        "pergunta": "Qual é a soma de 7 e 8?",
+        "alternativas": ["14", "15", "16", "17"],
+        "resposta_correta": "15"
+    },
+    {
+        "pergunta": "Qual é o valor de 50 dividido por 10?",
+        "alternativas": ["2", "3", "4", "5"],
+        "resposta_correta": "5"
+    },
+    {
+        "pergunta": "Qual é a soma de 0, 0 e 0?",
+        "alternativas": ["0", "1", "2", "3"],
+        "resposta_correta": "0"
+    },
+    {
+        "pergunta": "Qual é a multiplicação de 4 e 5?",
+        "alternativas": ["18", "19", "20", "21"],
+        "resposta_correta": "20"
+    },
+    {
+        "pergunta": "Qual é o resultado de 18 - 7?",
+        "alternativas": ["10", "11", "12", "13"],
+        "resposta_correta": "11"
+    },
+    {
+        "pergunta": "Qual é a fração de 3/4 equivalente a porcentagem?",
+        "alternativas": ["50%", "60%", "70%", "75%"],
+        "resposta_correta": "75%"
+    },
+    {
+        "pergunta": "Quantos graus há em um ângulo reto?",
+        "alternativas": ["45", "90", "180", "360"],
+        "resposta_correta": "90"
+    },
+    {
+        "pergunta": "Qual é o dobro de 7?",
+        "alternativas": ["12", "13", "14", "15"],
+        "resposta_correta": "14"
+    }
+]

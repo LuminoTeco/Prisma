@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios'; // Certifique-se de importar axios
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
+import styles from "./Initial.module.css";
+import SideBar from '../../../../components/InitialComponents/SideBar';
+import Feed from '../../../../components/InitialComponents/Feed';
+import Tasks from '../../../../components/InitialComponents/Tasks'; // Importar outros componentes que você deseja renderizar
 
 const Initial = () => {
   const navigate = useNavigate();
   
-  // Estado para controlar se o usuário está autenticado
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
-  const [userInfo, setUserInfo] = useState(null); // Estado para armazenar as informações do usuário
+  const [isLoading, setIsLoading] = useState(true); 
+  const [userInfo, setUserInfo] = useState(null); 
+  const [currentComponent, setCurrentComponent] = useState('feed'); // Estado para controlar o componente atual
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const res = await axios.get("http://localhost:8081/prisma/protected-route", { withCredentials: true });
         if (res.data.valid) {
-          setIsAuthenticated(true); // Marca como autenticado se a resposta for válida
+          setIsAuthenticated(true); 
           const storedUserInfo = JSON.parse(localStorage.getItem('user_info'));
-          setUserInfo(storedUserInfo); // Armazena as informações do usuário
+          setUserInfo(storedUserInfo); 
         } else {
-          navigate("/login_estudante"); // Redireciona para login se não for válido
+          navigate("/login_estudante"); 
         }
       } catch (err) {
         console.error("Erro na autenticação:", err);
-        navigate("/login_estudante"); // Redireciona para login em caso de erro
+        navigate("/login_estudante"); 
       } finally {
-        setIsLoading(false); // Remove o estado de carregamento
+        setIsLoading(false); 
       }
     };
 
@@ -33,24 +37,32 @@ const Initial = () => {
   }, [navigate]);
 
   if (isLoading) {
-    return <p>Carregando...</p>; // Exibe um indicador de carregamento enquanto aguarda
+    return <p>Carregando...</p>; 
   }
 
+  // Função para atualizar o componente atual
+  const handleComponentChange = (componentName) => {
+    setCurrentComponent(componentName);
+  };
+
+  // Renderiza o componente correspondente baseado no estado
+  const renderComponent = () => {
+    switch (currentComponent) {
+      case 'feed':
+        return <Feed />;
+      case 'task':
+        return <Tasks />; 
+      default:
+        return <Feed />;
+    }
+  };
+
   return (
-    <div>
-      {isAuthenticated && userInfo ? (
-        <>
-          <h1>Bem-vindo, {userInfo.nome}!</h1>
-          <p>ID do Aluno: {userInfo.aluno_id}</p>
-          <p>Email: {userInfo.email}</p>
-          {userInfo.foto && <img src={userInfo.foto} alt="Foto do usuário" />} {/* Exibe a foto do usuário se existir */}
-        </>
-      ) : (
-        <div>
-          <h1>Usuário não autenticado.</h1>
-          <p>Faça o login para conseguir acessar! <Link to="/login_estudante">Clique aqui!</Link></p>
-        </div>
-      )}
+    <div className={styles.containerInitialBody}>
+      <SideBar onComponentChange={handleComponentChange} />
+      <main className={styles.containerMainContent}>
+        {renderComponent()}
+      </main>
     </div>
   );
 };

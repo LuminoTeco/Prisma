@@ -1,0 +1,44 @@
+/* Sidebar.module.css */
+.containerSideBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 5%;
+    background-color: white;
+    height: 100vh;
+}
+
+.containerButtonLi {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: space-evenly; 
+    height: 50%;
+    width: 100%;
+}
+
+.iconContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.iconContainer img {
+    width: 24px; 
+    height: 24px;
+    cursor: pointer;
+}
+
+.iconLabel {
+    margin-top: 4px; 
+    font-size: 12px; 
+    color: black;
+    text-align: center;
+}
+
+.img {
+    height: 50%;
+    width: 100%;
+
+    overflow: hidden;
+}

@@ -1,0 +1,28 @@
+.containerInitialBody {
+  display: flex;
+  height: 100vh;
+}
+
+.containerMainContent {
+  flex: 1;
+  padding: 20px;
+  background-image: linear-gradient(
+    to left,
+    #fffef3,
+    #feeedc,
+    #ffdccd,
+    #ffc9c9,
+    #f9b9d2,
+    #f2badc,
+    #eabce4,
+    #dfbfec,
+    #e8cdf0,
+    #f1dbf5,
+    #f8eafa,
+    #fff9ff
+  );
+  height: 100vh;
+  overflow-y: auto;
+
+  border: 1px sol;
+}

@@ -1,0 +1,119 @@
+.containerFeed {
+  height: 100%;
+  display: flex;
+}
+
+.containerMessagesFeed {
+  background-color: white;
+  border-radius: 10px;
+  height: 100%;
+  width: 70%;
+  margin-right: 3%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Notification {
+  background-color: white;
+  height: 100%;
+  border-radius: 10px;
+  width: 30%;
+}
+
+.containerMessages {
+  height: 90%;
+  width: 100%;
+  overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column; /* Mantém as mensagens em coluna */
+    align-items: flex-start; /* Alinha todas as mensagens à esquerda por padrão */
+}
+
+.containerInput {
+  height: 10%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputMessage {
+  background-color: #eee6fa;
+  color: #000;
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.inputMessage:focus {
+  border-color: #eadcff;
+  outline: none;
+}
+
+.Send {
+  cursor: pointer;
+  margin-left: 10px;
+}
+.messageBox {
+  max-width: 60%;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.messageBoxCaíque {
+  background-color: white; /* Cor de fundo para Caíque */
+  border: 2px solid green;
+  align-self: flex-end; /* Alinhar à direita */
+}
+
+.messageBoxSoraia {
+  background-color: white; /* Cor de fundo para Soraia */
+  border: 2px solid yellow;
+  align-self: flex-start; /* Alinhar à esquerda */
+}
+
+.Notification {
+    position: relative; /* Para posicionar elementos internos */
+    margin-top: 10px; /* Espaço acima da seção de notificações */
+  }
+  
+  .notificationMessage {
+    background-color: #e2e3e5; /* Cor de fundo das notificações */
+    padding: 8px; /* Espaçamento interno das notificações */
+    border-radius: 5px; /* Bordas arredondadas */
+    margin: 5px 0; /* Margem entre notificações */
+    animation: fadeIn 0.5s; /* Animação de aparição */
+  }
+  
+  .notificationImages {
+    display: flex;
+    justify-content: center; /* Centraliza a imagem */
+    margin-top: 5px; /* Espaço acima da imagem */
+  }
+  
+  .notificationImages img {
+    width: 80%; /* Largura da imagem */
+    height: 80%; /* Altura da imagem */
+    border-radius: 5px; /* Bordas arredondadas para a imagem */
+  }
+  
+  /* Animação para as notificações */
+  @keyframes fadeIn {
+    from {
+      opacity: 0; /* Começa invisível */
+    }
+    to {
+      opacity: 1; /* Termina visível */
+    }
+  }
