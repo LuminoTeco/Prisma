@@ -6,28 +6,18 @@ import Utils from "../../../../components/DashComponents/Utils";
 import styles from "../../CSS/Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuth from "../../../../Hooks/useAuth"; 
 
 const Dashboard = () => {
   const [page, setPage] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, isLoading } = useAuth(); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get("http://localhost:8081/prisma/protected-route", { withCredentials: true });
-        if (res.data.valid) {
-          setIsAuthenticated(true);
-        } else {
-          navigate("/login");
-        }
-      } catch (err) {
-        navigate("/login");
-      }
-    };
-
-    checkAuth();
-  }, [navigate]);
+    if (!isAuthenticated && !isLoading) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, isLoading, navigate]);
 
   const changePage = (newPage) => {
     setPage(newPage);
@@ -67,8 +57,8 @@ const Dashboard = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return null;
+  if (isLoading) {
+    return <p>Carregando...</p>; // Exibe uma mensagem de loading enquanto o estado de autenticação não está definido
   }
 
   return (

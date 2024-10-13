@@ -51,7 +51,7 @@ exports.createStudent = [
     try {
       // Hash da senha
       const hash = await bcrypt.hash(req.body.senha.toString(), 10);
-      const foto_perfil = req.file ? req.file.filename : "default_user.jpeg";
+      const foto_perfil = req.file ? req.file.filename : "default_user.jpg";
       const newStudent = {
         nome: req.body.nome,
         email: req.body.email,

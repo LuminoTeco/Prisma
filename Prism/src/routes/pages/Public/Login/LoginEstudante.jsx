@@ -33,6 +33,7 @@ const LoginEstudante = () => {
                     nome: response.data.student.nome, 
                     aluno_id: response.data.student.aluno_id,
                     email: values.email,
+                    foto_perfil: response.data.student.foto_perfil
                 };
 
                 // Armazena o objeto no localStorage

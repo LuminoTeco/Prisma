@@ -1,45 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
+import React, { useEffect, useState } from "react";
 import styles from "./Initial.module.css";
-import SideBar from '../../../../components/InitialComponents/SideBar';
+import SideBar from "../../../../components/InitialComponents/SideBar";
+import useAuth from "../../../../Hooks/useAuth";
 
 const Initial = () => {
-  const navigate = useNavigate();
-  
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); 
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get("http://localhost:8081/prisma/protected-route", { withCredentials: true });
-        if (res.data.valid) {
-          setIsAuthenticated(true); 
-          const storedUserInfo = JSON.parse(localStorage.getItem('user_info'));
-          setUserInfo(storedUserInfo); 
-        } else {
-          navigate("/login_estudante"); 
-        }
-      } catch (err) {
-        console.error("Erro na autenticação:", err);
-        navigate("/login_estudante"); 
-      } finally {
-        setIsLoading(false); 
-      }
-    };
-
-    checkAuth();
-  }, [navigate]);
-
-  if (isLoading) {
-    return <p>Carregando...</p>; 
-  }
-
+  const { isAuthenticated, userInfo } = useAuth()
 
   return (
     <div className={styles.containerInitialBody}>
-      <SideBar onComponentChange={handleComponentChange} />
+      <SideBar />
+      <main className={styles.containerMainContent}>
+        {isAuthenticated && userInfo ? (
+          <div>
+            <h1>Bem-vindo, {userInfo.name}!</h1>
+
+            <img
+              src={`http://localhost:8081/images/${userInfo.foto_perfil}`}
+              alt="Foto de Perfil"
+            />
+            <p>{userInfo.foto_perfil}</p>
+            <p>Email: {userInfo.email}</p>
+          </div>
+        ) : (
+          <p>Usuário não autenticado.</p>
+        )}
+      </main>
     </div>
   );
 };
