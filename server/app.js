@@ -3,6 +3,7 @@ const express = require("express");
 const session = require("express-session")
 const bodyParser = require("body-parser")
 const cookie = require("cookie-parser")
+const path = require("path")
 const InstituteRouter = require("./Routers/InstituteRoutes")
 const studentRoutes = require("./Routers/studentRoutes")
 
@@ -19,6 +20,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 
   }
 }));
+app.use("/images", express.static(path.join(__dirname, "public", "images")))
 
 const port = 8081
 

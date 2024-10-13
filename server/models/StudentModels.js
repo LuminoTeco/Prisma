@@ -1,17 +1,21 @@
 const db = require("./mysql/db");
 
 exports.createStudent = async (studentData) => {
-  const query =
-    "INSERT INTO tb_alunos (nome, email, senha, ano_serie, nivel, instituicao_id_fk, turma_id_fk) VALUES (?, ?, ?, ?, ?, ?, ?)"
+  const query = `
+    INSERT INTO tb_alunos (nome, email, senha, ano_serie, nivel, foto_perfil, instituicao_id_fk, turma_id_fk)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  
   const values = [
     studentData.nome, 
     studentData.email, 
     studentData.senha,
     studentData.ano_serie,
     studentData.nivel,
+    studentData.foto_perfil || 'default_user.jpeg',
     studentData.instituicao_id_fk,
-    studentData.turma_id_fk,
-  ]
+    studentData.turma_id_fk,  // Adicionando turma_id_fk
+  ];
 
   try {
     const [result] = await db.query(query, values);
