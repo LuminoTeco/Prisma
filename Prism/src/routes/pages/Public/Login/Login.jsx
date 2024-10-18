@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ImgTeco from '../../../../assets/imgs/IMG_LOGIN.png';
+import InputTop from "@assets/imgs/input_top.png"
 import styles from './Login.module.css'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -11,13 +12,11 @@ const Login = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Manipula as alterações nos campos de entrada
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
 
-  // Manipula o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,28 +27,24 @@ const Login = () => {
         password: values.password,
       }, { withCredentials: true });
 
-      // Verifica se a resposta contém os dados do usuário
       if (response.data && response.data.user) {
         const userName = response.data.user.name;
-        const institutionId = response.data.user.id; // Captura o ID da instituição
+        const institutionId = response.data.user.id; 
 
-        // Usando Toastify para mostrar o sucesso
         toast.success(`Bem-vindo, ${userName}`, {
-          position: "bottom-center",
+          position: "top-right",
           autoClose: 1000,
           pauseOnHover: false, 
           onClose: () => {
-            // Armazena o ID da instituição no localStorage
             localStorage.setItem('instituicao_id_fk', institutionId);
-            navigate('/dashboard'); // Redireciona para o dashboard após o login
+            navigate('/dashboard'); 
           }
         });
 
         console.log(response.data);
       } else {
-        // Caso a resposta não contenha os dados esperados
         toast.error("E-mail ou senha incorretos.", {
-          position: "bottom-center",
+          position: "top-right",
           autoClose: 2000,
           pauseOnHover: false, 
         });
@@ -58,7 +53,6 @@ const Login = () => {
       console.error("Erro no login:", err);
       setError("E-mail ou senha incorretos");
 
-      // Usando Toastify para mostrar o erro
       toast.error("E-mail ou senha incorretos.", {
         position: "bottom-center",
         autoClose: 2000
@@ -66,12 +60,20 @@ const Login = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate("/choice")
+  }
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.containerImgTecoLogin}>
+        <div className={styles.buttonBack}>
+            <button onClick={handleBack}>Voltar</button>
+        </div>
         <img src={ImgTeco} alt="imagem do login" />
       </div>
       <div className={styles.formContainer}>
+        <img src={InputTop} alt="Logo da prisma" className={styles.imgInputTop}/>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="emailInstitute">E-mail</label>
@@ -96,6 +98,14 @@ const Login = () => {
               onChange={handleChange}
               required
             />
+          </div>
+          <div className={styles.HrContainer}>
+             <div className={styles.Divisor}>
+             <hr />
+              <p>ou</p>
+              <hr />
+             </div>
+              <a href="#">Não consegue iniciar a sessão?</a>
           </div>
           <button type="submit" className={styles.button}>Entrar</button>
         </form>

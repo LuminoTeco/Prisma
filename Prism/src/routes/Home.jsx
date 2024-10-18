@@ -8,11 +8,10 @@ import PurpleTeco from "../assets/svg/PurpleTeco.jsx";
 import Trinkets from "../assets/imgs/trinkets.png";
 
 const Home = () => {
-
   const handleClick = () => {
     window.scrollTo({
       top: 800,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -78,9 +77,20 @@ const Home = () => {
           <div className="plans">
             <Link to="/plans/school" className="plan-1">
               <h2>Escola</h2>
+              <p>
+                Perfeito para as intituições de ensino menores, que querem
+                melhorar a experiencia dos seus alunos e trabalhar a colaboração
+                e conexão entre eles!{" "}
+              </p>
             </Link>
             <Link to="/plans/institution" className="plan-2">
               <h2>Instituição</h2>
+              <p>
+                Ótimo para centros que cuidam de várias escolas! Com esse plano
+                você tem acesso ao cadastro de unidades e pode deixar todos os
+                alunos de todas as unidades criarem conexões e colaborarem entre
+                si!
+              </p>
             </Link>
           </div>
           <img src={CardTeco} alt="Card Teco" className="card-teco" />
@@ -91,22 +101,16 @@ const Home = () => {
       </div>
       <div className="fifth-container">
         <div className="container-text-footer">
-          <h1>
-          ilumine suas ideias
-          </h1> 
-          <h2>
-          Reflita novas
-          </h2>
+          <h1>ilumine suas ideias</h1>
+          <h2>Reflita novas</h2>
           <h1>
             <span className="spotlight">conexões</span>
           </h1>
         </div>
-        <footer className="container-fifth">
-
-        </footer>
+        <footer className="container-fifth"></footer>
       </div>
     </div>
   );
 };
 
-export default Home
+export default Home;

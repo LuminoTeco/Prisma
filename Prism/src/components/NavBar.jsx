@@ -1,24 +1,37 @@
 import React from 'react';
 import Icon from '../assets/svg/Icon';
 import "../App.css";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
-    const navigate = useNavigate(); // Hook para navegação
+    const location = useLocation()
+    const navigate = useNavigate(); 
+
+    const routes = ["/contact", "/about"]
 
     const handleClick = () => {
-        window.scrollTo({
-            top: 2250, 
-            behavior: 'smooth'
-        });
+        if(routes.includes(location.pathname)) {
+            navigate("/")
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: 2350, 
+                        behavior: 'smooth'
+                    });
+                }, 100)
+        } else if (!routes.includes(location.pathname) || location.pathname === "/") {
+            window.scrollTo({
+                top: 2350, 
+                behavior: 'smooth'
+            });
+        }
     };
 
     const handleLoginClick = () => {
         const token = localStorage.getItem('token'); 
         if (token) {
-            navigate('/dashboard'); // Redireciona para a página inicial
+            navigate('/dashboard'); 
         } else {
-            navigate('/choice'); // Redireciona para a página de escolha
+            navigate('/choice'); 
         }
     };
 

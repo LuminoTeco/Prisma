@@ -36,7 +36,6 @@ const LoginEstudante = () => {
                     foto_perfil: response.data.student.foto_perfil
                 };
 
-                // Armazena o objeto no localStorage
                 localStorage.setItem('user_info', JSON.stringify(userInfo));
     
                 toast.success(`Bem-vindo, ${userInfo.nome}`, {
@@ -62,18 +61,23 @@ const LoginEstudante = () => {
             });
         }
     };
+
+    const handleBack = () => {
+        navigate("/choice")
+      }
     
     return (
         <div className={styles.loginContainer}>
-            <ToastContainer /> {/* Adicione o ToastContainer aqui */}
+            <ToastContainer /> 
+            <button onClick={handleBack}>Voltar</button>
             <form className={styles.loginForm} onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input 
                     type="email" 
                     name="email" 
                     id="email" 
-                    value={values.email} // Valor do input
-                    onChange={handleChange} // Atualiza o estado ao mudar
+                    value={values.email} 
+                    onChange={handleChange} 
                     required 
                     className={styles.input} 
                 />
@@ -83,8 +87,8 @@ const LoginEstudante = () => {
                     type="password" 
                     name="senha" 
                     id="senha" 
-                    value={values.senha} // Valor do input
-                    onChange={handleChange} // Atualiza o estado ao mudar
+                    value={values.senha} 
+                    onChange={handleChange} 
                     required 
                     className={styles.input} 
                 />

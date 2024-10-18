@@ -10,18 +10,14 @@ import "react-toastify/dist/ReactToastify.css";
 const Initial = () => {
   const { isAuthenticated, userInfo } = useAuth();
 
-  // Defina o nome do cookie que deseja verificar
   const cookieName = "escolhaMateria";
 
-  // Verifica se o cookie existe
   const [isCookieSet, setIsCookieSet] = useState(false);
-  const [cookieValue, setCookieValue] = useState("");
 
   useEffect(() => {
     const value = Cookies.get(cookieName);
     if (value) {
       setIsCookieSet(true); 
-      setCookieValue(value);
     } else {
       toast.info("Por favor, selecione uma matéria.", {
         autoClose: 2500,
@@ -29,6 +25,8 @@ const Initial = () => {
       });
     }
   }, []);
+
+  /* Adição do banco de dados da matéria. */
 
   return (
     <div className={styles.containerInitialBody}>

@@ -58,7 +58,7 @@ const Dashboard = () => {
   };
 
   if (isLoading) {
-    return <p>Carregando...</p>; // Exibe uma mensagem de loading enquanto o estado de autenticação não está definido
+    return <p>Carregando...</p>; 
   }
 
   return (
@@ -68,8 +68,8 @@ const Dashboard = () => {
           <button onClick={() => changePage("dash")}>Quadros</button>
           <button onClick={() => changePage("util")}>Utilidades</button>
           <button onClick={() => changePage("usuario")}>Usuários</button>
-          <button onClick={handleLogout}>Sair</button>
         </div>
+        <button onClick={handleLogout} className={styles.buttonLogout}>Sair</button>
       </div>
       <div className={styles.content}>{renderAtual()}</div>
     </div>
