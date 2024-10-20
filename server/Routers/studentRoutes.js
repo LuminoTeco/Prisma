@@ -5,7 +5,12 @@ const router = express.Router();
 
 router.post('/students', StudentController.createStudent)
 router.post('/loginAlunos', StudentController.LoginStudents)
+
 router.get('/students/:turma_id_fk', StudentController.getStudents)
+router.get('/subjects/:aluno_id', StudentController.SelectSubject)
+
+router.patch('/SubjectUpdate', StudentController.UpdateStudentSubject)
+
 router.put('/students/:id', StudentController.UpdateStudent)
 
 module.exports = router;

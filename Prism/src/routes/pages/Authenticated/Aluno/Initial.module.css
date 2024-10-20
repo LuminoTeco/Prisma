@@ -8,23 +8,18 @@
   padding: 20px;
   background-image: linear-gradient(
     to left,
-    #fffef3,
-    #feeedc,
-    #ffdccd,
-    #ffc9c9,
-    #f9b9d2,
-    #f2badc,
-    #eabce4,
-    #dfbfec,
-    #e8cdf0,
-    #f1dbf5,
-    #f8eafa,
-    #fff9ff
+    #e6ccff,
+    #d9b3ff,
+    #cc99ff,
+    #bf80ff,
+    #b366ff,
+    #a64dff,
+    #9a33ff
   );
   height: 100vh;
   overflow-y: auto;
-
-  border: 1px sol;
+  filter: blur(20%);
+  border: 1px solid;
 }
 
 .toast-progress {

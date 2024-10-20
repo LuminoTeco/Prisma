@@ -1,4 +1,3 @@
-// src/index.jsx
 import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -29,6 +28,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/contact", element: <Contact /> },
       { path: "/about", element: <About /> },
+      { path: "/plans/:plan", element: <Plans />}
     ],
   },
   {

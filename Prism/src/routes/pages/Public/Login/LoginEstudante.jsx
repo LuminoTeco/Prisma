@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import styles from './LoginEstudante.module.css';
+import styles from './LoginEstudante.module.css'; 
 import { ToastContainer, toast } from 'react-toastify';
+import ImgTeco from "@assets/imgs/IMG_LOGIN.png"
+import InputTop from "@assets/imgs/input_top.png"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const LoginEstudante = () => {
     const [values, setValues] = useState({ email: "", senha: "" });
-    const navigate = useNavigate(); // Use useNavigate ao invés de Navigate
+    const navigate = useNavigate();
 
-    // Atualiza o estado dos campos de entrada
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValues(prevValues => ({
@@ -26,11 +27,9 @@ const LoginEstudante = () => {
                 senha: values.senha
             }, { withCredentials: true });
     
-            console.log(response.data);
-    
-            if (response.data && response.data.student) { 
+            if (response.data && response.data.student) {
                 const userInfo = {
-                    nome: response.data.student.nome, 
+                    nome: response.data.student.nome,
                     aluno_id: response.data.student.aluno_id,
                     email: values.email,
                     foto_perfil: response.data.student.foto_perfil
@@ -63,38 +62,54 @@ const LoginEstudante = () => {
     };
 
     const handleBack = () => {
-        navigate("/choice")
-      }
-    
+        navigate("/choice");
+    };
+
     return (
-        <div className={styles.loginContainer}>
-            <ToastContainer /> 
-            <button onClick={handleBack}>Voltar</button>
-            <form className={styles.loginForm} onSubmit={handleSubmit}>
-                <label htmlFor="email">Email:</label>
-                <input 
-                    type="email" 
-                    name="email" 
-                    id="email" 
-                    value={values.email} 
-                    onChange={handleChange} 
-                    required 
-                    className={styles.input} 
-                />
-
-                <label htmlFor="senha">Senha:</label>
-                <input 
-                    type="password" 
-                    name="senha" 
-                    id="senha" 
-                    value={values.senha} 
-                    onChange={handleChange} 
-                    required 
-                    className={styles.input} 
-                />
-
-                <button type="submit" className={styles.submitButton}>Enviar</button>
-            </form>
+        <div className={styles.pageWrapper}>
+            <ToastContainer />
+            <div className={styles.imgWrapper}>
+                <button onClick={handleBack} className={styles.backButton}>Voltar</button>
+                <img src={ImgTeco} alt="Imagem de login" className={styles.loginImage} />
+            </div>
+            <div className={styles.formWrapper}>
+                <img src={InputTop} alt="Logo" className={styles.formHeaderImg} />
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            value={values.email}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="senha">Senha:</label>
+                        <input
+                            type="password"
+                            name="senha"
+                            id="senha"
+                            value={values.senha}
+                            onChange={handleChange}
+                            required
+                            className={styles.input}
+                        />
+                    </div>
+                    <div className={styles.dividerSection}>
+                        <div className={styles.dividerLine}>
+                            <hr />
+                            <p>ou</p>
+                            <hr />
+                        </div>
+                        <a href="#" className={styles.forgotLink}>Não consegue iniciar a sessão?</a>
+                    </div>
+                    <button type="submit" className={styles.submitButton}>Enviar</button>
+                </form>
+            </div>
         </div>
     );
 };

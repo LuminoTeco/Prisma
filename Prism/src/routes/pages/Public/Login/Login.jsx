@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ImgTeco from '../../../../assets/imgs/IMG_LOGIN.png';
+import ImgTeco from '@assets/imgs/FORMAL_LOGIN.png';
 import InputTop from "@assets/imgs/input_top.png"
 import styles from './Login.module.css'; 
 import axios from 'axios';
@@ -68,7 +68,7 @@ const Login = () => {
     <div className={styles.loginContainer}>
       <div className={styles.containerImgTecoLogin}>
         <div className={styles.buttonBack}>
-            <button onClick={handleBack}>Voltar</button>
+            <button onClick={handleBack} className={styles.buttonBackItem}>Voltar</button>
         </div>
         <img src={ImgTeco} alt="imagem do login" />
       </div>

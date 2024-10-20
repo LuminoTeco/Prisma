@@ -7,7 +7,7 @@ const NavBar = () => {
     const location = useLocation()
     const navigate = useNavigate(); 
 
-    const routes = ["/contact", "/about"]
+    const routes = ["/contact", "/about", "/plans/school", "/plans/institute"]
 
     const handleClick = () => {
         if(routes.includes(location.pathname)) {

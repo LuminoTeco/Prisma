@@ -83,7 +83,7 @@ const Home = () => {
                 e conexão entre eles!{" "}
               </p>
             </Link>
-            <Link to="/plans/institution" className="plan-2">
+            <Link to="/plans/institute" className="plan-2">
               <h2>Instituição</h2>
               <p>
                 Ótimo para centros que cuidam de várias escolas! Com esse plano

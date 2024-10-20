@@ -82,21 +82,17 @@ exports.LoginStudents = async (req, res) => {
   const { email, senha } = req.body;
 
   try {
-    // Encontre o estudante pelo email
     const student = await StudentModel.LoginStudent(email);
 
-    // Verifique se o estudante existe
     if (!student) {
       return res.status(404).json({ message: "Estudante não encontrado" });
     }
 
-    // Verifique a senha
     const isPasswordValid = await bcrypt.compare(senha, student.senha);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Senha incorreta" });
     }
 
-    // Armazene os dados do estudante na sessão
     req.session.user = {
       name: student.nome,
       email: student.email,
@@ -136,32 +132,27 @@ exports.UpdateStudent = async (req, res) => {
     instituicao_id_fk,
   } = req.body;
 
-  // Verifica se o ID do aluno está presente
   if (!aluno_id) {
     return res.status(400).json({ Error: "ID do aluno é necessário" });
   }
 
   try {
-    // Verifica se uma nova senha foi fornecida e realiza o hash
     let hashedPassword;
     if (senha) {
-      const saltRounds = 10; // Número de rounds de sal para o hash
+      const saltRounds = 10; 
       hashedPassword = await bcrypt.hash(senha, saltRounds);
     }
 
-    // Atualiza o aluno no banco de dados
     const result = await StudentModel.UpdateStudent({
       aluno_id,
       nome,
       email,
-      senha: hashedPassword, // Passa a senha hash, se fornecida
+      senha: hashedPassword, 
       ano_serie,
       nivel,
       turma_id_fk,
       instituicao_id_fk,
     });
-
-    // Verifica se o resultado da atualização é válido
     if (result.affectedRows === 0) {
       return res
         .status(404)
@@ -176,3 +167,44 @@ exports.UpdateStudent = async (req, res) => {
     res.status(500).json({ Error: "Erro ao atualizar o estudante" });
   }
 };
+
+exports.UpdateStudentSubject = async (req, res) => {
+  const { disciplina_id_fk, aluno_id } = req.body;
+
+  if (!aluno_id || !disciplina_id_fk) {
+    return res.status(400).json({ Error: "ID do estudante e da disciplina são obrigatórios" });
+  }
+
+  try {
+    const result = await StudentModel.UpdateStudentSubject(aluno_id, disciplina_id_fk);
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ Error: "Estudante não encontrado ou não atualizado" });
+    }
+
+    res.status(200).json({ message: "Estudante atualizado com sucesso", result });
+  } catch (err) {
+    console.error("Erro ao atualizar o estudante:", err);
+    res.status(500).json({ Error: "Erro ao atualizar o estudante" });
+  }
+};
+
+exports.SelectSubject = async (req, res) => {
+  const { aluno_id } = req.params
+
+  if (!aluno_id) {
+    return res.status(400).json({ Error: "ID do estudante é obrigatório" });
+  }
+  try {
+    const result = await StudentModel.selectSubjects(aluno_id);
+
+    if(result.length === 0) {
+      return res.status(404).json({ Error: "Estudante não possui disciplina associada" });
+    }
+
+    res.status(200).json({message: "Disciplinas selecionadas com sucesso", result}) 
+  } catch (err) {
+    console.error("Erro ao selecionar as disciplinas:", err);
+    res.status(500).json({ Error: "Erro ao selecionar as disciplinas" });
+  }
+}

@@ -12,7 +12,7 @@ const Plans = () => {
     switch (plan) { 
       case 'school': 
         return <School />
-      case 'institution': 
+      case 'institute': 
         return <Institute />
     }
   }
