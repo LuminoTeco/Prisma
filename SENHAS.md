@@ -1,3 +1,10 @@
-Ferraz - 2309
-Guarulhos - 1012
-Suzano - 1000
+
+    <progress ></progress>
+    <input type="file" onChange={handleFileChange} />
+    <button onClick={handleUpload}>Enviar</button>
+
+    <p>Nível: {values.nivel}</p>
+    <h3>Conquista:</h3>
+    <div about="">
+
+    </div>

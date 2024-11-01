@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Initial.module.css";
-import Cookies from "js-cookie";
-import axios from "axios"
-import SideBar from "@components/InitialComponents/SideBar";
+import { useNavigate } from "react-router-dom";
 import useAuth from "@hooks/useAuth";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import styles from "./Initial.module.css";
 import Subjects from "./Subjects/Subjects";
+import "react-toastify/dist/ReactToastify.css";
+import Feed from "@components/InitialComponents/Feed";
+import { toast, ToastContainer } from "react-toastify";
+import SideBar from "../../../../components/InitialComponents/SideBar";
 
 const Initial = () => {
   const { isAuthenticated, userInfo } = useAuth();
+  const navigate = useNavigate();
 
-  const cookieName = "escolhaMateria";
-
-  const [isCookieSet, setIsCookieSet] = useState(false);
+  const localStorageKey = "user_info"; 
+  const [materiaId, setMateriaId] = useState(null);
 
   useEffect(() => {
-    const value = Cookies.get(cookieName);
-    if (value) {
-      setIsCookieSet(true); 
+    const userInfo = localStorage.getItem(localStorageKey);
+    if (userInfo) {
+      const parsedInfo = JSON.parse(userInfo);
+      setMateriaId(parsedInfo.materia_id);
     } else {
       toast.info("Por favor, selecione uma matéria.", {
         autoClose: 5000,
@@ -27,22 +28,31 @@ const Initial = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isAuthenticated || !userInfo) {
+      const timer = setTimeout(() => {
+        navigate("/login_estudante"); 
+      }, 3000);
+      return () => clearTimeout(timer); 
+    }
+  }, [isAuthenticated, userInfo, navigate]);
 
   return (
     <div className={styles.containerInitialBody}>
-      <ToastContainer/>
-      {!isCookieSet && <Subjects />}
+      <ToastContainer />
 
-      {isCookieSet && (
+      {materiaId === 3 ? (
+        <Subjects />
+      ) : (
         <>
           <SideBar />
           <main className={styles.containerMainContent}>
             {isAuthenticated && userInfo ? (
               <div>
-               <h1>Página inicial</h1>
+                <Feed />
               </div>
             ) : (
-              <p>Usuário não autenticado.</p>
+              <p>Usuário não autenticado. Redirecionando para o login <span className={styles.dots}></span></p> 
             )}
           </main>
         </>

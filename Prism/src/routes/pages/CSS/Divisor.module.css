@@ -23,18 +23,18 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: #007BFF;
+    background-color: #ffae00;
     color: white;
     border: none;
     padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s;
   }
   
   .backButton:hover {
-    background-color: #0056b3;
+    background-color: #d6970d;
   }
   
   .divisorContainer {

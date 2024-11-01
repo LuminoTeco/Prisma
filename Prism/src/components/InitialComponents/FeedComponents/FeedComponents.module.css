@@ -1,0 +1,111 @@
+.ChatContainerFeed {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+.InputSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.containerChoiceType {
+  width: 100%;
+  padding: 5px;
+
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+
+.containerChoiceType span {
+    margin-left: 20px;
+    font-weight: bold;
+
+    border-radius: 10px 10px 0px 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.containerChoiceType span:nth-child(1) {
+   background-color: #FFF193;
+}
+
+.containerChoiceType span:nth-child(2) {
+    background-color: #FD8FFF;
+ }
+ .containerChoiceType span:nth-child(3) {
+    background-color: #AFE6F8;
+ }
+
+.FormMessages {
+  display: flex;
+  width: 100%;
+}
+
+.InputMessage {
+  border: 2px solid #000000;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.InputMessage:focus {
+  border-color: #4f00e2;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.SendMessage {
+  background-color: #4f00e2;
+  color: #fff;
+  border: none;
+  margin-top: 5px;
+  height: 45px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dots {
+  display: inline-block;
+}
+
+.dots::after {
+  content: "";
+  animation: dots 1s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    content: "";
+  }
+  40% {
+    content: ".";
+  }
+  60% {
+    content: "..";
+  }
+  80% {
+    content: "...";
+  }
+}

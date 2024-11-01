@@ -24,6 +24,11 @@ CREATE TABLE tb_conquistas (
     requisito VARCHAR(70) NOT NULL
 );
 
+INSERT INTO tb_conquistas (descricao, requisito) VALUES
+('Ao amanhecer', 'Realizar uma atividade antes das 8:00 da manhã'),
+('Primeira tarefa', 'Fez sua primeira atividade dentro da plataforma'),
+('Noite produtiva', 'Realizar uma atividade após as 22:00 da noite');
+
 CREATE TABLE tb_adm (
     adm_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
     nome VARCHAR(30) NOT NULL,
@@ -34,6 +39,18 @@ CREATE TABLE tb_adm (
     CONSTRAINT FK_instituicao_adm FOREIGN KEY (instituicao_id_fk) REFERENCES registerUnits(Cod_Escolar)
 );
 
+CREATE TABLE tb_disciplina (
+    disciplina_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
+    nome VARCHAR(30) NOT NULL,
+    descricao VARCHAR(50) NOT NULL
+);
+
+INSERT INTO tb_disciplina (nome, descricao)
+VALUES 
+('matematica', 'Disciplina de Matemática básica e avançada'),
+('portugues', 'Disciplina de Língua Portuguesa e Literatura'),
+('Indefinido', 'É indefinido a matéria do usuário');
+
 CREATE TABLE tb_alunos (
     aluno_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
     nome VARCHAR(30) NOT NULL,
@@ -42,27 +59,22 @@ CREATE TABLE tb_alunos (
     ano_serie INT NOT NULL,
     nivel VARCHAR(3) NOT NULL,
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    foto_perfil VARCHAR(100) DEFAULT 'src/assets/imgs/default_user.jpeg',
+    foto_perfil VARCHAR(100) DEFAULT '/images/user/default_user.jpeg',
     turma_id_fk INT NOT NULL,
     instituicao_id_fk INT NOT NULL,
-    conquistas_id_fk INT,
+    disciplina_id_fk INT default 3,  
     CONSTRAINT FK_turma_aluno FOREIGN KEY (turma_id_fk) REFERENCES tb_turmas(turma_id),
     CONSTRAINT FK_instituicao_aluno FOREIGN KEY (instituicao_id_fk) REFERENCES registerUnits(Cod_Escolar),
-    CONSTRAINT FK_conquista_aluno FOREIGN KEY (conquistas_id_fk) REFERENCES tb_conquistas(conquista_id)
+    CONSTRAINT FK_disciplina_aluno FOREIGN KEY (disciplina_id_fk) REFERENCES tb_disciplina(disciplina_id)
 );
 
-CREATE TABLE tb_disciplina (
-    disciplina_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-    nome VARCHAR(30) NOT NULL,
-    descricao VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE tb_chat (
-    chat_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-    aluno1_id_fk INT NOT NULL,
-    aluno2_id_fk INT NOT NULL,
-    CONSTRAINT FK_aluno_chat1 FOREIGN KEY (aluno1_id_fk) REFERENCES tb_alunos(aluno_id),
-    CONSTRAINT FK_aluno_chat2 FOREIGN KEY (aluno2_id_fk) REFERENCES tb_alunos(aluno_id)
+-- Tabela de junção para associar alunos a conquistas
+CREATE TABLE tb_alunos_conquistas (
+    aluno_id_fk INT NOT NULL,
+    conquista_id_fk INT NOT NULL,
+    PRIMARY KEY (aluno_id_fk, conquista_id_fk),
+    CONSTRAINT FK_aluno_conquista FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id),
+    CONSTRAINT FK_conquista_aluno FOREIGN KEY (conquista_id_fk) REFERENCES tb_conquistas(conquista_id)
 );
 
 CREATE TABLE tb_progresso (
@@ -91,12 +103,9 @@ CREATE TABLE tb_tarefas (
 
 CREATE TABLE tb_mensagem (
     mensagem_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-    conteudo VARCHAR(30) NOT NULL,
-    data_envio DATETIME NOT NULL,
-    remetente_id_fk INT NOT NULL,
-    chat_id_fk INT NOT NULL,
-    CONSTRAINT FK_chat_mensagem FOREIGN KEY (chat_id_fk) REFERENCES tb_chat(chat_id),
-    CONSTRAINT FK_aluno_mensagem FOREIGN KEY (remetente_id_fk) REFERENCES tb_alunos(aluno_id)
+    sender VARCHAR(255) NOT NULL,
+    conteudo TEXT NOT NULL,
+    data_envio DATETIME NOT NULL
 );
 
 CREATE TABLE tb_forum (
@@ -107,6 +116,10 @@ CREATE TABLE tb_forum (
     aluno_id_fk INT NOT NULL,
     CONSTRAINT FK_aluno_forum FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id)
 );
+
+ALTER TABLE tb_forum
+MODIFY COLUMN data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+MODIFY COLUMN conteudo TEXT NOT NULL;
 
 CREATE TABLE tb_forum_resposta (
     resposta_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
@@ -141,6 +154,12 @@ SHOW TABLES;
 SELECT * FROM registerUnits;
 SELECT * FROM tb_turmas;
 SELECT * FROM tb_alunos;
+SELECT * FROM tb_disciplina;
+SELECT * FROM tb_conquistas;
+
+SELECT * FROM tb_alunos WHERE aluno_id IN (1, 4);
+
+SELECT * FROM tb_forum WHERE aluno_id_fk = 1;
 
 SELECT 
     ru.Cod_Escolar AS instituicao_id_fk, 
@@ -170,3 +189,40 @@ JOIN
 JOIN 
     registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar;
     
+SELECT d.nome
+FROM tb_alunos a
+JOIN tb_disciplina d ON a.disciplina_id_fk = d.disciplina_id
+WHERE a.aluno_id = 1;
+
+SELECT 
+    a.nome, 
+    f.conteudo 
+FROM 
+    tb_forum f
+JOIN 
+    tb_alunos a ON f.aluno_id_fk = a.aluno_id
+ORDER BY 
+    f.data_criacao ASC;
+
+SELECT 
+    a.nome, 
+    a.email, 
+    a.ano_serie, 
+    a.nivel, 
+    a.data_cadastro, 
+    a.foto_perfil, 
+    ru.NameInstitute AS nome_instituicao, 
+    c.descricao AS nome_conquista,
+    d.nome AS nome_disciplina
+FROM 
+    tb_alunos a
+LEFT JOIN 
+    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
+LEFT JOIN 
+    tb_alunos_conquistas ac ON a.aluno_id = ac.aluno_id_fk
+LEFT JOIN 
+    tb_conquistas c ON ac.conquista_id_fk = c.conquista_id
+LEFT JOIN 
+    tb_disciplina d ON a.disciplina_id_fk = d.disciplina_id
+WHERE 
+    a.aluno_id = 1;

@@ -42,7 +42,12 @@ exports.createInstitute = [
       };
 
       const result = await InstituteModel.createInstitute(newInstitute);
-      res.status(201).json({message: "Instituto criado com sucesso", id: newInstitute.Cod_Escolar});
+      res
+        .status(201)
+        .json({
+          message: "Instituto criado com sucesso",
+          id: newInstitute.Cod_Escolar,
+        });
     } catch (err) {
       console.error("Erro ao criar o instituto:", err);
       res.status(500).json({ Error: "Erro ao criar o instituto" });
@@ -51,32 +56,36 @@ exports.createInstitute = [
 ];
 
 exports.login = async (req, res) => {
-  const {emailInstitute, password} = req.body;
+  const { emailInstitute, password } = req.body;
 
   try {
     const user = await InstituteModel.getInstituteUser(emailInstitute);
-    if(!user) {
+    if (!user) {
       return res.status(401).json({ message: "Usuário não encontrado" });
     }
 
     const paswMathc = await bcrypt.compare(password, user.pwd);
-    if(!paswMathc) {
+    if (!paswMathc) {
       return res.status(401).json({ message: "Email ou senha inválido" });
     }
 
     req.session.user = {
-      name: user.NameInstitute, 
+      name: user.NameInstitute,
       email: user.emailInstitute,
       city: user.city,
-      id: user.Cod_Escolar
-    } 
+      id: user.Cod_Escolar,
+    };
 
-    return res.json({ message: "Login bem-sucedido!", user: req.session.user, id: req.session.user.id });
+    return res.json({
+      message: "Login bem-sucedido!",
+      user: req.session.user,
+      id: req.session.user.id,
+    });
   } catch (err) {
-    console.error("erro", err)
-    return res.status(500).json9({ message: "Erro interno" })
+    console.error("erro", err);
+    return res.status(500).json9({ message: "Erro interno" });
   }
-}
+};
 
 exports.logout = (req, res) => {
   // Verifica se existe uma sessão ativa
@@ -84,17 +93,18 @@ exports.logout = (req, res) => {
     // Destrói a sessão
     req.session.destroy((err) => {
       if (err) {
-        return res.status(500).send('Erro ao realizar logout');
+        return res.status(500).send("Erro ao realizar logout");
       } else {
-        res.clearCookie('connect.sid'); 
-        return res.status(200).send({ message: 'Logout realizado com sucesso' });
+        res.clearCookie("connect.sid");
+        return res
+          .status(200)
+          .send({ message: "Logout realizado com sucesso" });
       }
     });
   } else {
-    return res.status(400).send({ message: 'Nenhuma sessão ativa encontrada' });
+    return res.status(400).send({ message: "Nenhuma sessão ativa encontrada" });
   }
 };
-
 
 //Class
 
@@ -150,14 +160,13 @@ exports.createClass = [
 ];
 
 exports.getClass = async (req, res) => {
-  const { instituicao_id_fk } = req.params; // Obtém o ID da instituição a partir dos parâmetros da URL
+  const { instituicao_id_fk } = req.params;
 
   try {
     const classes = await InstituteModel.getClassByID(instituicao_id_fk);
     res.json(classes);
   } catch (error) {
-    console.error('Erro ao buscar turmas:', error);
-    res.status(500).json({ message: 'Erro ao buscar turmas.' });
+    console.error("Erro ao buscar turmas:", error);
+    res.status(500).json({ message: "Erro ao buscar turmas." });
   }
 };
-

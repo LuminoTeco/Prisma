@@ -117,7 +117,7 @@ input:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
 }
 
-button[type="submit"] {
+.submitButton {
     background-color: #007bff;
     color: white;
     border: none;
@@ -127,15 +127,16 @@ button[type="submit"] {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-button[type="submit"]:hover {
+.submitButton:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-button[type="submit"]:disabled {
+.submitButton:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
 
 .closeButton {
     margin: 10px;

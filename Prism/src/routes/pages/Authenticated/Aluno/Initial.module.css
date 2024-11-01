@@ -6,15 +6,12 @@
 .containerMainContent {
   flex: 1;
   padding: 20px;
-  background-image: linear-gradient(
-    to left,
-    #e6ccff,
-    #d9b3ff,
-    #cc99ff,
-    #bf80ff,
-    #b366ff,
-    #a64dff,
-    #9a33ff
+  background: rgb(202, 124, 255);
+  background: linear-gradient(
+    43deg,
+    rgba(202, 124, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 49%,
+    rgba(255, 209, 145, 1) 100%
   );
   height: 100vh;
   overflow-y: auto;
@@ -24,4 +21,28 @@
 
 .toast-progress {
   background: linear-gradient(90deg, #f06, #00f);
+}
+
+.dots {
+  display: inline-block;
+}
+
+.dots::after {
+  content: "";
+  animation: dots 1s steps(5, end) infinite; 
+}
+
+@keyframes dots {
+  0%, 20% {
+      content: "";
+  }
+  40% {
+      content: ".";
+  }
+  60% {
+      content: "..";
+  }
+  80% {
+      content: "...";
+  }
 }

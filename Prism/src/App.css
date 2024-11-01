@@ -2,6 +2,7 @@
 
 body {
   overflow-x: hidden;
+  
 }
 
 nav {
@@ -36,6 +37,10 @@ nav .left-links li,
 nav .center-link li,
 nav .right-link li {
   margin: 0 9px;
+}
+
+.nav-shadow {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .login-button {

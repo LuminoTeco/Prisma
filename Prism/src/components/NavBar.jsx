@@ -4,20 +4,20 @@ import "../App.css";
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
-    const location = useLocation()
+    const location = useLocation();
     const navigate = useNavigate(); 
 
-    const routes = ["/contact", "/about", "/plans/school", "/plans/institute"]
+    const routes = ["/contact", "/about", "/plans/school", "/plans/institute"];
 
     const handleClick = () => {
         if(routes.includes(location.pathname)) {
-            navigate("/")
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: 2350, 
-                        behavior: 'smooth'
-                    });
-                }, 100)
+            navigate("/");
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 2350, 
+                    behavior: 'smooth'
+                });
+            }, 100);
         } else if (!routes.includes(location.pathname) || location.pathname === "/") {
             window.scrollTo({
                 top: 2350, 
@@ -35,8 +35,11 @@ const NavBar = () => {
         }
     };
 
+    // Verifica se a rota atual é "/contact"
+    const isContactPage = location.pathname === "/contact";
+
     return (
-        <nav>
+        <nav className={isContactPage ? "nav-shadow" : ""}>
             <ul className="left-links">
                 <li>
                     <NavLink to="/about">Sobre</NavLink>

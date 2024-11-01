@@ -32,7 +32,8 @@ const LoginEstudante = () => {
                     nome: response.data.student.nome,
                     aluno_id: response.data.student.aluno_id,
                     email: values.email,
-                    foto_perfil: response.data.student.foto_perfil
+                    foto_perfil: response.data.student.foto_perfil,
+                    materia_id: response.data.student.disciplina_id_fk
                 };
 
                 localStorage.setItem('user_info', JSON.stringify(userInfo));
@@ -83,6 +84,7 @@ const LoginEstudante = () => {
                             id="email"
                             value={values.email}
                             onChange={handleChange}
+                            placeholder='example@xxx.com'
                             required
                             className={styles.input}
                         />
@@ -95,6 +97,7 @@ const LoginEstudante = () => {
                             id="senha"
                             value={values.senha}
                             onChange={handleChange}
+                            placeholder='*********'
                             required
                             className={styles.input}
                         />

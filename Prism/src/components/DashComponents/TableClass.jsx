@@ -14,8 +14,8 @@ const Class = () => {
   });
   const [errors, setErrors] = useState({});
   const [turmas, setTurmas] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Controle do modal
-  const [loading, setLoading] = useState(false); // Estado de carregamento
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [loading, setLoading] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -52,9 +52,9 @@ const Class = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    setLoading(true); // Inicia o carregamento
+    setLoading(true); 
 
-    const toastId = toast.loading("Criando turma..."); // Cria o toast de carregamento
+    const toastId = toast.loading("Criando turma..."); 
 
     try {
       const response = await axios.post("http://localhost:8081/prisma/class", formData);
@@ -67,7 +67,6 @@ const Class = () => {
       });
       setIsModalOpen(false); // Fecha o modal após o envio
 
-      // Atualiza o toast de carregamento para sucesso
       toast.update(toastId, {
         render: "Turma criada com sucesso!",
         type: "success",
@@ -131,10 +130,8 @@ const Class = () => {
         </tbody>
       </table>
 
-      {/* Botão para abrir o modal */}
       <button onClick={() => setIsModalOpen(true)} className={styles.buttonCreate}>Criar Nova Turma</button>
 
-      {/* Modal animado */}
       {isModalOpen && (
         <animated.div style={modalAnimation} className={styles.modal}>
           <div className={styles.modalContent}>
@@ -176,7 +173,7 @@ const Class = () => {
                 />
                 {errors.instituicao_id_fk && <p>{errors.instituicao_id_fk}</p>}
               </div>
-              <button type="submit" disabled={loading}>Enviar</button>
+              <button type="submit" disabled={loading} className={styles.submitButton}>Enviar</button>
             </form>
 
           </div>

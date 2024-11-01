@@ -1,47 +1,22 @@
 const { body, validationResult } = require("express-validator");
 const StudentModel = require("../models/StudentModels");
-const multer = require("multer");
-const path = require("path");
 const bcrypt = require("bcrypt");
+const uploadSingleImage = require("../middlewares/Upload");
 
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, "..", "public", "images"),
-  filename: (req, file, cb) => {
-    const fileExtension = path.extname(file.originalname);
-    const fileName = `user_${Date.now()}${fileExtension}`;
-    cb(null, fileName);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    const allowedType = ["image/jpeg", "image/png", "image/jpg"];
-    if (allowedType.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error("Tipo de arquivo inválido"), false);
-    }
-  },
-});
-
-const secret = "ECKSWG";
-
+// Validações para criar estudante
 const createStudentValidator = [
-  body("nome").notEmpty().withMessage("O nome do estudante é obrigatorio"),
+  body("nome").notEmpty().withMessage("O nome do estudante é obrigatório"),
   body("email").isEmail().withMessage("Email inválido"),
   body("senha").notEmpty().withMessage("A senha é obrigatória"),
-  body("ano_serie").notEmpty().withMessage("O ano de seção é obrigatorio"),
-  body("nivel").notEmpty().withMessage("O nivel é obrigatorio"),
-  body("instituicao_id_fk")
-    .notEmpty()
-    .withMessage("A instituição é obrigatoria"),
-  body("turma_id_fk").notEmpty().withMessage("A turma é obrigatoria"),
+  body("ano_serie").notEmpty().withMessage("O ano de série é obrigatório"),
+  body("nivel").notEmpty().withMessage("O nível é obrigatório"),
+  body("instituicao_id_fk").notEmpty().withMessage("A instituição é obrigatória"),
+  body("turma_id_fk").notEmpty().withMessage("A turma é obrigatória"),
 ];
 
 exports.createStudent = [
-  upload.single("foto_perfil"),
-  createStudentValidator,
+  uploadSingleImage, 
+  ...createStudentValidator,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -64,13 +39,11 @@ exports.createStudent = [
       };
 
       const result = await StudentModel.createStudent(newStudent);
-      res
-        .status(201)
-        .json({ 
-            message: "Estudante criado com sucesso", 
-            id: result.aluno_id ,
-            foto_perfil: `images/${foto_perfil}`
-        });
+      res.status(201).json({
+        message: "Estudante criado com sucesso",
+        id: result.aluno_id,
+        foto_perfil: `images/${foto_perfil}`,
+      });
     } catch (err) {
       console.error("Erro ao criar o estudante:", err);
       res.status(500).json({ error: "Erro ao criar o estudante" });
@@ -139,7 +112,7 @@ exports.UpdateStudent = async (req, res) => {
   try {
     let hashedPassword;
     if (senha) {
-      const saltRounds = 10; 
+      const saltRounds = 10;
       hashedPassword = await bcrypt.hash(senha, saltRounds);
     }
 
@@ -147,7 +120,7 @@ exports.UpdateStudent = async (req, res) => {
       aluno_id,
       nome,
       email,
-      senha: hashedPassword, 
+      senha: hashedPassword,
       ano_serie,
       nivel,
       turma_id_fk,
@@ -168,21 +141,62 @@ exports.UpdateStudent = async (req, res) => {
   }
 };
 
+exports.UpdateStudentPhoto = (req, res) => {
+  const { aluno_id } = req.params;
+
+  if (!aluno_id) {
+    return res.status(400).json({ Error: "ID do estudante é obrigatório" });
+  }
+
+  if (!req.file) {
+    return res.status(400).json({ Error: "Nenhuma imagem foi enviada" });
+  }
+
+  const foto_perfil = `/images/${req.file.filename}`; 
+
+  StudentModel.UpdateStudentPhoto(foto_perfil, aluno_id)
+    .then((result) => {
+      if (result.affectedRows === 0) {
+        return res
+          .status(404)
+          .json({ Error: "Estudante não encontrado ou não atualizado" });
+      }
+      res.status(200).json({
+        message: "Foto do estudante atualizada com sucesso",
+        filePath: foto_perfil,
+      });
+    })
+    .catch((err) => {
+      console.error("Erro ao atualizar o estudante:", err);
+      res.status(500).json({ Error: "Erro ao atualizar o estudante" });
+    });
+};
+
+
 exports.UpdateStudentSubject = async (req, res) => {
   const { disciplina_id_fk, aluno_id } = req.body;
 
   if (!aluno_id || !disciplina_id_fk) {
-    return res.status(400).json({ Error: "ID do estudante e da disciplina são obrigatórios" });
+    return res
+      .status(400)
+      .json({ Error: "ID do estudante e da disciplina são obrigatórios" });
   }
 
   try {
-    const result = await StudentModel.UpdateStudentSubject(aluno_id, disciplina_id_fk);
-    
+    const result = await StudentModel.UpdateStudentSubject(
+      aluno_id,
+      disciplina_id_fk
+    );
+
     if (result.affectedRows === 0) {
-      return res.status(404).json({ Error: "Estudante não encontrado ou não atualizado" });
+      return res
+        .status(404)
+        .json({ Error: "Estudante não encontrado ou não atualizado" });
     }
 
-    res.status(200).json({ message: "Estudante atualizado com sucesso", result });
+    res
+      .status(200)
+      .json({ message: "Estudante atualizado com sucesso", result });
   } catch (err) {
     console.error("Erro ao atualizar o estudante:", err);
     res.status(500).json({ Error: "Erro ao atualizar o estudante" });
@@ -190,7 +204,7 @@ exports.UpdateStudentSubject = async (req, res) => {
 };
 
 exports.SelectSubject = async (req, res) => {
-  const { aluno_id } = req.params
+  const { aluno_id } = req.params;
 
   if (!aluno_id) {
     return res.status(400).json({ Error: "ID do estudante é obrigatório" });
@@ -198,13 +212,39 @@ exports.SelectSubject = async (req, res) => {
   try {
     const result = await StudentModel.selectSubjects(aluno_id);
 
-    if(result.length === 0) {
-      return res.status(404).json({ Error: "Estudante não possui disciplina associada" });
+    if (result.length === 0) {
+      return res
+        .status(404)
+        .json({ Error: "Estudante não possui disciplina associada" });
     }
 
-    res.status(200).json({message: "Disciplinas selecionadas com sucesso", result}) 
+    res
+      .status(200)
+      .json({ message: "Disciplinas selecionadas com sucesso", result });
   } catch (err) {
     console.error("Erro ao selecionar as disciplinas:", err);
     res.status(500).json({ Error: "Erro ao selecionar as disciplinas" });
   }
-}
+};
+
+exports.allInformationUser = async (req, res) => {
+  const { aluno_id } = req.params;
+
+  if (!aluno_id) {
+    return res.status(400).json({ Error: "ID do estudante é obrigatório" });
+  }
+
+  try {
+    const result = await StudentModel.allInfomationUser(aluno_id);
+    if (result.length === 0) {
+      return res.status(404).json({ Error: "Estudante não encontrado" });
+    }
+
+    res.status(200).json({ message: "Informações do estudante", result });
+  } catch (err) {
+    console.error("Erro ao buscar as informações do estudante:", err);
+    res
+      .status(500)
+      .json({ Error: "Erro ao buscar as informações do estudante" });
+  }
+};

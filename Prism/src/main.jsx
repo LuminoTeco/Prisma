@@ -1,21 +1,22 @@
 import "./index.css";
 import React from "react";
-import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import Home from "./routes/Home.jsx";
 import About from "./routes/About.jsx";
+import ReactDOM from "react-dom/client";
+import Divisor from "./routes/Divisor.jsx";
 import Contact from "./routes/Contact.jsx";
 import Plans from "./routes/pages/Public/Plans.jsx";
 import Units from "./routes/pages/Private/Units.jsx";
 import ErrorElement from "./routes/ErrorElement.jsx";
 import Login from "./routes/pages/Public/Login/Login.jsx";
-import Dashboard from "./routes/pages/Authenticated/Escola/Dashboard.jsx";
+import Initial from "./routes/pages/Authenticated/Aluno/Initial.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ClassDetails from "./components/DashComponents/ClassDetails.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Divisor from "./routes/Divisor.jsx";
+import Dashboard from "./routes/pages/Authenticated/Escola/Dashboard.jsx";
 import LoginEstudante from "./routes/pages/Public/Login/LoginEstudante.jsx";
-import Initial from "./routes/pages/Authenticated/Aluno/Initial.jsx";
+import Perfil from "./components/InitialComponents/FeedComponents/Perfil.jsx";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: "/inicio",
     element: <Initial />
+  },
+  {
+    path: "/perfil",
+    element: <Perfil />
   }
   
 ]);

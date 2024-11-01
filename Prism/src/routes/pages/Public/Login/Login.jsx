@@ -21,7 +21,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // Envia a requisição de login para o servidor
       const response = await axios.post('http://localhost:8081/prisma/login', {
         emailInstitute: values.emailInstitute,
         password: values.password,

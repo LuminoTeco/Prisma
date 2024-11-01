@@ -1,0 +1,32 @@
+.containerFeed {
+  height: 93vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.FeedMessagesContainer {
+  height: 100%;
+  width: 67%;
+  background-color: rgb(255, 255, 255);
+
+  -webkit-box-shadow: 0 2.5px 14px -1px #3a3a3a;
+  -moz-box-shadow: 0 2.5px 14px -1px #3a3a3a;
+  box-shadow: 0 2.5px 14px -1px #3a3a3a;
+
+  border-radius: 10px;
+
+  margin-right: 10px;
+
+  overflow-y: scroll;
+}
+
+.AchivementContainer {
+  height: 100%;
+  width: 33%;
+  border-radius: 10px;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 2.5px 14px -1px #3a3a3a;
+  -moz-box-shadow: 0 2.5px 14px -1px #3a3a3a;
+  box-shadow: 0 2.5px 14px -1px #3a3a3a;
+}

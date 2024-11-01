@@ -1,0 +1,33 @@
+.container {
+  height: 200vh;
+  width: 100%;
+
+  border: 1px solid red;
+}
+
+.ContainerImageUser {
+  height: 55vh;
+  width: 100%;
+
+  background: #1c20ff;
+  background: -webkit-linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
+  background: linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ContainerImageUser > img {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ContainerImageUser > h1 {
+  color: white;
+  font-size: 3rem;
+  margin-top: 20px;
+}
