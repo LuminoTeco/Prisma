@@ -151,3 +151,26 @@ exports.allInfomationUser = async (aluno_id) => {
     throw err;
   }
 };
+
+exports.allStudentsByNameInvite = async (aluno_id) => {
+  const query = `
+    SELECT 
+    a.nome AS nome_aluno
+FROM 
+    tb_alunos a
+JOIN 
+    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
+WHERE 
+    a.instituicao_id_fk = (SELECT instituicao_id_fk FROM tb_alunos WHERE aluno_id = 1)
+    AND a.aluno_id <> 1;
+
+  `;
+
+  try {
+    const [rows] = await db.query(query, [aluno_id])
+    return rows
+  } catch (err) {
+    console.error("Usuarios não encontrados", err)
+    throw err;
+  }
+};

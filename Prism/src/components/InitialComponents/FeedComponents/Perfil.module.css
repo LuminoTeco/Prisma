@@ -1,8 +1,9 @@
 .container {
   height: 200vh;
   width: 100%;
+  background-color: white;
 
-  border: 1px solid red;
+  border-radius: 10px;
 }
 
 .ContainerImageUser {
@@ -12,6 +13,8 @@
   background: #1c20ff;
   background: -webkit-linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
   background: linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
+
+  border-radius: 10px 10px 0 0;
 
   display: flex;
   align-items: center;

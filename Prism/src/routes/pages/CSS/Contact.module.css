@@ -56,11 +56,13 @@
 
 .sectionContainerInformations {
     background-color: white;
-    width: 80%;
+    width: 102%;
     height: 55vh;
 
     border-radius: 10px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+    margin-left: 10px;
 }
 
 .containerText {

@@ -38,12 +38,12 @@ const LoginEstudante = () => {
 
                 localStorage.setItem('user_info', JSON.stringify(userInfo));
     
-                toast.success(`Bem-vindo, ${userInfo.nome}`, {
+                toast.success(`Bem-vindo(a), ${userInfo.nome}`, {
                     position: "bottom-center",
                     autoClose: 1000,
                     pauseOnHover: false,
                     onClose: () => {
-                        navigate("/inicio");
+                        navigate("/inicio/feed");
                     }
                 });
             } else {

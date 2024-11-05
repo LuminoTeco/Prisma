@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import useAuth from "@hooks/useAuth";
 import styles from "./Initial.module.css";
-import Subjects from "./Subjects/Subjects";
 import "react-toastify/dist/ReactToastify.css";
-import Feed from "@components/InitialComponents/Feed";
 import { toast, ToastContainer } from "react-toastify";
 import SideBar from "../../../../components/InitialComponents/SideBar";
 
 const Initial = () => {
   const { isAuthenticated, userInfo } = useAuth();
   const navigate = useNavigate();
-
-  const localStorageKey = "user_info"; 
   const [materiaId, setMateriaId] = useState(null);
 
   useEffect(() => {
-    const userInfo = localStorage.getItem(localStorageKey);
+    const userInfo = localStorage.getItem("user_info");
     if (userInfo) {
       const parsedInfo = JSON.parse(userInfo);
       setMateriaId(parsedInfo.materia_id);
@@ -31,32 +27,27 @@ const Initial = () => {
   useEffect(() => {
     if (!isAuthenticated || !userInfo) {
       const timer = setTimeout(() => {
-        navigate("/login_estudante"); 
+        navigate("/login_estudante");
       }, 3000);
-      return () => clearTimeout(timer); 
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, userInfo, navigate]);
 
   return (
     <div className={styles.containerInitialBody}>
       <ToastContainer />
+      <SideBar />
 
-      {materiaId === 3 ? (
-        <Subjects />
-      ) : (
-        <>
-          <SideBar />
-          <main className={styles.containerMainContent}>
-            {isAuthenticated && userInfo ? (
-              <div>
-                <Feed />
-              </div>
-            ) : (
-              <p>Usuário não autenticado. Redirecionando para o login <span className={styles.dots}></span></p> 
-            )}
-          </main>
-        </>
-      )}
+      <main className={styles.containerMainContent}>
+        {isAuthenticated && userInfo ? (
+          <Outlet /> 
+        ) : (
+          <p>
+            Usuário não autenticado. Redirecionando para o login{" "}
+            <span className={styles.dots}></span>
+          </p>
+        )}
+      </main>
     </div>
   );
 };

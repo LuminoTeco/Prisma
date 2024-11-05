@@ -6,9 +6,12 @@ const router = express.Router();
 
 router.post("/students", StudentController.createStudent);
 router.post("/loginAlunos", StudentController.LoginStudents);
+
 router.get("/students/:turma_id_fk", StudentController.getStudents);
 router.get("/subjects/:aluno_id", StudentController.SelectSubject);
 router.get("/allinformation/:aluno_id", StudentController.allInformationUser);
+router.get("/searchStudents/:aluno_id", StudentController.allStudentsByNameInvite)
+
 router.patch("/SubjectUpdate", StudentController.UpdateStudentSubject);
 router.patch(
   "/uploadImage/:aluno_id",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Modal from "./ModalInvite.jsx"; 
 import styles from "./Perfil.module.css";
 
 const Perfil = () => {
@@ -9,8 +10,8 @@ const Perfil = () => {
     foto_perfil: "",
     nome_conquista: "",
   });
-
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar o modal
 
   const userValues = JSON.parse(localStorage.getItem("user_info"));
   const { aluno_id } = userValues || {};
@@ -72,6 +73,14 @@ const Perfil = () => {
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true); // Abre o modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Fecha o modal
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.ContainerImageUser}>
@@ -82,6 +91,14 @@ const Perfil = () => {
         />
         <h1>{values.nome}</h1>
       </div>
+      <p>Clique para procurar amigos: </p>
+      <button onClick={openModal}>Procurar</button>
+
+      {/* Modal com conteúdo */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2>Procurar Amigos</h2>
+        <p>Aqui você pode buscar amigos!</p>
+      </Modal>
     </div>
   );
 };

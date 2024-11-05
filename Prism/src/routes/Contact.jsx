@@ -11,7 +11,7 @@ const Contact = () => {
     <div className={styles.containerContact}>
       <div className={styles.containerLeft}>
         <div className={styles.containerTextH1}>
-          <h1>Fale com a gente</h1>
+          <h1>Fale com a gente!</h1>
         </div>
         <div className={styles.containerImg}>
           <img src={Teco} alt="Imagem do teco" />

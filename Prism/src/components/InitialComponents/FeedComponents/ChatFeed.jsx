@@ -16,11 +16,34 @@ const getRandomColor = () => {
   return color;
 };
 
+const lightenColor = (color, percent) => {
+  const num = parseInt(color.slice(1), 16);
+  const amt = Math.round(2.55 * percent);
+  const r = (num >> 16) + amt;
+  const g = ((num >> 8) & 0x00ff) + amt;
+  const b = (num & 0x0000ff) + amt;
+
+  // Garantir que os valores RGB não sejam superiores a 240 para evitar cores muito claras
+  const cappedR = Math.min(r, 240);
+  const cappedG = Math.min(g, 240);
+  const cappedB = Math.min(b, 240);
+
+  return (
+    "#" +
+    (
+      0x1000000 +
+      (cappedR < 255 ? (cappedR < 1 ? 0 : cappedR) : 255) * 0x10000 +
+      (cappedG < 255 ? (cappedG < 1 ? 0 : cappedG) : 255) * 0x100 +
+      (cappedB < 255 ? (cappedB < 1 ? 0 : cappedB) : 255)
+    )
+      .toString(16)
+      .slice(1)
+  );
+};
+
 const ChatFeed = () => {
   const [message, setMessage] = useState("");
   const [userColors, setUserColors] = useState({});
-  const [typingUser, setTypingUser] = useState(null);
-  const [messageColor, setMessageColor] = useState("#000000");
   const storedUserInfo = JSON.parse(localStorage.getItem("user_info"));
   const storedUserName = storedUserInfo.nome;
 
@@ -31,6 +54,7 @@ const ChatFeed = () => {
         "http://localhost:8081/prisma/all_messages"
       );
       return response.data.map((msg) => ({
+        foto_perfil: msg.foto_perfil,
         user: msg.nome,
         message: msg.conteudo,
       }));
@@ -60,6 +84,8 @@ const ChatFeed = () => {
     });
   }, [chatMessages, userColors]);
 
+  useEffect(() => {});
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (message.trim() === "") return;
@@ -67,14 +93,12 @@ const ChatFeed = () => {
     const messageData = {
       user: storedUserName,
       message: message,
-      color: messageColor
     };
 
     try {
       await axios.post("http://localhost:8081/prisma/messages", {
         conteudo: message,
         aluno_id_fk: storedUserInfo.aluno_id,
-        color: messageColor
       });
       socket.emit("message", messageData);
       setMessage("");
@@ -83,54 +107,59 @@ const ChatFeed = () => {
     }
   };
 
-  const handleMessageColorSwitch = (color) => {
-    setMessageColor(color);
-  };
+  const baseURL = "http://localhost:8081";
 
   return (
     <div className={styles.ChatContainerFeed}>
-
       <div className={styles.messages}>
         {chatMessages.map((msg, index) => (
-          <div key={index} className={styles.message}>
-            <strong
-              style={{
-                color:
-                  msg.user === storedUserName
-                    ? userColors[storedUserName] || "#000"
-                    : userColors[msg.user] || getRandomColor(),
-              }}
-            >
-              {msg.user}:
-            </strong>
-            {msg.message}
+          <div
+            key={index}
+            className={styles.message}
+            style={{
+              borderColor: lightenColor(
+                msg.user === storedUserName
+                  ? userColors[storedUserName] || "#000"
+                  : userColors[msg.user] || getRandomColor(),
+                30
+              ),
+              borderWidth: "2px",
+              borderStyle: "solid",
+              backgroundColor: "transparent",
+            }}
+          >
+            <div className={styles.messageContent}>
+              <img
+                src={`${baseURL}${msg.foto_perfil}`}
+                alt="foto do usuário"
+                className={styles.userImage}
+              />
+              <strong
+                style={{
+                  color:
+                    msg.user === storedUserName
+                      ? userColors[storedUserName] || "#000"
+                      : userColors[msg.user] || getRandomColor(),
+                }}
+              >
+                {msg.user}
+              </strong>
+            </div>
+            <p>{msg.message}</p>
           </div>
         ))}
       </div>
       <div className={styles.InputSubmit}>
-        <div className={styles.containerChoiceType}>
-          <span onClick={() => handleMessageColorSwitch("#ffcc00")}>
-            Pergunta
-          </span>
-          <span onClick={() => handleMessageColorSwitch("#FD8FFF")}>
-            Resposta
-          </span>
-          <span onClick={() => handleMessageColorSwitch("#AFE6F8")}>Dica</span>
-        </div>
         <form className={styles.FormMessages} onSubmit={handleSendMessage}>
           <input
             type="text"
             placeholder="Digite algo..."
             value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-              socket.emit("typing", storedUserName);
-            }}
+            onChange={(e) => setMessage(e.target.value)}
             className={styles.InputMessage}
-            style={{ borderColor: messageColor }}
           />
           <button type="submit" className={styles.SendMessage}>
-            <img src={send} alt="" />
+            <img src={send} alt="enviar mensagem" />
           </button>
         </form>
       </div>

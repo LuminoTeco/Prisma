@@ -9,15 +9,17 @@ import Contact from "./routes/Contact.jsx";
 import Plans from "./routes/pages/Public/Plans.jsx";
 import Units from "./routes/pages/Private/Units.jsx";
 import ErrorElement from "./routes/ErrorElement.jsx";
+import Feed from "./components/InitialComponents/Feed.jsx"
 import Login from "./routes/pages/Public/Login/Login.jsx";
 import Initial from "./routes/pages/Authenticated/Aluno/Initial.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ClassDetails from "./components/DashComponents/ClassDetails.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./routes/pages/Authenticated/Escola/Dashboard.jsx";
 import LoginEstudante from "./routes/pages/Public/Login/LoginEstudante.jsx";
 import Perfil from "./components/InitialComponents/FeedComponents/Perfil.jsx";
+import Subjects from "./routes/pages/Authenticated/Aluno/Subjects/Subjects.jsx";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/contact", element: <Contact /> },
       { path: "/about", element: <About /> },
-      { path: "/plans/:plan", element: <Plans />}
+      { path: "/plans/:plan", element: <Plans /> },
     ],
   },
   {
@@ -45,26 +47,26 @@ const router = createBrowserRouter([
     element: <ClassDetails />,
   },
   {
-    path: "/choice", 
-    element: <Divisor />
+    path: "/choice",
+    element: <Divisor />,
   },
   {
     path: "/login",
     element: <Login />,
   },
   {
-    path: "/login_estudante", 
-    element: <LoginEstudante />
-  }, 
-  {
-    path: "/inicio",
-    element: <Initial />
+    path: "/login_estudante",
+    element: <LoginEstudante />,
   },
   {
-    path: "/perfil",
-    element: <Perfil />
-  }
-  
+    path: "/inicio",
+    element: <Initial />, 
+    children: [
+      { path: "feed", element: <Feed /> }, 
+      { path: "subjects", element: <Subjects /> },
+      { path: "perfil", element: <Perfil /> },
+    ],
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -74,3 +76,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </QueryClientProvider>
   </React.StrictMode>
 );
+

@@ -1,18 +1,33 @@
-.ChatContainerFeed {
-  width: 100%;
-  height: 100%;
+.messages {
   display: flex;
+  align-items: center;
+  justify-content: center;
+
   flex-direction: column;
 }
 
-.messages {
-  flex-grow: 1;
+.message {
+  margin: 10px;
   padding: 10px;
+  border-radius: 5px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-  overflow-y: auto;
+}
+
+.messageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.userImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 5px;
 }
 
 .InputSubmit {
@@ -22,35 +37,6 @@
   flex-direction: column;
   padding: 10px;
 }
-
-.containerChoiceType {
-  width: 100%;
-  padding: 5px;
-
-  display: flex;
-  align-items: end;
-  justify-content: end;
-}
-
-.containerChoiceType span {
-    margin-left: 20px;
-    font-weight: bold;
-
-    border-radius: 10px 10px 0px 10px;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.containerChoiceType span:nth-child(1) {
-   background-color: #FFF193;
-}
-
-.containerChoiceType span:nth-child(2) {
-    background-color: #FD8FFF;
- }
- .containerChoiceType span:nth-child(3) {
-    background-color: #AFE6F8;
- }
 
 .FormMessages {
   display: flex;
@@ -83,29 +69,4 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
-}
-
-.dots {
-  display: inline-block;
-}
-
-.dots::after {
-  content: "";
-  animation: dots 1s steps(5, end) infinite;
-}
-
-@keyframes dots {
-  0%,
-  20% {
-    content: "";
-  }
-  40% {
-    content: ".";
-  }
-  60% {
-    content: "..";
-  }
-  80% {
-    content: "...";
-  }
 }
