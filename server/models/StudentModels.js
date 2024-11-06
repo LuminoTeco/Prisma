@@ -155,22 +155,21 @@ exports.allInfomationUser = async (aluno_id) => {
 exports.allStudentsByNameInvite = async (aluno_id) => {
   const query = `
     SELECT 
-    a.nome AS nome_aluno
-FROM 
-    tb_alunos a
-JOIN 
-    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
-WHERE 
-    a.instituicao_id_fk = (SELECT instituicao_id_fk FROM tb_alunos WHERE aluno_id = 1)
-    AND a.aluno_id <> 1;
-
+      a.aluno_id,        
+      a.nome AS nome_aluno
+    FROM 
+      tb_alunos a
+    JOIN 
+      registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
+    WHERE 
+      a.instituicao_id_fk = (SELECT instituicao_id_fk FROM tb_alunos WHERE aluno_id = ?)
+      AND a.aluno_id <> ?;
   `;
-
+  
   try {
-    const [rows] = await db.query(query, [aluno_id])
-    return rows
+    const [results] = await db.query(query, [aluno_id, aluno_id]);  
+    return results;
   } catch (err) {
-    console.error("Usuarios não encontrados", err)
-    throw err;
+    throw new Error("Erro ao buscar alunos");
   }
 };

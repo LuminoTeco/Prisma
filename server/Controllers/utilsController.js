@@ -21,3 +21,39 @@ exports.getMessagesForum = async (req, res) => {
         res.status(500).json({ Error: "Erro ao buscar as mensagens" });
     }
 }
+
+//Requests para adicionar, rejeitar e enviar pedidos de amizades
+
+exports.sendFriendRequest = async (req, res) => {
+    const { id_aluno, id_amigo } = req.body;
+
+    if (!id_aluno || !id_amigo) {
+        return res.status(400).json({ error: "Faltando id_aluno ou id_amigo" });
+    }
+
+    try {
+        const result = await utilsModel.sendFriendRequest(id_aluno, id_amigo);
+        res.status(201).json({ message: "Solicitação enviada com sucesso", id: result });
+    } catch (err) {
+        console.error("Erro ao enviar a solicitação de amizade:", err);
+        res.status(500).json({ error: "Erro ao enviar a solicitação de amizade" });
+    }
+}
+
+// controller.js
+exports.getFriendRequestPendent = async (req, res) => {
+    const { id_aluno } = req.query;
+  
+    if (!id_aluno) {
+      return res.status(400).json({ error: "ID do aluno é necessário." });
+    }
+  
+    try {
+      const result = await utilsModel.getFriendRequestPendent({ id_aluno });  
+      res.status(200).json(result);
+    } catch (err) {
+      console.error("Erro ao buscar as solicitações pendentes:", err);
+      res.status(500).json({ error: "Erro ao buscar as solicitações pendentes" });
+    }
+  };
+  

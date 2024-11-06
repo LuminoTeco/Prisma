@@ -94,7 +94,6 @@ const Perfil = () => {
       <p>Clique para procurar amigos: </p>
       <button onClick={openModal}>Procurar</button>
 
-      {/* Modal com conteúdo */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2>Procurar Amigos</h2>
         <p>Aqui você pode buscar amigos!</p>

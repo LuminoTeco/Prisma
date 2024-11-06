@@ -250,24 +250,22 @@ exports.allInformationUser = async (req, res) => {
 };
 
 exports.allStudentsByNameInvite = async (req, res) => {
-  const { aluno_id } = req.params
+  const { aluno_id } = req.params; 
   
   if (!aluno_id) {
     return res.status(400).json({ Error: "ID do estudante é obrigatório" });
   }
 
   try {
-    const result = await StudentModel.allStudentsByNameInvite(aluno_id)
+    const result = await StudentModel.allStudentsByNameInvite(aluno_id); 
     if(result.length === 0) {
-      return res.status(404).json({ Error: "Estudantes não encontrado" });
+      return res.status(404).json({ Error: "Estudantes não encontrados" });
     }
 
-    res.status(200).json({ message: "Informações do estudante", result });
+    res.status(200).json({ message: "Informações dos estudantes", result });
   } catch (err) {
     console.error("Erro ao buscar as informações do estudante:", err);
-    res
-      .status(500)
-      .json({ Error: "Erro ao buscar as informações do estudante" });
+    res.status(500).json({ Error: "Erro ao buscar as informações do estudante" });
   }
-}
+};
 
