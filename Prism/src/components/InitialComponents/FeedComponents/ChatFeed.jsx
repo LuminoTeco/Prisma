@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import styles from "./FeedComponents.module.css";
@@ -23,7 +23,6 @@ const lightenColor = (color, percent) => {
   const g = ((num >> 8) & 0x00ff) + amt;
   const b = (num & 0x0000ff) + amt;
 
-  // Garantir que os valores RGB não sejam superiores a 240 para evitar cores muito claras
   const cappedR = Math.min(r, 240);
   const cappedG = Math.min(g, 240);
   const cappedB = Math.min(b, 240);
@@ -44,6 +43,7 @@ const lightenColor = (color, percent) => {
 const ChatFeed = () => {
   const [message, setMessage] = useState("");
   const [userColors, setUserColors] = useState({});
+  const messagesEndRef = useRef(null);
   const storedUserInfo = JSON.parse(localStorage.getItem("user_info"));
   const storedUserName = storedUserInfo.nome;
 
@@ -61,6 +61,14 @@ const ChatFeed = () => {
     },
     refetchInterval: 1000,
   });
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
 
   useEffect(() => {
     const messageHandler = () => {
@@ -83,8 +91,6 @@ const ChatFeed = () => {
       }
     });
   }, [chatMessages, userColors]);
-
-  useEffect(() => {});
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -148,6 +154,7 @@ const ChatFeed = () => {
             <p>{msg.message}</p>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className={styles.InputSubmit}>
         <form className={styles.FormMessages} onSubmit={handleSendMessage}>

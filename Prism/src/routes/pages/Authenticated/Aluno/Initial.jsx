@@ -5,6 +5,7 @@ import styles from "./Initial.module.css";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import SideBar from "../../../../components/InitialComponents/SideBar";
+import Subject from "./Subjects/Subjects"; 
 
 const Initial = () => {
   const { isAuthenticated, userInfo } = useAuth();
@@ -12,10 +13,10 @@ const Initial = () => {
   const [materiaId, setMateriaId] = useState(null);
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("user_info");
-    if (userInfo) {
-      const parsedInfo = JSON.parse(userInfo);
-      setMateriaId(parsedInfo.materia_id);
+    const storedUserInfo = localStorage.getItem("user_info");
+    if (storedUserInfo) {
+      const parsedInfo = JSON.parse(storedUserInfo);
+      setMateriaId(parsedInfo.materia_id); 
     } else {
       toast.info("Por favor, selecione uma matéria.", {
         autoClose: 5000,
@@ -40,7 +41,11 @@ const Initial = () => {
 
       <main className={styles.containerMainContent}>
         {isAuthenticated && userInfo ? (
-          <Outlet /> 
+          materiaId === 3 ? (
+            <Subject /> 
+          ) : (
+            <Outlet /> 
+          )
         ) : (
           <p>
             Usuário não autenticado. Redirecionando para o login{" "}

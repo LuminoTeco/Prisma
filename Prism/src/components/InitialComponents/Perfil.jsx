@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Modal from "./ModalInvite.jsx"; 
+import Modal from "./FeedComponents/ModalInvite";
+import editor from "@assets/imgs/editor.png";
 import styles from "./Perfil.module.css";
 
 const Perfil = () => {
@@ -11,7 +12,8 @@ const Perfil = () => {
     nome_conquista: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar o modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditPhotoModalOpen, setIsEditPhotoModalOpen] = useState(false);
 
   const userValues = JSON.parse(localStorage.getItem("user_info"));
   const { aluno_id } = userValues || {};
@@ -21,15 +23,22 @@ const Perfil = () => {
       axios
         .get(`http://localhost:8081/prisma/allinformation/${aluno_id}`)
         .then((response) => {
-          const { nome, nivel, foto_perfil, nome_conquista } =
-            response.data.result[0];
+          const { nome, nivel, foto_perfil, nome_conquista } = response.data.result[0];
 
-          setValues({
+          const updatedValues = {
             nome,
             nivel,
             foto_perfil,
             nome_conquista,
-          });
+          };
+
+          setValues(updatedValues);
+
+          // Atualiza o localStorage com as informações mais recentes
+          localStorage.setItem("user_info", JSON.stringify({
+            ...userValues,
+            foto_perfil,
+          }));
         })
         .catch((error) => {
           console.error("Erro ao buscar informações do usuário:", error);
@@ -53,7 +62,7 @@ const Perfil = () => {
     formData.append("foto_perfil", selectedFile);
 
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `http://localhost:8081/prisma/uploadImage/${aluno_id}`,
         formData,
         {
@@ -62,11 +71,8 @@ const Perfil = () => {
           },
         }
       );
-      console.log("Upload realizado com sucesso:", response.data);
-      setValues((prevValues) => ({
-        ...prevValues,
-        foto_perfil: `${baseURL}${response.data.newPhotoPath}`,
-      }));
+
+      // Recarrega a página para acionar o useEffect novamente
       window.location.reload();
     } catch (error) {
       console.error("Erro ao fazer upload da imagem:", error);
@@ -74,11 +80,19 @@ const Perfil = () => {
   };
 
   const openModal = () => {
-    setIsModalOpen(true); // Abre o modal
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Fecha o modal
+    setIsModalOpen(false);
+  };
+
+  const openEditPhotoModal = () => {
+    setIsEditPhotoModalOpen(true);
+  };
+
+  const closeEditPhotoModal = () => {
+    setIsEditPhotoModalOpen(false);
   };
 
   return (
@@ -89,6 +103,9 @@ const Perfil = () => {
           alt={`${values.nome} perfil`}
           className={styles.imgPhotoPerfil}
         />
+        <button onClick={openEditPhotoModal} className={styles.PhotoButtonEditor}>
+          <img src={editor} alt="Editar foto" />
+        </button>
         <h1>{values.nome}</h1>
       </div>
       <p>Clique para procurar amigos: </p>
@@ -98,6 +115,17 @@ const Perfil = () => {
         <h2>Procurar Amigos</h2>
         <p>Aqui você pode buscar amigos!</p>
       </Modal>
+
+      {isEditPhotoModalOpen && (
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalContent}>
+            <h2>Editar Foto de Perfil</h2>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={handleUpload}>Atualizar Foto</button>
+            <button onClick={closeEditPhotoModal}>Fechar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

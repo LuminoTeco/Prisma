@@ -6,6 +6,9 @@ router.post("/messages", utils.CreateMessagesForum)
 router.get("/all_messages", utils.getMessagesForum)
 
 router.post("/sendInvite", utils.sendFriendRequest)
+router.patch("/acceptInvite", utils.acceptFriendRequest)
+router.delete("/rejectInvite", utils.rejectFriendRequest)
+
 router.get("/getInvites", utils.getFriendRequestPendent)
 
 module.exports = router

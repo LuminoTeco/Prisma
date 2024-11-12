@@ -65,7 +65,7 @@ JOIN
 JOIN 
     tb_alunos a2 ON ta.amigo2_id_fk = a2.aluno_id 
 WHERE 
-    ta.amigo2_id_fk = 1
+    ta.amigo2_id_fk = ?
     AND ta.request = 'pendente';
   `;
 
@@ -77,3 +77,34 @@ WHERE
     throw err;
   }
 };
+
+exports.acceptFriendRequest = async({ id_aluno }) => {
+  const query = `
+    UPDATE tb_amizade
+    SET request = 'aceito'
+    WHERE amigo2_id_fk = ? AND request = 'pendente';
+  `;
+
+  try {
+    const [results] = await db.query(query, [id_aluno]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao aceitar a solicitação de amizade:", err);
+    throw err;
+  }
+}
+
+exports.rejectFriendRequest = async({ id_aluno }) => {
+  const query = `
+    DELETE FROM tb_amizade
+    WHERE amigo2_id_fk = ? AND request = 'pendente';
+  `;
+
+  try {
+    const [results] = await db.query(query, [id_aluno]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao rejeitar a solicitação de amizade:", err);
+    throw err;
+  }
+}

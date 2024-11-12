@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./SideBar.module.css";
 import Setinha from "@assets/imgs/divisa-direita.png";
 import Expandir from "@assets/imgs/Expandir.png";
 import stars from "@assets/imgs/stars.png";
 import bubbleChat from "@assets/imgs/chat_bubble.png";
 import settings from "@assets/imgs/settings.png";
-import rainbowInitial from "@assets/imgs/rainbowInitial.png"
+import useLogout from "../../Hooks/useLogout";
 import SetinhaEsquerda from "@assets/imgs/seta-esquerda.png";
 
 const SideBar = () => {
@@ -14,7 +14,7 @@ const SideBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef(null);
   const storedUserInfo = JSON.parse(localStorage.getItem("user_info"));
-  const storedUserPhoto = storedUserInfo?.foto_perfil;
+  const storedUserPhoto = storedUserInfo.foto_perfil;
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
   const toggleExpand = () => setIsExpanded((prev) => !prev);
@@ -37,7 +37,6 @@ const SideBar = () => {
     };
   }, [sidebarRef]);
 
- 
   const getMateriaName = (id) => {
     switch (id) {
       case 1:
@@ -59,6 +58,10 @@ const SideBar = () => {
         return "";
     }
   };
+
+  console.log(storedUserPhoto);
+
+  const { logout } = useLogout();
 
   return (
     <>
@@ -97,30 +100,39 @@ const SideBar = () => {
                 </li>
                 <li>
                   <div className={styles.iconContainer}>
-                    <img src={stars} alt="Estrelas" />
-                    {isExpanded && <p>Tarefas</p>}
+                    <Link to="/inicio/tarefas" onClick={closeSidebar}>
+                      <img src={stars} alt="Estrelas"/>
+                      {isExpanded && <p>Tarefas</p>}
+                    </Link>
                   </div>
                   <div className={styles.iconContainer}>
                     <img src={bubbleChat} alt="Chat" />
-                    {isExpanded && <p>Chat</p>} 
+                    {isExpanded && <p>Chat</p>}
                   </div>
                   <div className={styles.iconContainer}>
-                    <NavLink to="/inicio/feed" onClick={closeSidebar}>
-                    <div>
-                      {!isExpanded ? ( 
-                        <p>{getMateriaAbbreviation(storedUserInfo.materia_id)}</p>
-                      ) : ( 
-                        <p className={styles.fullName}>
-                          {getMateriaName(storedUserInfo.materia_id)}
-                        </p>
-                      )}
-                    </div>
-                    </NavLink>
+                    <Link to="/inicio/feed" onClick={closeSidebar}>
+                      <div>
+                        {!isExpanded ? (
+                          <p>
+                            {getMateriaAbbreviation(storedUserInfo.materia_id)}
+                          </p>
+                        ) : (
+                          <p className={styles.fullName}>
+                            {getMateriaName(storedUserInfo.materia_id)}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
                   </div>
                   <div className={styles.iconContainer}>
                     <img src={settings} alt="Configurações" />
-                    {isExpanded && <p>Configurações</p>} 
+                    {isExpanded && <p>Configurações</p>}
                   </div>
+                  <Link>
+                    <div className={styles.iconContainer}>
+                      <button onClick={logout}>Sair</button>
+                    </div>
+                  </Link>
                 </li>
               </ul>
             </div>

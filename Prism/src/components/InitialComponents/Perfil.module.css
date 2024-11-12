@@ -1,0 +1,94 @@
+.container {
+  height: 200vh;
+  width: 100%;
+  background-color: white;
+
+  border-radius: 10px;
+}
+
+.ContainerImageUser {
+  height: 55vh;
+  width: 100%;
+
+  position: relative;
+
+  background: #1c20ff;
+  background: -webkit-linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
+  background: linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
+
+  border-radius: 10px 10px 0 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ContainerImageUser > .imgPhotoPerfil {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ContainerImageUser > h1 {
+  color: white;
+  font-size: 3rem;
+  margin-top: 20px;
+}
+
+.PhotoButtonEditor {
+  background-color: azure;
+  border: none;
+  cursor: pointer;
+
+  height: 9%;
+  width: 3%;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 50%;
+  left: 53%;
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.modalContent button {
+  background-color: #1c20ff;
+
+  margin: 10px;
+  padding: 10px 20px;
+
+  color: white;
+  font-weight: bold;
+
+  border: none;
+
+  border-radius: 10px;
+  cursor: pointer;
+}

@@ -2,126 +2,151 @@
     {
         "pergunta": "Qual é a forma correta: 'eu vou ir' ou 'eu vou'?",
         "alternativas": ["Eu vou ir", "Eu vou", "Eu ir", "Eu vai"],
-        "resposta_correta": "Eu vou"
+        "resposta_correta": "Eu vou",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é o sinônimo de 'feliz'?",
         "alternativas": ["Triste", "Contente", "Raivoso", "Zangado"],
-        "resposta_correta": "Contente"
+        "resposta_correta": "Contente",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é o antônimo de 'alto'?",
         "alternativas": ["Baixo", "Largo", "Forte", "Fraco"],
-        "resposta_correta": "Baixo"
+        "resposta_correta": "Baixo",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é a forma correta: 'mais' ou 'mas'?",
         "alternativas": ["Mais", "Mas", "Máis", "Mas'"],
-        "resposta_correta": "Mas"
+        "resposta_correta": "Mas",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual destas palavras é um adjetivo?",
         "alternativas": ["Correr", "Bonito", "Mesa", "Sorrir"],
-        "resposta_correta": "Bonito"
+        "resposta_correta": "Bonito",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é a forma correta: 'para mim' ou 'para eu'?",
         "alternativas": ["Para mim", "Para eu", "Para mim mesmo", "Para eu mesmo"],
-        "resposta_correta": "Para mim"
+        "resposta_correta": "Para mim",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é o plural de 'cidade'?",
         "alternativas": ["Cidades", "Cidadess", "Cidadões", "Cidadens"],
-        "resposta_correta": "Cidades"
+        "resposta_correta": "Cidades",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual destas palavras é um advérbio?",
         "alternativas": ["Rapidamente", "Carro", "Correr", "Bonito"],
-        "resposta_correta": "Rapidamente"
+        "resposta_correta": "Rapidamente",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é a forma correta: 'haja' ou 'aja'?",
         "alternativas": ["Haja", "Aja", "Raja", "Faja"],
-        "resposta_correta": "Haja"
+        "resposta_correta": "Haja",
+        "dificuldade": "Difícil"
     },
     {
         "pergunta": "Qual é a conjugação correta do verbo 'ser' na 1ª pessoa do singular no presente?",
         "alternativas": ["Sou", "É", "Foi", "Serei"],
-        "resposta_correta": "Sou"
+        "resposta_correta": "Sou",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é a forma correta: 'a gente vai' ou 'nós vamos'?",
         "alternativas": ["A gente vai", "Nós vai", "Nós vamos", "A gente vão"],
-        "resposta_correta": "Nós vamos"
+        "resposta_correta": "Nós vamos",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é a forma correta: 'fui eu' ou 'eu fui'?",
         "alternativas": ["Fui eu", "Eu fui", "Eu fui eu", "Fui eu fui"],
-        "resposta_correta": "Eu fui"
+        "resposta_correta": "Eu fui",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é o significado da palavra 'abrangente'?",
         "alternativas": ["Limitado", "Extenso", "Exato", "Específico"],
-        "resposta_correta": "Extenso"
+        "resposta_correta": "Extenso",
+        "dificuldade": "Difícil"
     },
     {
         "pergunta": "Qual é o diminutivo de 'casa'?",
         "alternativas": ["Casinha", "Casinhas", "Casa pequena", "Casitas"],
-        "resposta_correta": "Casinha"
+        "resposta_correta": "Casinha",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é a forma correta: 'de mais' ou 'demais'?",
         "alternativas": ["De mais", "Demais", "Demaiss", "De mais que"],
-        "resposta_correta": "Demais"
+        "resposta_correta": "Demais",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é o plural de 'leão'?",
         "alternativas": ["Leões", "Leonios", "Leos", "Leãoes"],
-        "resposta_correta": "Leões"
+        "resposta_correta": "Leões",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual destas frases está correta?",
         "alternativas": ["Eu não sei nada.", "Eu não sei nada não.", "Eu nada sei.", "Nada eu sei."],
-        "resposta_correta": "Eu não sei nada."
+        "resposta_correta": "Eu não sei nada.",
+        "dificuldade": "Difícil"
     },
     {
         "pergunta": "Qual é o superlativo de 'bom'?",
         "alternativas": ["Melhor", "Ótimo", "Excelente", "Bom demais"],
-        "resposta_correta": "Ótimo"
+        "resposta_correta": "Ótimo",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é a forma correta: 'pouco' ou 'pouca'?",
         "alternativas": ["Pouco", "Pouca", "Pouquinhos", "Poucos"],
-        "resposta_correta": "Pouco"
+        "resposta_correta": "Pouco",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é o sinônimo de 'rápido'?",
         "alternativas": ["Devagar", "Ágil", "Lento", "Demorado"],
-        "resposta_correta": "Ágil"
+        "resposta_correta": "Ágil",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é a forma correta: 'se não' ou 'senão'?",
         "alternativas": ["Se não", "Senão", "Se não for", "Senão for"],
-        "resposta_correta": "Senão"
+        "resposta_correta": "Senão",
+        "dificuldade": "Difícil"
     },
     {
         "pergunta": "Qual é a conjugação correta do verbo 'ter' na 3ª pessoa do plural no passado?",
         "alternativas": ["Tiveram", "Tinha", "Tem", "Têm"],
-        "resposta_correta": "Tiveram"
+        "resposta_correta": "Tiveram",
+        "dificuldade": "Difícil"
     },
     {
         "pergunta": "Qual destas palavras é um substantivo?",
         "alternativas": ["Feliz", "Rapidamente", "Correr", "Mesa"],
-        "resposta_correta": "Mesa"
+        "resposta_correta": "Mesa",
+        "dificuldade": "Fácil"
     },
     {
         "pergunta": "Qual é a forma correta: 'mau' ou 'mal'?",
         "alternativas": ["Mau", "Mal", "Mau é", "Mal é"],
-        "resposta_correta": "Mal"
+        "resposta_correta": "Mal",
+        "dificuldade": "Médio"
     },
     {
         "pergunta": "Qual é o significado da palavra 'infinito'?",
         "alternativas": ["Limitado", "Sem fim", "Contável", "Pequeno"],
-        "resposta_correta": "Sem fim"
+        "resposta_correta": "Sem fim",
+        "dificuldade": "Difícil"
     }
 ]

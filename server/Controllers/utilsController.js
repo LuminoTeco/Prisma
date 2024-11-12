@@ -39,8 +39,6 @@ exports.sendFriendRequest = async (req, res) => {
         res.status(500).json({ error: "Erro ao enviar a solicitação de amizade" });
     }
 }
-
-// controller.js
 exports.getFriendRequestPendent = async (req, res) => {
     const { id_aluno } = req.query;
   
@@ -56,4 +54,36 @@ exports.getFriendRequestPendent = async (req, res) => {
       res.status(500).json({ error: "Erro ao buscar as solicitações pendentes" });
     }
   };
+
+  exports.acceptFriendRequest = async (req, res) => {
+    const { id_aluno } = req.query;
+
+    if(!id_aluno) {
+        return res.status(400).json({ error: "ID do aluno é necessário."})
+    }
+
+    try {
+        const result = await utilsModel.acceptFriendRequest({ id_aluno });     
+        res.status(200).json(result);
+    } catch (err) {
+        console.error("Erro ao aceitar a solicitação de amizade:", err);
+        res.status(500).json({ error: "Erro ao aceitar a solicitação de amizade" });
+    }
+  }
+
+  exports.rejectFriendRequest = async (req, res) => {
+    const { id_aluno } = req.query;
+
+    if(!id_aluno) {
+        return res.status(400).json({ error: "ID do aluno é indispensável."})
+    }
+
+    try {
+        const result = await utilsModel.rejectFriendRequest({ id_aluno });
+        res.status(200).json(result);
+    }  catch (err) {
+        console.error("Erro ao rejeitar a solicitação de amizade:", err);
+        res.status(500).json({ error: "Erro ao rejeitar a solicitação de amizade" });
+    }
+  }
   

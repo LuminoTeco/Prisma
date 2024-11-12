@@ -1,6 +1,7 @@
 .containerInitialBody {
   display: flex;
   height: 100vh;
+  width: 100%;
 }
 
 .containerMainContent {
@@ -16,7 +17,6 @@
   height: 100vh;
   overflow-y: auto;
   filter: blur(20%);
-  border: 1px solid;
 }
 
 .toast-progress {
