@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "./FeedComponents/ModalInvite";
-import editor from "@assets/imgs/editor.png";
 import styles from "./Perfil.module.css";
 
 const Perfil = () => {
@@ -10,6 +9,8 @@ const Perfil = () => {
     nivel: "",
     foto_perfil: "",
     nome_conquista: "",
+    meta_xp: 0,
+    xp: 0,
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,22 +24,33 @@ const Perfil = () => {
       axios
         .get(`http://localhost:8081/prisma/allinformation/${aluno_id}`)
         .then((response) => {
-          const { nome, nivel, foto_perfil, nome_conquista } = response.data.result[0];
+          const {
+            nome,
+            nivel,
+            foto_perfil,
+            nome_conquista,
+            meta_xp,
+            xp,
+          } = response.data.result[0];
 
           const updatedValues = {
             nome,
             nivel,
             foto_perfil,
             nome_conquista,
+            meta_xp,
+            xp,
           };
 
           setValues(updatedValues);
 
-          // Atualiza o localStorage com as informações mais recentes
-          localStorage.setItem("user_info", JSON.stringify({
-            ...userValues,
-            foto_perfil,
-          }));
+          localStorage.setItem(
+            "user_info",
+            JSON.stringify({
+              ...userValues,
+              foto_perfil,
+            })
+          );
         })
         .catch((error) => {
           console.error("Erro ao buscar informações do usuário:", error);
@@ -72,12 +84,16 @@ const Perfil = () => {
         }
       );
 
-      // Recarrega a página para acionar o useEffect novamente
       window.location.reload();
     } catch (error) {
       console.error("Erro ao fazer upload da imagem:", error);
     }
   };
+
+  const porcentagem =
+    values.meta_xp > 0
+      ? Math.min(100, ((values.xp / values.meta_xp) * 100).toFixed(1))
+      : 0;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -102,14 +118,29 @@ const Perfil = () => {
           src={`${baseURL}${values.foto_perfil}`}
           alt={`${values.nome} perfil`}
           className={styles.imgPhotoPerfil}
+          onClick={openEditPhotoModal}
         />
-        <button onClick={openEditPhotoModal} className={styles.PhotoButtonEditor}>
-          <img src={editor} alt="Editar foto" />
-        </button>
-        <h1>{values.nome}</h1>
+        <h1>{userValues.nome}</h1>
+        <div className={styles.progressBarContainer}>
+          <div className={styles.progressBarSlide}>
+            <div
+              className={styles.Bar}
+              style={{
+                width: `${porcentagem}%`, 
+              }}
+            ></div>
+          </div>
+          <span className={styles.metaXp}>{porcentagem}%</span>
+        </div>
       </div>
-      <p>Clique para procurar amigos: </p>
-      <button onClick={openModal}>Procurar</button>
+      {/* <p>Clique para procurar amigos: </p>
+      <button onClick={openModal}>Procurar</button> */}
+
+      <div className={styles.containerInfoUsers}>
+        <div className={styles.ContainerAchivements}>
+
+        </div>
+      </div>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2>Procurar Amigos</h2>

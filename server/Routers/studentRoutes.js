@@ -18,6 +18,8 @@ router.patch(
   studentUpload,
   StudentController.UpdateStudentPhoto
 );
+router.patch("/insertXp", StudentController.insertXpUser)
+
 router.put("/students/:id", StudentController.UpdateStudent);
 
 module.exports = router;

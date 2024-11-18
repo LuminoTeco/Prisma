@@ -40,7 +40,7 @@ const lightenColor = (color, percent) => {
   );
 };
 
-const ChatFeed = () => {
+const ChatFeed = ({ setQuestionAsked }) => {
   const [message, setMessage] = useState("");
   const [userColors, setUserColors] = useState({});
   const messagesEndRef = useRef(null);
@@ -76,10 +76,17 @@ const ChatFeed = () => {
     };
 
     socket.on("message", messageHandler);
+    socket.on("oneQuestion", (user) => {
+      setQuestionAsked(user);
+    });
+
     return () => {
       socket.off("message", messageHandler);
+      socket.off("oneQuestion", (user) => {
+        setQuestionAsked(user);
+      });
     };
-  }, [refetch]);
+  }, [refetch, setQuestionAsked]);
 
   useEffect(() => {
     chatMessages.forEach((msg) => {
@@ -102,11 +109,19 @@ const ChatFeed = () => {
     };
 
     try {
+      // Envia a mensagem ao servidor
       await axios.post("http://localhost:8081/prisma/messages", {
         conteudo: message,
         aluno_id_fk: storedUserInfo.aluno_id,
       });
+
       socket.emit("message", messageData);
+
+      // Emitir o evento 'oneQuestion' se a mensagem for uma pergunta
+      if (message.includes("?")) {
+        socket.emit("oneQuestion", storedUserName);
+      }
+
       setMessage("");
     } catch (err) {
       console.error("Erro ao enviar a mensagem:", err);

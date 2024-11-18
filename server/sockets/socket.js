@@ -28,6 +28,15 @@ const setupSocket = (server) => {
           message: `Você recebeu um pedido de amizade de ${name}`,
         });
       });
+
+    socket.on("oneQuestion", (user) => {
+      console.log("Pergunta")
+      io.emit("oneQuestion", user);
+    })
+
+      socket.on("Conquista", (user) => {
+        io.emit("Conquista", user)
+      })
     
 
     socket.on("disconnect", () => {

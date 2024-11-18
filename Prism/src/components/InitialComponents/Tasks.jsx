@@ -12,7 +12,7 @@ const Tasks = () => {
           <div key={phase.id} className={styles.losangoContainer}>
             <Link 
               to={`nivel/${phase.id}`} 
-              className={styles.losangoLink} 
+              className={`${styles.losangoLink} ${phase.isFinished ? styles.completed : ""}`}
             >
               <div className={styles.losango}>
                 <div className={styles.reflex}></div>

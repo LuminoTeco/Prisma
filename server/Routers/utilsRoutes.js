@@ -3,12 +3,17 @@ const utils = require("../Controllers/utilsController")
 const router = express.Router();
 
 router.post("/messages", utils.CreateMessagesForum)
-router.get("/all_messages", utils.getMessagesForum)
-
 router.post("/sendInvite", utils.sendFriendRequest)
-router.patch("/acceptInvite", utils.acceptFriendRequest)
-router.delete("/rejectInvite", utils.rejectFriendRequest)
+router.post("/addAchivement", utils.addAchivementUser)
 
+router.patch("/acceptInvite", utils.acceptFriendRequest)
+
+router.get("/all_messages", utils.getMessagesForum)
 router.get("/getInvites", utils.getFriendRequestPendent)
+router.get("/ranking", utils.ranking)
+router.get("/friendsRank", utils.rankingMyFriends)
+router.get("/getAchivements", utils.NotAchivement)
+
+router.delete("/rejectInvite", utils.rejectFriendRequest)
 
 module.exports = router

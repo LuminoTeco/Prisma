@@ -1,0 +1,26 @@
+.ContainerChat {
+    height: 94vh;
+    width: 100%;
+
+    background-color: transparent;
+    border-radius: 10px;
+
+    border: 1px solid red;
+
+    display: flex;
+    align-items: center;
+}
+
+.ContainerChatContacts {
+    height: 90vh;
+    width: 30%;
+    background-color: white;
+    margin: 5px;
+
+    border-radius: 10px;
+
+    -webkit-box-shadow: 8.5px 8px 18.5px -0.5px #7b7b7b;
+    -moz-box-shadow: 8.5px 8px 18.5px -0.5px #7b7b7b;
+    box-shadow: 8.5px 8px 18.5px -0.5px #7b7b7b;
+
+}

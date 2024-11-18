@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Feed.module.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import ChatFeed from "./FeedComponents/ChatFeed";
+import Ranking from "./FeedComponents/Ranking";
+import { io } from "socket.io-client";
+import trofeu from "@assets/imgs/trofeu.png";
+
+const socket = io("http://localhost:8081");
 
 const Feed = () => {
   const [friendRequests, setFriendRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [questionAsked, setQuestionAsked] = useState(null); // Estado para a pergunta
 
   useEffect(() => {
     const storedUserInfo = localStorage.getItem("user_info");
@@ -19,6 +26,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchFriendRequests = async () => {
       if (!userInfo) return;
+
       setLoading(true);
 
       try {
@@ -39,63 +47,34 @@ const Feed = () => {
     return () => clearInterval(intervalId);
   }, [userInfo]);
 
-  const acceptFriendRequest = async (request) => {
-    if (!userInfo) return;
-
-    try {
-      const response = await axios.patch(
-        `http://localhost:8081/prisma/acceptInvite?id_aluno=${userInfo.aluno_id}`
-      );
-
-      if (response.status === 200) {
-        setFriendRequests((prevRequests) =>
-          prevRequests.filter(
-            (req) => req.id_solicitante !== request.id_solicitante
-          )
-        );
-        console.log(
-          `Solicitação de amizade de ${request.nome_enviado} aceita com sucesso!`
-        );
-      } else {
-        console.error("Erro ao aceitar a solicitação de amizade");
+  useEffect(() => {
+    socket.on("oneQuestion", (user) => {
+      if (user !== userInfo?.nome) {
+        setQuestionAsked(user);
       }
-    } catch (error) {
-      console.error("Erro ao aceitar a solicitação:", error);
-    }
-  };
+    });
 
-  const rejectFriendRequest = async (idSolicitante) => {
-    if (!userInfo) return;
-
-    try {
-      const response = await axios.delete(
-        `http://localhost:8081/prisma/rejectInvite?id_aluno=${userInfo.aluno_id}`
-      );
-
-      if (response.status === 200) {
-        setFriendRequests(
-          (prevRequests) =>
-            prevRequests.filter((req) => req.id_enviado !== idSolicitante)
-        );
-        console.log(
-          `Solicitação de amizade de usuário com id ${idSolicitante} rejeitada com sucesso!`
-        );
-      } else {
-        console.error("Erro ao recusar a solicitação de amizade");
-      }
-    } catch (err) {
-      console.log(err, "Erro ao recusar amizade");
-    }
-  };
+    return () => {
+      socket.off("oneQuestion");
+    };
+  }, [userInfo]);
 
   return (
     <div className={styles.containerFeed}>
       <div className={styles.FeedMessagesContainer}>
-        <ChatFeed />
+        <ChatFeed setQuestionAsked={setQuestionAsked} />
       </div>
       <div className={styles.AchivementContainer}>
+        <Link to="../ranking">
+          <img src={trofeu} alt="Trofeu" className={styles.trofeu} />
+        </Link>
+        {questionAsked && userInfo?.nome !== questionAsked && (
+          <div className={styles.questionNotification}>
+            <strong>{questionAsked}</strong> fez uma pergunta!
+          </div>
+        )}
         {loading ? (
-          <p className={styles.loadingText}>Carregando solicitações...</p>
+          <p className={styles.loadingText}></p>
         ) : (
           <div>
             {friendRequests.length > 0 && (

@@ -101,14 +101,16 @@ const SideBar = () => {
                 <li>
                   <div className={styles.iconContainer}>
                     <Link to="/inicio/tarefas" onClick={closeSidebar}>
-                      <img src={stars} alt="Estrelas"/>
+                      <img src={stars} alt="Estrelas" />
                       {isExpanded && <p>Tarefas</p>}
                     </Link>
                   </div>
-                  <div className={styles.iconContainer}>
-                    <img src={bubbleChat} alt="Chat" />
-                    {isExpanded && <p>Chat</p>}
-                  </div>
+                  <Link to="/inicio/chat" onClick={closeSidebar}>
+                    <div className={styles.iconContainer}>
+                      <img src={bubbleChat} alt="Chat" />
+                      {isExpanded && <p>Chat</p>}
+                    </div>
+                  </Link>
                   <div className={styles.iconContainer}>
                     <Link to="/inicio/feed" onClick={closeSidebar}>
                       <div>
@@ -130,7 +132,9 @@ const SideBar = () => {
                   </div>
                   <Link>
                     <div className={styles.iconContainer}>
-                      <button onClick={logout}>Sair</button>
+                      <button onClick={logout} className={styles.logout}>
+                        Sair
+                      </button>
                     </div>
                   </Link>
                 </li>

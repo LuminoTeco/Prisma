@@ -19,9 +19,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./routes/pages/Authenticated/Escola/Dashboard.jsx";
 import LoginEstudante from "./routes/pages/Public/Login/LoginEstudante.jsx";
 import Subjects from "./routes/pages/Authenticated/Aluno/Subjects/Subjects.jsx";
+import Ranking from "./components/InitialComponents/FeedComponents/Ranking.jsx";
+import Questions from "./components/InitialComponents/TasksComponents/Questions.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Questions from "./components/InitialComponents/TasksComponents/Questions.jsx";
+import PrivateChat from "./components/InitialComponents/PrivateChat.jsx";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -67,8 +69,10 @@ const router = createBrowserRouter([
       { path: "feed", element: <Feed /> },
       { path: "subjects", element: <Subjects /> },
       { path: "perfil", element: <Perfil /> },
+      { path: "ranking", element: <Ranking /> },
       { path: "tarefas", element: <Tasks /> },
-      { path: "tarefas/nivel/:id", element: <Questions />}
+      { path: "tarefas/nivel/:id", element: <Questions /> },
+      { path: "chat", element: <PrivateChat /> },
     ],
   },
 ]);

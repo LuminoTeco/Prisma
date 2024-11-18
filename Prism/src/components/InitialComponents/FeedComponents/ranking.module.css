@@ -1,0 +1,118 @@
+.RankingContainer {
+  height: 94vh;
+  width: 100%;
+
+  background-color: white;
+
+  -webkit-box-shadow: 8.5px 8px 18.5px -0.5px #7b7b7b;
+  -moz-box-shadow: 8.5px 8px 18.5px -0.5px #7b7b7b;
+  box-shadow: 8.5px 8px 18.5px -0.5px #7b7b7b;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  display: flex;
+}
+
+
+.RankingInsituicao {
+  height: 100%;
+  width: 74%;
+}
+
+.RankingInsituicao hr {
+  margin-left: 34px;
+  width: 80%;
+
+  border: 1px solid black;
+}
+
+.TextRanking {
+  height: 20%;
+
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+
+  justify-content: center;
+
+  padding-left: 3.5%;
+}
+
+.TextRanking h1 {
+  font-size: 3em;
+  padding: 5px;
+}
+
+
+.ShowMyFriends {
+  width: 26%;
+  height: 100%;
+
+  background: url(../../../assets/imgs/background-ranking.png);
+  background-position: center;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+}
+
+.RankingItem {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.2s;
+
+
+  -webkit-box-shadow: 3px 3px 10px 3px #dddddd;
+-moz-box-shadow: 3px 3px 10px 3px #dddddd;
+box-shadow: 3px 3px 10px 3px #dddddd;
+
+margin: 10px;
+}
+
+.RankingItem:hover {
+  transform: translateY(-5px);
+}
+
+.RankingPosition {
+  padding-right: 10px;
+}
+
+.ProfileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.RankingDetails {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.StudentName {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.Highlighted {
+  background-color: #f0cf113d;
+  border-left: 5px solid #f0ce11; 
+}
+
+.StudentXP {
+  font-size: 1rem;
+  color: #666;
+}
+

@@ -33,6 +33,9 @@ const LoginEstudante = () => {
                     aluno_id: response.data.student.aluno_id,
                     email: values.email,
                     foto_perfil: response.data.student.foto_perfil,
+                    nivel: response.data.student.nivel, 
+                    xp: response.data.student.xp,
+                    meta: response.data.student.meta_xp,
                     materia_id: response.data.student.disciplina_id_fk
                 };
 

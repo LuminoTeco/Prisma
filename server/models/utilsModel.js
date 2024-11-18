@@ -41,7 +41,7 @@ exports.sendFriendRequest = async (aluno_id, amigo_id) => {
     INSERT INTO tb_amizade (amigo1_id_fk, amigo2_id_fk, data_amizade) 
     VALUES (?, ?, NOW())
   `;
-  const values = [aluno_id, amigo_id]; 
+  const values = [aluno_id, amigo_id];
 
   try {
     const [result] = await db.query(query, values);
@@ -70,7 +70,7 @@ WHERE
   `;
 
   try {
-    const [results] = await db.query(query, [id_aluno]); 
+    const [results] = await db.query(query, [id_aluno]);
     return results;
   } catch (err) {
     console.error("Erro ao buscar as solicitações pendentes:", err);
@@ -78,7 +78,7 @@ WHERE
   }
 };
 
-exports.acceptFriendRequest = async({ id_aluno }) => {
+exports.acceptFriendRequest = async ({ id_aluno }) => {
   const query = `
     UPDATE tb_amizade
     SET request = 'aceito'
@@ -92,9 +92,9 @@ exports.acceptFriendRequest = async({ id_aluno }) => {
     console.error("Erro ao aceitar a solicitação de amizade:", err);
     throw err;
   }
-}
+};
 
-exports.rejectFriendRequest = async({ id_aluno }) => {
+exports.rejectFriendRequest = async ({ id_aluno }) => {
   const query = `
     DELETE FROM tb_amizade
     WHERE amigo2_id_fk = ? AND request = 'pendente';
@@ -107,4 +107,120 @@ exports.rejectFriendRequest = async({ id_aluno }) => {
     console.error("Erro ao rejeitar a solicitação de amizade:", err);
     throw err;
   }
-}
+};
+
+exports.ranking = async ({ Cod_Escolar }) => {
+  const query = `
+    SELECT 
+    a.aluno_id,
+    a.nome AS nome_aluno,
+    a.foto_perfil,
+    COALESCE(tx.total_xp, 0) AS total_xp
+  FROM 
+    tb_alunos a
+  LEFT JOIN 
+    tb_total_xp tx ON a.aluno_id = tx.aluno_id
+  JOIN 
+    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar 
+  WHERE 
+    ru.Cod_Escolar = ?
+  ORDER BY 
+    total_xp DESC;
+  `;
+
+  try {
+    const [results] = await db.query(query, [Cod_Escolar]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar o ranking:", err);
+    throw err;
+  }
+};
+
+exports.rankingMyFriends = async ({ Cod_Escolar, id_aluno }) => {
+  const query = `
+    SELECT 
+    a.aluno_id,
+    a.nome AS nome_aluno,
+    a.foto_perfil,
+    COALESCE(tx.total_xp, 0) AS total_xp
+FROM 
+    tb_alunos a
+LEFT JOIN 
+    tb_total_xp tx ON a.aluno_id = tx.aluno_id
+JOIN 
+    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
+JOIN 
+    tb_amizade ta ON (a.aluno_id = ta.amigo1_id_fk OR a.aluno_id = ta.amigo2_id_fk)
+WHERE 
+    ru.Cod_Escolar = ?
+    AND (
+        (ta.amigo1_id_fk = a.aluno_id AND ta.amigo2_id_fk IN (SELECT aluno_id FROM tb_alunos WHERE instituicao_id_fk = 210))
+        OR
+        (ta.amigo2_id_fk = a.aluno_id AND ta.amigo1_id_fk IN (SELECT aluno_id FROM tb_alunos WHERE instituicao_id_fk = 210))
+    )
+    AND a.aluno_id != ?
+ORDER BY 
+    total_xp DESC;
+
+  `;
+
+  try {
+    const [results] = await db.query(query, [Cod_Escolar, id_aluno]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar o ranking dos amigos:", err);
+    throw err;
+  }
+};
+
+exports.AddAchivementUser = async (aluno_id, conquista_id) => {
+  const query =
+    "INSERT INTO tb_alunos_conquistas (aluno_id_fk, conquista_id_fk, data_conquista) VALUES (?, ?, NOW())";
+
+  try {
+    const [results] = await db.query(query, [aluno_id, conquista_id]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao adicionar a conquista:", err);
+    throw err;
+  }
+};
+
+exports.NotAchivement = async (aluno_id) => {
+  const query = `
+   WITH Recentes AS (
+    SELECT 
+        a.nome AS nome_aluno,
+        c.descricao AS nome_conquista,
+        ac.data_conquista,
+        ROW_NUMBER() OVER (PARTITION BY a.aluno_id ORDER BY ac.data_conquista DESC) AS rn
+    FROM 
+        tb_alunos_conquistas ac
+    JOIN 
+        tb_alunos a ON ac.aluno_id_fk = a.aluno_id  
+    JOIN 
+        tb_conquistas c ON ac.conquista_id_fk = c.conquista_id
+    WHERE 
+        ac.aluno_id_fk != ?
+    ORDER BY 
+        ac.data_conquista DESC
+)
+SELECT 
+    nome_aluno,
+    nome_conquista,
+    data_conquista
+FROM 
+    Recentes
+WHERE 
+    rn = 1;
+  `;
+
+  try {
+    const [results] = await db.query(query, [aluno_id]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar as conquistas:", err);
+    throw err;
+  }
+};

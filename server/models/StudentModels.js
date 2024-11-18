@@ -31,7 +31,7 @@ exports.LoginStudent = async (email) => {
 
   try {
     const [results] = await db.query(query, [email]);
-    return results.length > 0 ? results[0] : null; // Retorna o primeiro aluno ou null se não encontrado
+    return results.length > 0 ? results[0] : null;
   } catch (err) {
     console.error("Erro ao buscar o email do aluno", err);
     throw err;
@@ -120,28 +120,35 @@ exports.selectSubjects = async (aluno_id) => {
 exports.allInfomationUser = async (aluno_id) => {
   const query = `
       SELECT 
-      a.nome, 
-      a.email, 
-      a.ano_serie, 
-      a.nivel, 
-      a.data_cadastro, 
-      a.foto_perfil, 
-      ru.NameInstitute AS nome_instituicao, 
-      c.descricao AS nome_conquista,
-      d.nome AS nome_disciplina
-    FROM 
-      tb_alunos a
-    LEFT JOIN 
-      registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
-    LEFT JOIN 
-      tb_alunos_conquistas ac ON a.aluno_id = ac.aluno_id_fk
-    LEFT JOIN 
-      tb_conquistas c ON ac.conquista_id_fk = c.conquista_id
-    LEFT JOIN 
-      tb_disciplina d ON a.disciplina_id_fk = d.disciplina_id
-    WHERE 
-      a.aluno_id = ?;
-  `;
+    a.nome AS nome_aluno,
+    a.email,
+    a.ano_serie,
+    a.nivel,
+    a.meta_xp,
+    a.xp,
+    a.data_cadastro,
+    a.foto_perfil,
+    ru.NameInstitute AS nome_instituicao,
+    ru.Cod_Escolar AS cod_escolar, 
+    c.descricao AS nome_conquista,
+    d.nome AS nome_disciplina
+FROM 
+    tb_alunos a
+LEFT JOIN 
+    registerUnits ru 
+    ON a.instituicao_id_fk = ru.Cod_Escolar
+LEFT JOIN 
+    tb_alunos_conquistas ac 
+    ON a.aluno_id = ac.aluno_id_fk
+LEFT JOIN 
+    tb_conquistas c 
+    ON ac.conquista_id_fk = c.conquista_id
+LEFT JOIN 
+    tb_disciplina d 
+    ON a.disciplina_id_fk = d.disciplina_id
+WHERE 
+    a.aluno_id = ?;
+`;
 
   try {
     const [rows] = await db.query(query, [aluno_id]);
@@ -165,11 +172,22 @@ exports.allStudentsByNameInvite = async (aluno_id) => {
       a.instituicao_id_fk = (SELECT instituicao_id_fk FROM tb_alunos WHERE aluno_id = ?)
       AND a.aluno_id <> ?;
   `;
-  
+
   try {
-    const [results] = await db.query(query, [aluno_id, aluno_id]);  
+    const [results] = await db.query(query, [aluno_id, aluno_id]);
     return results;
   } catch (err) {
     throw new Error("Erro ao buscar alunos");
+  }
+};
+
+exports.insertXpUser = async (aluno_id, xpGanho) => {
+  const query = "UPDATE tb_alunos SET xp = xp + ? WHERE aluno_id = ?";
+
+  try {
+    const [results] = await db.query(query, [xpGanho, aluno_id]);
+    return results;
+  } catch (err) {
+    throw new Error("Erro ao atualizar XP do aluno");
   }
 };

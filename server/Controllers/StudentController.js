@@ -269,3 +269,28 @@ exports.allStudentsByNameInvite = async (req, res) => {
   }
 };
 
+exports.insertXpUser = async (req, res) => {
+  const { aluno_id, xpGanho }  = req.body
+  
+  if (!aluno_id || !xpGanho) {
+    return res
+      .status(400)
+      .json({ Error: "ID do estudante e da disciplina são obrigatórios" });
+  }
+
+  try {
+    const result = await StudentModel.insertXpUser(aluno_id, xpGanho);
+
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ Error: "Estudante não encontrado ou não atualizado" });
+    }
+
+    return res.status(200).json({ message: "Estudante atualizado com sucesso" });
+  } catch (err) {
+    console.error("Erro ao atualizar o estudante:", err);
+    res.status(500).json({ Error: "Erro ao atualizar o estudante" });
+  }
+}
+
