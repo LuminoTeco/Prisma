@@ -171,5 +171,22 @@ exports.NotAchivement = async (req, res) => {
   }
 
 }
+exports.getContentForum = async (req, res) => {
+  const { aluno_id } = req.query
+  
+  if (!aluno_id) {
+    return res.status(400).json({ error: "Faltando id_aluno" });
+  }
 
+  try {
+    const result = await utilsModel.getContentForum(aluno_id);
+    res
+      .status(201)
+      .json({ message: "Posts buscadas com sucesso", id: result });
+  } catch (err) {
+    console.error("Erro ao procurar Posts:", err);
+    res.status(500).json({ error: "Erro ao procurar Posts" });
+  }
+
+}
 

@@ -1,0 +1,180 @@
+.containerAbout {
+    height: 310vh;
+}
+
+.TextImgContainer {
+    width: 90%;
+    height: 90%;
+    
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+
+    margin: 0 auto; 
+}
+
+.containerTextAboutUs h1 {
+    color: #0D00FF;
+    font-size: 3.5em;
+    padding-left: 2.5%;
+}
+
+
+.ImgContainer img {
+    max-height: 80%;
+    max-width: 70%;
+    object-fit: contain; 
+}
+
+.TextContainer {
+    flex: 1; 
+    font-size: 1.2em; 
+    margin-right: 20px; 
+}
+
+.TextContainer span {
+    color: #0D00FF;
+    font-weight: bold;
+}
+
+.ImgContainer {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ValueContainer {
+    width: 100%;
+    margin-top: 10%;
+    height: 70vh;
+
+    background-color: #0D00FF;
+}
+
+.containerTextCard {
+    height: 25%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: white;
+}
+
+.containerCard {
+    height: 75%;
+
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: end;
+}
+
+.Card {
+    width: 280px;
+    height: 300px;
+    border-radius: 30px 30px 0 0; 
+    background-color: #fff; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    font-size: 1.2rem; 
+
+    flex-direction: column;
+    
+    text-align: center;
+  }
+
+.Card span {
+    color: #0D00FF;
+    font-weight: bold;
+
+    padding-bottom: 10px;
+}
+
+.list {
+    text-align: start;
+}
+
+.ContainerMascote {
+    height: 90vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.CenterContainer {
+    height: 80%;
+}
+
+.containerTextMasc {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    width: 50%;
+    padding-left: 5%;
+}
+
+.containerTextMasc h1 {
+    color: #0D00FF;
+}
+
+.containerTextMasc span {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #0d00ff80;
+}
+
+.containerTextMasc p {
+    padding: 10px 0 0 0;
+}
+
+.CenterContainer hr {
+    margin: 7% 10% 10% 10%;
+
+}
+
+.ContainerTeam {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 30%;
+}
+
+.ContainerTeamCenter {
+    height: 95%;
+    width: 98%;
+}
+
+.ContainerTextTeam {
+    margin: 2.5%;
+
+    width: 90%;
+    height: 20%;
+
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
+
+.ContainerTextTeam h1 {
+    color: #0D00FF;
+    padding-bottom: 20px;
+}
+
+.ContainerImgTeam {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ContainerImgTeam img {
+    width: 90%;
+    height: 90%;
+}

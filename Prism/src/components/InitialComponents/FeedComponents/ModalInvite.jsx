@@ -38,20 +38,23 @@ const ModalInvite = ({ isOpen, onClose, children }) => {
     if (storedUserInfo) {
       const parsedUserInfo = JSON.parse(storedUserInfo);
       if (parsedUserInfo && parsedUserInfo.aluno_id) {
-        setAlunoid(parsedUserInfo.aluno_id); // Recupera o ID do aluno logado
+        setAlunoid(parsedUserInfo.aluno_id);
       }
     }
   }, []);
 
-  // Função para pesquisar alunos
+  // Função de pesquisa
   const handleSearch = () => {
-    if (alunoid && searchTerm.length > 2) {
-      fetchStudents(alunoid);
+    if (searchTerm.length > 2) {
+      if (alunoid) {
+        fetchStudents(alunoid);
+      }
     } else {
-      setStudents([]);
+      setStudents([]); // Limpa a lista de alunos quando o campo de pesquisa estiver vazio ou com menos de 3 caracteres
     }
   };
 
+  // Filtra os alunos com base no nome e no ID
   const filteredStudents = Array.isArray(students)
     ? students.filter((student) => {
         return (
@@ -61,41 +64,50 @@ const ModalInvite = ({ isOpen, onClose, children }) => {
       })
     : [];
 
-    const sendInvite = async () => {
-      if (toAluno) {
-        try {
-          const response = await axios.post("http://localhost:8081/prisma/sendInvite", {
-            id_aluno: alunoid, 
-            id_amigo: toAluno,   
+  // Enviar convite
+  const sendInvite = async () => {
+    if (toAluno) {
+      try {
+        const response = await axios.post("http://localhost:8081/prisma/sendInvite", {
+          id_aluno: alunoid,
+          id_amigo: toAluno,
+        });
+
+        if (response.data.success) {
+          console.log(`Convite enviado de ${alunoid} para ${toAluno}`);
+
+          socket.emit("sendInvite", {
+            from: alunoid,
+            to: toAluno,
           });
-    
-          if (response.data.success) {
-            console.log(`Convite enviado de ${alunoid} para ${toAluno}`);
-            
-            socket.emit("sendInvite", {
-              from: alunoid,
-              to: toAluno,
-            });
-    
-            console.log("Convite enviado com sucesso!");
-          } else {
-            console.error("Erro ao enviar o convite:", response.data.message);
-          }
-    
-          onClose();
-    
-        } catch (error) {
-          console.error("Erro ao enviar convite:", error);
+
+          console.log("Convite enviado com sucesso!");
+        } else {
+          console.error("Erro ao enviar o convite:", response.data.message);
         }
-      } else {
-        console.error("Nenhum destinatário selecionado.");
+
+        onClose();
+
+      } catch (error) {
+        console.error("Erro ao enviar convite:", error);
       }
-    };
-    
+    } else {
+      console.error("Nenhum destinatário selecionado.");
+    }
+  };
+
+  // Selecionar aluno
   const handleSelectStudent = (alunoId) => {
-    setToAluno(alunoId); 
+    setToAluno(alunoId);
     console.log(`Aluno selecionado: ${alunoId}`);
   };
+
+  // Limpa a lista de alunos caso o searchTerm seja vazio ou 0
+  useEffect(() => {
+    if (searchTerm.length === 0) {
+      setStudents([]); // Limpa a lista de alunos quando o campo de pesquisa for vazio
+    }
+  }, [searchTerm]);
 
   if (!isOpen) return null;
 
@@ -122,20 +134,19 @@ const ModalInvite = ({ isOpen, onClose, children }) => {
         {loading && <p>Carregando...</p>}
         {error && <p>{error}</p>}
         <ul className={styles.studentList}>
+          {searchTerm.length > 2 && filteredStudents.length === 0 && !loading && !error && (
+            <li className={styles.noResults}>Nenhum aluno encontrado</li>
+          )}
           {filteredStudents.map((student) => (
-            <li
-              key={`${student.aluno_id}-${student.nome_aluno}`}
-              className={styles.studentItem}
-            >
+            <li key={`${student.aluno_id}-${student.nome_aluno}`} className={styles.studentItem}>
               <button
-                onClick={() => handleSelectStudent(student.aluno_id)} 
+                onClick={() => handleSelectStudent(student.aluno_id)}
+                className={styles.studentButton}
               >
                 {student.nome_aluno}
               </button>
               {toAluno === student.aluno_id && (
-                <button
-                  onClick={sendInvite} 
-                >
+                <button onClick={sendInvite} className={styles.buttonInvite}>
                   Enviar Convite
                 </button>
               )}

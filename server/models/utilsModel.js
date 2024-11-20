@@ -24,7 +24,7 @@ FROM
 JOIN 
     tb_alunos a ON f.aluno_id_fk = a.aluno_id
 ORDER BY 
-    f.data_criacao ASC;
+    f.data_criacao DESC;
     `;
 
   try {
@@ -139,39 +139,40 @@ exports.ranking = async ({ Cod_Escolar }) => {
 
 exports.rankingMyFriends = async ({ Cod_Escolar, id_aluno }) => {
   const query = `
-    SELECT 
+  SELECT 
     a.aluno_id,
     a.nome AS nome_aluno,
     a.foto_perfil,
     COALESCE(tx.total_xp, 0) AS total_xp
-FROM 
+  FROM 
     tb_alunos a
-LEFT JOIN 
+  LEFT JOIN 
     tb_total_xp tx ON a.aluno_id = tx.aluno_id
-JOIN 
+  JOIN 
     registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar
-JOIN 
+  JOIN 
     tb_amizade ta ON (a.aluno_id = ta.amigo1_id_fk OR a.aluno_id = ta.amigo2_id_fk)
-WHERE 
-    ru.Cod_Escolar = ?
+  WHERE 
+    ru.Cod_Escolar = ?  
     AND (
-        (ta.amigo1_id_fk = a.aluno_id AND ta.amigo2_id_fk IN (SELECT aluno_id FROM tb_alunos WHERE instituicao_id_fk = 210))
-        OR
-        (ta.amigo2_id_fk = a.aluno_id AND ta.amigo1_id_fk IN (SELECT aluno_id FROM tb_alunos WHERE instituicao_id_fk = 210))
+      (ta.amigo1_id_fk = a.aluno_id AND ta.amigo2_id_fk = ?)
+      OR
+      (ta.amigo2_id_fk = a.aluno_id AND ta.amigo1_id_fk = ?)
     )
     AND a.aluno_id != ?
-ORDER BY 
+    AND ta.request = 'aceito'
+  ORDER BY 
     total_xp DESC;
+`;
 
-  `;
+try {
+  const [results] = await db.query(query, [Cod_Escolar, id_aluno, id_aluno, id_aluno]);
+  return results;
+} catch (err) {
+  console.error("Erro ao buscar o ranking dos amigos:", err);
+  throw err;
+}
 
-  try {
-    const [results] = await db.query(query, [Cod_Escolar, id_aluno]);
-    return results;
-  } catch (err) {
-    console.error("Erro ao buscar o ranking dos amigos:", err);
-    throw err;
-  }
 };
 
 exports.AddAchivementUser = async (aluno_id, conquista_id) => {
@@ -221,6 +222,32 @@ WHERE
     return results;
   } catch (err) {
     console.error("Erro ao buscar as conquistas:", err);
+    throw err;
+  }
+};
+
+exports.getContentForum = async (aluno_id) => {
+  const query = `
+    SELECT 
+    a.nome, 
+    a.foto_perfil,
+    f.conteudo
+FROM 
+    tb_forum f
+JOIN 
+    tb_alunos a ON f.aluno_id_fk = a.aluno_id
+WHERE 
+    a.aluno_id = ? 
+ORDER BY 
+    f.data_criacao ASC;
+
+  `;
+
+  try {
+    const [results] = await db.query(query, [aluno_id]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar as mensagens:", err);
     throw err;
   }
 };

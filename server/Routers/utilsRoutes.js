@@ -13,6 +13,7 @@ router.get("/getInvites", utils.getFriendRequestPendent)
 router.get("/ranking", utils.ranking)
 router.get("/friendsRank", utils.rankingMyFriends)
 router.get("/getAchivements", utils.NotAchivement)
+router.get("/getContentForum", utils.getContentForum)
 
 router.delete("/rejectInvite", utils.rejectFriendRequest)
 

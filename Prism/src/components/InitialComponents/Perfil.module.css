@@ -2,22 +2,15 @@
   height: 200vh;
   width: 100%;
   background-color: white;
-
   border-radius: 10px;
 }
 
 .ContainerImageUser {
   height: 55vh;
   width: 100%;
-
   position: relative;
-
-  background: #1c20ff;
-  background: -webkit-linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
   background: linear-gradient(148deg, #1c20ff 0%, #a60ffd 100%);
-
   border-radius: 10px 10px 0 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,19 +23,15 @@
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-
 }
 
 .ContainerImageUser > h1 {
   color: white;
   font-size: 3rem;
   margin-top: 20px;
-
   width: 50%;
-
   text-align: center;
 }
-
 
 .modalBackdrop {
   position: fixed;
@@ -68,28 +57,20 @@
 
 .modalContent button {
   background-color: #1c20ff;
-
   margin: 10px;
   padding: 10px 20px;
-
   color: white;
   font-weight: bold;
-
   border: none;
-
   border-radius: 10px;
   cursor: pointer;
 }
 
-/* Progress bar */
-
 .progressBarContainer {
   height: 15%;
   width: 50%;
-
   background-color: white;
   border-radius: 20px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,10 +80,8 @@
 .progressBarSlide {
   width: 98%;
   height: 90%;
-
   border-radius: 10px;
   background-color: #fff193;
-
   overflow: hidden;
 }
 
@@ -118,7 +97,6 @@
   background-size: 23px 23px;
   background-repeat: repeat;
   border-radius: 10px;
-
   display: flex;
   align-items: center;
 }
@@ -126,12 +104,123 @@
 .metaXp {
   position: absolute;
   left: 70.5%;
-
   font-weight: bold;
 }
 
+.ContainerAchivements {
+  display: flex;
+  margin: 10px;
+  flex-direction: column;
+  text-align: start;
+}
 
-.containerInfoUsers {
-  border: 1px solid red;
-  height: 145vh;
+.ContainerAchivements h2 {
+  font-size: 2em;
+  margin-inline-start: 10px;
+}
+
+.achievementsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-left: 2.2%;
+}
+
+.achievementItem {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 10px;
+  width: 100%;
+}
+
+.achievementItem span {
+  font-weight: bold;
+}
+
+.achievementImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.achievementItem p {
+  margin: 0;
+}
+
+.containerMessages {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.Posts {
+  height: 90%;
+  width: 90%;
+  background-color: #FFF4EA;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  gap: 15px;
+}
+
+.messageItem {
+  background-color: #1c20ffc7;
+  width: 96%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  border-radius: 10px;
+
+  overflow-wrap: break-word; 
+  word-wrap: break-word;
+}
+
+.messageHeader {
+  display: flex;
+  align-items: center;
+  
+}
+
+.messageItem img {
+  width: 8%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.messageItem span {
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.messageItem p {
+  color: white;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.ContainerUtils {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+
+  margin-inline-end: 5%;
+  cursor: pointer;
+
+  gap: 20px;
+
+}
+
+.ContainerUtils img {
+  filter: invert(100%) sepia(1) saturate(5) hue-rotate(180deg);
 }

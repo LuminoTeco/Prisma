@@ -113,7 +113,7 @@ const LoginEstudante = () => {
                         </div>
                         <a href="#" className={styles.forgotLink}>Não consegue iniciar a sessão?</a>
                     </div>
-                    <button type="submit" className={styles.submitButton}>Enviar</button>
+                    <button type="submit" className={styles.submitButton}>Entrar</button>
                 </form>
             </div>
         </div>

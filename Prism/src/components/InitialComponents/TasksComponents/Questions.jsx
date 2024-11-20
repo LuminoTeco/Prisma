@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify"; // Importar o Toastify
-import "react-toastify/dist/ReactToastify.css"; // Importar os estilos do Toastify
+import { toast, ToastContainer } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./Questions.module.css";
 import Level from "../../datas/LevelObject";
 import solteco from "@assets/imgs/sol.png";

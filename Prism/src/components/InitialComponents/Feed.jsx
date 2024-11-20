@@ -51,13 +51,18 @@ const Feed = () => {
     socket.on("oneQuestion", (user) => {
       if (user !== userInfo?.nome) {
         setQuestionAsked(user);
+        
+        setTimeout(() => {
+          setQuestionAsked(null);
+        }, 10000);
       }
     });
-
+  
     return () => {
       socket.off("oneQuestion");
     };
   }, [userInfo]);
+  
 
   return (
     <div className={styles.containerFeed}>

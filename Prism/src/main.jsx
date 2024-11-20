@@ -24,6 +24,7 @@ import Questions from "./components/InitialComponents/TasksComponents/Questions.
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PrivateChat from "./components/InitialComponents/PrivateChat.jsx";
+import Colaborator from "./routes/pages/Authenticated/Aluno/Colaborator.jsx";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/login_estudante",
     element: <LoginEstudante />,
+  },
+  {
+    path: "/colaborador", 
+    element: <Colaborator />
   },
   {
     path: "/inicio",
