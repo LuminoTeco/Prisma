@@ -43,6 +43,7 @@ const lightenColor = (color, percent) => {
 const ChatFeed = ({ setQuestionAsked }) => {
   const [message, setMessage] = useState("");
   const [userColors, setUserColors] = useState({});
+  const [isCollaborator, setIsCollaborator] = useState(false); 
   const messagesEndRef = useRef(null);
   const storedUserInfo = JSON.parse(localStorage.getItem("user_info"));
   const storedUserName = storedUserInfo.nome;
@@ -61,6 +62,27 @@ const ChatFeed = ({ setQuestionAsked }) => {
     },
     refetchInterval: 1000,
   });
+
+  const CheckColaborador = async () => {
+    try {
+      const colaboradorRes = await axios.get(
+        "http://localhost:8081/prisma/verifyColaborator",
+        { params: { aluno_id_fk: storedUserInfo.aluno_id } }
+      );
+
+      if (colaboradorRes.data.id.length > 0) {
+        setIsCollaborator(true); 
+      } else {
+        setIsCollaborator(false);
+      }
+    } catch (error) {
+      console.error("Erro ao verificar colaborador:", error);
+    }
+  };
+
+  useEffect(() => {
+    CheckColaborador();
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -102,31 +124,39 @@ const ChatFeed = ({ setQuestionAsked }) => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (message.trim() === "") return;
-
+  
     const messageData = {
       user: storedUserName,
       message: message,
     };
-
+  
     try {
-      // Envia a mensagem ao servidor
       await axios.post("http://localhost:8081/prisma/messages", {
         conteudo: message,
         aluno_id_fk: storedUserInfo.aluno_id,
       });
-
+  
       socket.emit("message", messageData);
-
-      // Emitir o evento 'oneQuestion' se a mensagem for uma pergunta
+  
       if (message.includes("?")) {
         socket.emit("oneQuestion", storedUserName);
       }
-
-      setMessage("");
+  
+      if (isCollaborator) {
+        await axios.patch("http://localhost:8081/prisma/updateXpColaborador", {
+          aluno_id_fk: storedUserInfo.aluno_id,
+          xp: 125, 
+        }).then((response) => {
+          console.log(response.data);
+        });
+      }
     } catch (err) {
-      console.error("Erro ao enviar a mensagem:", err);
+      console.error("Erro ao enviar a mensagem ou atualizar XP:", err);
+    } finally {
+      setMessage("");
     }
   };
+  
 
   const baseURL = "http://localhost:8081";
 
@@ -140,7 +170,11 @@ const ChatFeed = ({ setQuestionAsked }) => {
             style={{
               borderColor: lightenColor(
                 msg.user === storedUserName
-                  ? userColors[storedUserName] || "#000"
+                  ? isCollaborator && msg.user === storedUserName
+                    ? "#1100ff"
+                    : userColors[storedUserName] || "#000"
+                  : isCollaborator && msg.user === storedUserName
+                  ? "#1100ff"
                   : userColors[msg.user] || getRandomColor(),
                 30
               ),
@@ -158,12 +192,17 @@ const ChatFeed = ({ setQuestionAsked }) => {
               <strong
                 style={{
                   color:
-                    msg.user === storedUserName
+                    isCollaborator && msg.user === storedUserName
+                      ? "#1100ff"
+                      : msg.user === storedUserName
                       ? userColors[storedUserName] || "#000"
                       : userColors[msg.user] || getRandomColor(),
                 }}
               >
-                {msg.user}
+                {msg.user}  {" "}
+                {isCollaborator && msg.user === storedUserName
+                  ? " • Colaborador"
+                  : ""}
               </strong>
             </div>
             <p>{msg.message}</p>

@@ -102,10 +102,9 @@ const ModalInvite = ({ isOpen, onClose, children }) => {
     console.log(`Aluno selecionado: ${alunoId}`);
   };
 
-  // Limpa a lista de alunos caso o searchTerm seja vazio ou 0
   useEffect(() => {
     if (searchTerm.length === 0) {
-      setStudents([]); // Limpa a lista de alunos quando o campo de pesquisa for vazio
+      setStudents([]); 
     }
   }, [searchTerm]);
 
@@ -134,9 +133,6 @@ const ModalInvite = ({ isOpen, onClose, children }) => {
         {loading && <p>Carregando...</p>}
         {error && <p>{error}</p>}
         <ul className={styles.studentList}>
-          {searchTerm.length > 2 && filteredStudents.length === 0 && !loading && !error && (
-            <li className={styles.noResults}>Nenhum aluno encontrado</li>
-          )}
           {filteredStudents.map((student) => (
             <li key={`${student.aluno_id}-${student.nome_aluno}`} className={styles.studentItem}>
               <button

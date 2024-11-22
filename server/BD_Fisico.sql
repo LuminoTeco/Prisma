@@ -57,15 +57,16 @@ CREATE TABLE tb_alunos (
     email VARCHAR(50) UNIQUE NOT NULL,
     senha VARCHAR(100) NOT NULL,
     ano_serie INT NOT NULL,
-    nivel INT NOT NULL DEFAULT 0,
-    meta_xp INT DEFAULT 100,
-    total_xp INT DEFAULT 0,
-    total_atividades INT DEFAULT 0,
+    nivel VARCHAR(3) NOT NULL,
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     foto_perfil VARCHAR(100) DEFAULT '/images/user/default_user.jpeg',
     turma_id_fk INT NOT NULL,
     instituicao_id_fk INT NOT NULL,
     disciplina_id_fk INT default 3,  
+    xp INT DEFAULT 0,
+    meta_xp INT DEFAULT 100,
+    total_xp INT DEFAULT 0,
+    total_atividades INT DEFAULT 0,
     CONSTRAINT FK_turma_aluno FOREIGN KEY (turma_id_fk) REFERENCES tb_turmas(turma_id),
     CONSTRAINT FK_instituicao_aluno FOREIGN KEY (instituicao_id_fk) REFERENCES registerUnits(Cod_Escolar),
     CONSTRAINT FK_disciplina_aluno FOREIGN KEY (disciplina_id_fk) REFERENCES tb_disciplina(disciplina_id)
@@ -75,15 +76,14 @@ CREATE TABLE tb_alunos_conquistas (
     aluno_id_fk INT NOT NULL,
     conquista_id_fk INT NOT NULL,
     PRIMARY KEY (aluno_id_fk, conquista_id_fk),
+    data_conquista TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_aluno_conquista FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id),
-    CONSTRAINT FK_conquista_aluno FOREIGN KEY (conquista_id_fk) REFERENCES tb_conquistas(conquista_id),
-    data_conquista TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    CONSTRAINT FK_conquista_aluno FOREIGN KEY (conquista_id_fk) REFERENCES tb_conquistas(conquista_id)
 );
 
 CREATE TABLE tb_aluno_colaborador (
     colaborador_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,   
-    aluno_id_fk INT NOT NULL,                                       
-    nivel_colaborador INT NOT NULL DEFAULT 0,                          
+    aluno_id_fk INT NOT NULL,                                                              
     xp_colaborador INT DEFAULT 0,                                    
     CONSTRAINT FK_aluno_colaborador FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id)
 );
@@ -162,10 +162,7 @@ CREATE TABLE tb_total_xp (
     FOREIGN KEY (aluno_id) REFERENCES tb_alunos(aluno_id)
 );
 
--- Request para determinar o status do pedido da amizade
-INSERT INTO tb_amizade (amigo1_id_fk, amigo2_id_fk, data_amizade) VALUES (?, ?, NOW());
-
--- Trigger para a metas de niveis do usuário
+-- Trigger para a metas de niveis do usuario
 DELIMITER $$
 
 CREATE TRIGGER atualizar_nivel
@@ -173,52 +170,28 @@ BEFORE UPDATE ON tb_alunos
 FOR EACH ROW
 BEGIN
    IF NEW.xp >= NEW.meta_xp THEN
-      SET NEW.nivel = NEW.nivel + 1;
+      SET NEW.nivel = CAST(NEW.nivel AS UNSIGNED) + 1;
       SET NEW.xp = NEW.xp - NEW.meta_xp;
-      SET NEW.meta_xp = NEW.meta_xp + 100; -- Exemplo de incremento da meta
    END IF;
 END $$
 
 DELIMITER ;
 
--- Consultas de exemplo
-SELECT * FROM registerUnits;
-SELECT * FROM tb_turmas;
-SELECT * FROM tb_alunos;
-SELECT * FROM tb_disciplina;
-SELECT * FROM tb_conquistas;
-SELECT * FROM tb_alunos WHERE aluno_id IN (1, 4);
-SELECT * FROM tb_forum WHERE aluno_id_fk = 1;
 
-SELECT 
-    ru.Cod_Escolar AS instituicao_id_fk, 
-    t.turma_id AS turma_id_fk,
-    t.nome_turma,
-    t.ano_letivo
-FROM 
-    registerUnits ru
-JOIN 
-    tb_turmas t ON ru.Cod_Escolar = t.instituicao_id_fk;
+DELIMITER $$
 
-SELECT * FROM tb_turmas WHERE instituicao_id_fk = 215;
-SELECT * FROM tb_alunos;
+CREATE TRIGGER atualizar_total_xp
+AFTER UPDATE ON tb_alunos
+FOR EACH ROW
+BEGIN
 
-SELECT 
-    a.aluno_id,
-    a.nome AS nome_aluno,
-    ru.Cod_Escolar AS instituicao_id_fk, 
-    ru.NameInstitute AS nome_instituicao,
-    t.turma_id AS turma_id_fk,
-    t.nome_turma
-FROM 
-    tb_alunos a
-JOIN 
-    tb_turmas t ON a.turma_id_fk = t.turma_id
-JOIN 
-    registerUnits ru ON a.instituicao_id_fk = ru.Cod_Escolar;
-    
-SELECT d.nome
-FROM tb_turmas t
-JOIN tb_alunos a ON t.turma_id = a.turma_id_fk
-JOIN tb_disciplina d ON a.disciplina_id_fk = d.disciplina_id
-WHERE a.aluno_id = 1;
+   IF NEW.xp <> OLD.xp THEN
+   
+      INSERT INTO tb_total_xp (aluno_id, total_xp)
+      VALUES (NEW.aluno_id, NEW.xp)
+      ON DUPLICATE KEY UPDATE total_xp = total_xp + (NEW.xp - OLD.xp);
+   END IF;
+END$$
+
+DELIMITER ;
+

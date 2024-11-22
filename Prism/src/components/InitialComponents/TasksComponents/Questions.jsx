@@ -116,7 +116,7 @@ const Questions = () => {
 
     if (selectedAnswer === correctAnswer) {
       setIsAnswerCorrect(true);
-      setXp(xp + 10);
+      setXp(xp + 20);
       handleNext()
       toast.success("🎉 Resposta correta! +10 XP", {
         position: "bottom-center", 

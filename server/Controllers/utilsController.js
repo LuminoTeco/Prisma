@@ -96,28 +96,27 @@ exports.rejectFriendRequest = async (req, res) => {
   }
 };
 
-exports.ranking = async (req, res) => { 
-    const { Cod_Escolar } = req.query;
-  
-    if (!Cod_Escolar) {
-      return res
-        .status(400)
-        .json({ error: "ID da Instituição é indispensável." });
-    }
-  
-    try {
-      const result = await utilsModel.ranking({ Cod_Escolar });
-      res.status(200).json(result);
-      console.table(result);
-    } catch (err) {
-      console.error("Erro ao buscar o ranking:", err);
-      res.status(500).json({ error: "Erro ao buscar o ranking" });
-    }
-  };
-  
+exports.ranking = async (req, res) => {
+  const { Cod_Escolar } = req.query;
+
+  if (!Cod_Escolar) {
+    return res
+      .status(400)
+      .json({ error: "ID da Instituição é indispensável." });
+  }
+
+  try {
+    const result = await utilsModel.ranking({ Cod_Escolar });
+    res.status(200).json(result);
+    console.table(result);
+  } catch (err) {
+    console.error("Erro ao buscar o ranking:", err);
+    res.status(500).json({ error: "Erro ao buscar o ranking" });
+  }
+};
 
 exports.rankingMyFriends = async (req, res) => {
-  const { Cod_Escolar, id_aluno} = req.query;
+  const { Cod_Escolar, id_aluno } = req.query;
 
   if (!Cod_Escolar || !id_aluno) {
     return res
@@ -133,13 +132,15 @@ exports.rankingMyFriends = async (req, res) => {
     console.error("Erro ao buscar o ranking:", err);
     res.status(500).json({ error: "Erro ao buscar o ranking" });
   }
-}
+};
 
 exports.addAchivementUser = async (req, res) => {
   const { id_aluno, id_achivement } = req.body;
 
   if (!id_aluno || !id_achivement) {
-    return res.status(400).json({ error: "Faltando id_aluno ou id_achivement" });
+    return res
+      .status(400)
+      .json({ error: "Faltando id_aluno ou id_achivement" });
   }
 
   try {
@@ -151,10 +152,10 @@ exports.addAchivementUser = async (req, res) => {
     console.error("Erro ao adicionar o Achivement:", err);
     res.status(500).json({ error: "Erro ao adicionar o Achivement" });
   }
-}
+};
 
 exports.NotAchivement = async (req, res) => {
-  const { aluno_id } = req.query
+  const { aluno_id } = req.query;
 
   if (!aluno_id) {
     return res.status(400).json({ error: "Faltando id_aluno" });
@@ -169,24 +170,95 @@ exports.NotAchivement = async (req, res) => {
     console.error("Erro ao adicionar o Achivement:", err);
     res.status(500).json({ error: "Erro ao adicionar o Achivement" });
   }
-
-}
+};
 exports.getContentForum = async (req, res) => {
-  const { aluno_id } = req.query
-  
+  const { aluno_id } = req.query;
+
   if (!aluno_id) {
     return res.status(400).json({ error: "Faltando id_aluno" });
   }
 
   try {
     const result = await utilsModel.getContentForum(aluno_id);
-    res
-      .status(201)
-      .json({ message: "Posts buscadas com sucesso", id: result });
+    res.status(201).json({ message: "Posts buscadas com sucesso", id: result });
   } catch (err) {
     console.error("Erro ao procurar Posts:", err);
     res.status(500).json({ error: "Erro ao procurar Posts" });
   }
+};
 
+exports.InsertStudentColaborator = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Precisa-se do email" });
+  }
+
+  try {
+    const result = await utilsModel.InsertStudentColaborator(email);
+    res
+      .status(201)
+      .json({ message: "Colaborador inserido com sucesso", id: result });
+  } catch (err) {
+    console.error("Erro ao procurar Posts:", err);
+    res.status(500).json({ error: "Erro ao procurar Posts" });
+  }
+};
+
+exports.verifyColaborator = async (req, res) => {
+  const { aluno_id_fk } = req.query;
+
+  if (!aluno_id_fk) {
+    return res.status(400).json({ error: "Necessita-se id_aluno" });
+  }
+
+  try {
+    const result = await utilsModel.verifyColaborator(aluno_id_fk);
+    res
+      .status(201)
+      .json({
+        message: "Colaborador verificado com sucesso",
+        id: result,
+        isColaborator: result.isColaborator,
+      });
+  } catch (err) {
+    console.error("Erro ao procurar Posts:", err);
+    res.status(500).json({ error: "Erro ao procurar Posts" });
+  }
+};
+
+exports.getXpColaborador = async (req, res) => {
+  const { aluno_id_fk } = req.query;
+
+  if (!aluno_id_fk) {
+    return res.status(400).json({ error: "Necessita-se id_aluno" });
+  }
+
+  try {
+    const result = await utilsModel.getXpColaborador(aluno_id_fk);
+    res
+      .status(201)
+      .json({ message: "Xp verificado com sucesso", id: result });
+  } catch (err) {
+    console.error("Erro ao procurar Usuario:", err);
+    res.status(500).json({ error: "Erro ao procurar Usuario" });
+  }
 }
 
+exports.updateXpColaborador = async (req, res) => {
+  const { aluno_id_fk, xp } = req.body;
+
+  if (!aluno_id_fk || !xp) {
+    return res.status(400).json({ error: "Necessita-se id_aluno e xp" });
+  }
+
+  try {
+    const result = await utilsModel.updateXpColaborador(aluno_id_fk, xp);
+    res
+      .status(201)
+      .json({ message: "Xp verificado com sucesso", id: result });
+  } catch (err) {
+    console.error("Erro ao procurar Usuario:", err);
+    res.status(500).json({ error: "Erro ao procurar Usuario" });
+  }
+}

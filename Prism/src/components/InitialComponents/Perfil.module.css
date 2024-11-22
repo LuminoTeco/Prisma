@@ -3,6 +3,12 @@
   width: 100%;
   background-color: white;
   border-radius: 10px;
+
+  overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 .ContainerImageUser {
@@ -160,7 +166,7 @@
 .Posts {
   height: 90%;
   width: 90%;
-  background-color: #FFF4EA;
+  background-color: #fff4ea;
   border-radius: 20px 20px 0 0;
   display: flex;
   flex-direction: column;
@@ -180,14 +186,13 @@
   gap: 5px;
   border-radius: 10px;
 
-  overflow-wrap: break-word; 
+  overflow-wrap: break-word;
   word-wrap: break-word;
 }
 
 .messageHeader {
   display: flex;
   align-items: center;
-  
 }
 
 .messageItem img {
@@ -218,9 +223,125 @@
   cursor: pointer;
 
   gap: 20px;
-
 }
 
 .ContainerUtils img {
   filter: invert(100%) sepia(1) saturate(5) hue-rotate(180deg);
+}
+
+.titleNameandNivel {
+  width: 50%;
+  display: flex;
+  align-items: base;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+}
+
+.ContainerProgressBarColaborador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 10px;
+  height: 100px;
+}
+
+.progressBarContainerColaborador {
+  background-color: rgb(233, 230, 230);
+  width: 51%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progressBarSlideColaborador {
+  background-color: rgba(100, 4, 255, 0.418);
+  height: 80%;
+  border-radius: 20px;
+  width: 98%;
+  overflow: hidden;
+}
+
+.progressBarContainerColaborador span {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: white;
+  z-index: 10;
+}
+
+.BarColaborador {
+  background-color: #1c20ff;
+  width: 50%;
+  height: 100%;
+
+  border-radius: 20px;
+
+  background-color: #0000ff;
+  opacity: 0.8;
+  background-image: linear-gradient(135deg, #000ac2 25%, transparent 25%),
+    linear-gradient(225deg, #000ac2 25%, transparent 25%),
+    linear-gradient(45deg, #000ac2 25%, transparent 25%),
+    linear-gradient(315deg, #000ac2 25%, #0000ff 25%);
+  background-position: 10px 0, 10px 0, 0 0, 0 0;
+  background-size: 10px 10px;
+  background-repeat: repeat;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .ContainerImageUser {
+    height: 45vh;
+  }
+
+  .ContainerImageUser > h1 {
+    font-size: 2rem;
+    width: 80%;
+  }
+
+  .progressBarContainer {
+    width: 80%;
+  }
+
+  .ContainerAchivements h2 {
+    font-size: 1.5em;
+  }
+
+  .achievementsGrid {
+    padding-left: 0;
+    gap: 15px;
+  }
+
+  .Posts {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .messageItem {
+    width: 100%;
+  }
+
+  .ContainerUtils {
+    justify-content: center;
+    margin-inline-end: 0;
+    gap: 10px;
+  }
+
+  .titleNameandNivel {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .messageItem img {
+    width: 12%;
+  }
 }

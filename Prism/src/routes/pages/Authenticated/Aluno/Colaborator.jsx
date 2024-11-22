@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Colaborator.module.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Colaborator = () => {
   const [values, setValues] = useState({
@@ -8,14 +9,18 @@ const Colaborator = () => {
     nivel: 0,
   });
 
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isCollaborator, setIsCollaborator] = useState(false); 
 
   const userValues = JSON.parse(localStorage.getItem("user_info"));
   const { aluno_id } = userValues || {};
 
   useEffect(() => {
     if (aluno_id) {
+
       axios
         .get(`http://localhost:8081/prisma/allinformation/${aluno_id}`)
         .then((response) => {
@@ -28,19 +33,45 @@ const Colaborator = () => {
         .catch((error) => {
           console.log(error);
         });
+
+      // Verifica se o aluno é colaborador
+      axios
+        .get("http://localhost:8081/prisma/verifyColaborator", {
+          params: { aluno_id_fk: aluno_id },
+        })
+        .then((response) => {
+          if (response.data.id.length > 0) {
+            setIsCollaborator(true); 
+          }
+        })
+        .catch((error) => {
+          console.error("Erro ao verificar colaborador:", error);
+        });
     }
   }, [aluno_id]);
 
+  useEffect(() => {
+    // Redireciona se já for colaborador
+    if (isCollaborator) {
+      setTimeout(() => {
+        navigate("/inicio/perfil");
+      }, 2000);
+    }
+  }, [isCollaborator, navigate]);
+
   const handleEmailSubmit = () => {
     if (email) {
-      // Aqui você faria a chamada para o backend para registrar o e-mail
       axios
-        .post("http://localhost:8081/api/registrar-colaborador", { email })
-        .then((response) => {
+        .post("http://localhost:8081/prisma/InsertStudentColaborator", { email })
+        .then(() => {
           setMessage("Parabéns! Você agora faz parte da nossa equipe.");
+          setTimeout(() => {
+            navigate("/inicio/perfil");
+          }, 2000);
         })
         .catch((error) => {
           setMessage("Ocorreu um erro ao registrar seu e-mail. Tente novamente.");
+          console.error(error);
         });
     } else {
       setMessage("Por favor, insira um e-mail válido.");
@@ -52,11 +83,16 @@ const Colaborator = () => {
   return (
     <div className={styles.Background}>
       <div className={styles.ContainerColaborator}>
-        {nivel < 10 ? (
+        {isCollaborator ? (
+          // Caso já seja colaborador
+          <h1 className={styles.Title}>Você já é um colaborador!</h1>
+        ) : nivel < 10 ? (
+          // Caso o nível seja insuficiente
           <h1 className={styles.Title}>
             Ainda não é possível se tornar um colaborador
           </h1>
         ) : (
+          // Caso o nível permita
           <div className={styles.containerSendEmail}>
             <h1>
               Parabéns! Você agora tem a oportunidade de se tornar um{" "}
@@ -80,7 +116,10 @@ const Colaborator = () => {
                 placeholder="Digite seu e-mail"
                 className={styles.inputField}
               />
-              <button onClick={handleEmailSubmit} className={styles.submitButton}>
+              <button
+                onClick={handleEmailSubmit}
+                className={styles.submitButton}
+              >
                 Confirmar e-mail
               </button>
             </div>

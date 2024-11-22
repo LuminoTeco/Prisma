@@ -165,14 +165,18 @@ exports.rankingMyFriends = async ({ Cod_Escolar, id_aluno }) => {
     total_xp DESC;
 `;
 
-try {
-  const [results] = await db.query(query, [Cod_Escolar, id_aluno, id_aluno, id_aluno]);
-  return results;
-} catch (err) {
-  console.error("Erro ao buscar o ranking dos amigos:", err);
-  throw err;
-}
-
+  try {
+    const [results] = await db.query(query, [
+      Cod_Escolar,
+      id_aluno,
+      id_aluno,
+      id_aluno,
+    ]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar o ranking dos amigos:", err);
+    throw err;
+  }
 };
 
 exports.AddAchivementUser = async (aluno_id, conquista_id) => {
@@ -251,3 +255,67 @@ ORDER BY
     throw err;
   }
 };
+
+exports.InsertStudentColaborator = async (email) => {
+  const query = `
+    INSERT INTO tb_aluno_colaborador (aluno_id_fk, xp_colaborador)
+    SELECT aluno_id, 0
+    FROM tb_alunos
+    WHERE email = ?;
+  `;
+
+  try {
+    const [results] = await db.query(query, [email]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar as mensagens:", err);
+    throw err;
+  }
+};
+
+exports.verifyColaborator = async (aluno_id_fk) => {
+  const query = `
+    SELECT 1 as Id_AlunoColaborador
+    FROM tb_aluno_colaborador
+    WHERE aluno_id_fk = ?
+    LIMIT 1;
+  `;
+
+  try {
+    const [result] = await db.query(query, [aluno_id_fk]);
+    return result;
+  } catch (err) {
+    console.error("Erro ao buscar as usuário:", err);
+    throw err;
+  }
+};
+
+exports.getXpColaborador = async (aluno_id_fk) => {
+  const query = `
+    SELECT xp_colaborador
+    FROM tb_aluno_colaborador
+    WHERE aluno_id_fk = ?;
+  `;
+
+  try {
+    const [result] = await db.query(query, [aluno_id_fk]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.updateXpColaborador = async (aluno_id_fk, xp) => {
+  const query = `
+    UPDATE tb_aluno_colaborador 
+    SET xp_colaborador = xp_colaborador + ? 
+    WHERE aluno_id_fk = ?;
+  `
+
+  try {
+    const [result] = await db.query(query, [xp, aluno_id_fk]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
