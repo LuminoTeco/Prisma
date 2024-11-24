@@ -6,6 +6,7 @@ router.post("/messages", utils.CreateMessagesForum)
 router.post("/sendInvite", utils.sendFriendRequest)
 router.post("/addAchivement", utils.addAchivementUser)
 router.post("/InsertStudentColaborator", utils.InsertStudentColaborator)
+router.post("/SendMessageFriends", utils.SendMessageFriends)
 
 router.patch("/acceptInvite", utils.acceptFriendRequest)
 router.patch("/updateXpColaborador", utils.updateXpColaborador)
@@ -18,6 +19,9 @@ router.get("/getAchivements", utils.NotAchivement)
 router.get("/getContentForum", utils.getContentForum)
 router.get("/verifyColaborator", utils.verifyColaborator)
 router.get("/getXpColaborador", utils.getXpColaborador)
+router.get("/getAllColaborators", utils.getAllColaborators)
+router.get("/getMyFriends", utils.getMyFriends)
+router.get("/getMessagesFriends", utils.getMessageFriends)
 
 router.delete("/rejectInvite", utils.rejectFriendRequest)
 

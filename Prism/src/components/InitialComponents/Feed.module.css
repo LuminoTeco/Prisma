@@ -67,6 +67,32 @@
   margin: 10px 0;
 }
 
+.requestItem button {
+  margin: 2px;
+}
+
+.acceptButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+
+  cursor: pointer;
+  padding: 2.5px;
+
+  border-radius: 5px;
+}
+
+.rejectButton {
+  background-color: #d30b0b;
+  color: white;
+  border: none;
+
+  cursor: pointer;
+  padding: 2.5px;
+
+  border-radius: 5px;
+}
+
 .requestSender {
   color: #007bff;
   font-weight: 600;

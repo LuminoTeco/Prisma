@@ -37,7 +37,16 @@ const setupSocket = (server) => {
       socket.on("Conquista", (user) => {
         io.emit("Conquista", user)
       })
+
+      socket.on("join_room", (room) => {
+        socket.join(room);
+
+        console.log(`Usuário ${socket.id} entrou na sala ${room}`);
+      })
     
+      socket.on("private_message", ({ room, from, message }) => {
+        io.to(room).emit("private_message", { from, message, room });
+      });
 
     socket.on("disconnect", () => {
       console.log("Usuário desconectado:", socket.id);

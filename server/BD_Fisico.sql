@@ -62,7 +62,7 @@ CREATE TABLE tb_alunos (
     foto_perfil VARCHAR(100) DEFAULT '/images/user/default_user.jpeg',
     turma_id_fk INT NOT NULL,
     instituicao_id_fk INT NOT NULL,
-    disciplina_id_fk INT default 3,  
+    disciplina_id_fk INT DEFAULT 3,  
     xp INT DEFAULT 0,
     meta_xp INT DEFAULT 100,
     total_xp INT DEFAULT 0,
@@ -75,8 +75,8 @@ CREATE TABLE tb_alunos (
 CREATE TABLE tb_alunos_conquistas (
     aluno_id_fk INT NOT NULL,
     conquista_id_fk INT NOT NULL,
-    PRIMARY KEY (aluno_id_fk, conquista_id_fk),
     data_conquista TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (aluno_id_fk, conquista_id_fk),
     CONSTRAINT FK_aluno_conquista FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id),
     CONSTRAINT FK_conquista_aluno FOREIGN KEY (conquista_id_fk) REFERENCES tb_conquistas(conquista_id)
 );
@@ -114,15 +114,16 @@ CREATE TABLE tb_tarefas (
 
 CREATE TABLE tb_mensagem (
     mensagem_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-    sender VARCHAR(255) NOT NULL,
     conteudo TEXT NOT NULL,
-    data_envio DATETIME NOT NULL
+    from_user VARCHAR(255) NOT NULL,
+    to_user VARCHAR(255) NOT NULL,
+    data_envio TIMESTAMP
 );
 
 CREATE TABLE tb_forum (
     post_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
     conteudo VARCHAR(50) NOT NULL,
-    data_criacao TIMESTAMP NOT NULL,
+    data_criacao TIMESTAMP,
     aluno_id_fk INT NOT NULL,
     CONSTRAINT FK_aluno_forum FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id)
 );
@@ -137,18 +138,10 @@ CREATE TABLE tb_forum_resposta (
     CONSTRAINT FK_aluno_forum_resposta FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id)
 );
 
-CREATE TABLE tb_curtida (
-    curtida_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-    data_curtida DATETIME NOT NULL,
-    aluno_id_fk INT NOT NULL,
-    post_id_fk INT NOT NULL,
-    CONSTRAINT FK_post_curtida FOREIGN KEY (post_id_fk) REFERENCES tb_forum(post_id),
-    CONSTRAINT FK_aluno_curtida FOREIGN KEY (aluno_id_fk) REFERENCES tb_alunos(aluno_id)
-);
 
 CREATE TABLE tb_amizade (
     amizade_id INT PRIMARY KEY AUTO_INCREMENT UNIQUE NOT NULL,
-    data_amizade DATETIME NOT NULL,
+    data_amizade TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     amigo1_id_fk INT NOT NULL,
     amigo2_id_fk INT NOT NULL,
     request ENUM('rejeitado', 'aceito', 'pendente') DEFAULT 'pendente',
@@ -162,7 +155,6 @@ CREATE TABLE tb_total_xp (
     FOREIGN KEY (aluno_id) REFERENCES tb_alunos(aluno_id)
 );
 
--- Trigger para a metas de niveis do usuario
 DELIMITER $$
 
 CREATE TRIGGER atualizar_nivel
@@ -172,11 +164,9 @@ BEGIN
    IF NEW.xp >= NEW.meta_xp THEN
       SET NEW.nivel = CAST(NEW.nivel AS UNSIGNED) + 1;
       SET NEW.xp = NEW.xp - NEW.meta_xp;
+      SET NEW.meta_xp = NEW.meta_xp + 100;
    END IF;
-END $$
-
-DELIMITER ;
-
+END$$
 
 DELIMITER $$
 
@@ -184,9 +174,7 @@ CREATE TRIGGER atualizar_total_xp
 AFTER UPDATE ON tb_alunos
 FOR EACH ROW
 BEGIN
-
    IF NEW.xp <> OLD.xp THEN
-   
       INSERT INTO tb_total_xp (aluno_id, total_xp)
       VALUES (NEW.aluno_id, NEW.xp)
       ON DUPLICATE KEY UPDATE total_xp = total_xp + (NEW.xp - OLD.xp);
@@ -194,4 +182,3 @@ BEGIN
 END$$
 
 DELIMITER ;
-

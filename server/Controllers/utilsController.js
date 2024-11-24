@@ -214,13 +214,11 @@ exports.verifyColaborator = async (req, res) => {
 
   try {
     const result = await utilsModel.verifyColaborator(aluno_id_fk);
-    res
-      .status(201)
-      .json({
-        message: "Colaborador verificado com sucesso",
-        id: result,
-        isColaborator: result.isColaborator,
-      });
+    res.status(201).json({
+      message: "Colaborador verificado com sucesso",
+      id: result,
+      isColaborator: result.isColaborator,
+    });
   } catch (err) {
     console.error("Erro ao procurar Posts:", err);
     res.status(500).json({ error: "Erro ao procurar Posts" });
@@ -236,14 +234,12 @@ exports.getXpColaborador = async (req, res) => {
 
   try {
     const result = await utilsModel.getXpColaborador(aluno_id_fk);
-    res
-      .status(201)
-      .json({ message: "Xp verificado com sucesso", id: result });
+    res.status(201).json({ message: "Xp verificado com sucesso", id: result });
   } catch (err) {
     console.error("Erro ao procurar Usuario:", err);
     res.status(500).json({ error: "Erro ao procurar Usuario" });
   }
-}
+};
 
 exports.updateXpColaborador = async (req, res) => {
   const { aluno_id_fk, xp } = req.body;
@@ -254,11 +250,77 @@ exports.updateXpColaborador = async (req, res) => {
 
   try {
     const result = await utilsModel.updateXpColaborador(aluno_id_fk, xp);
-    res
-      .status(201)
-      .json({ message: "Xp verificado com sucesso", id: result });
+    res.status(201).json({ message: "Xp verificado com sucesso", id: result });
   } catch (err) {
     console.error("Erro ao procurar Usuario:", err);
     res.status(500).json({ error: "Erro ao procurar Usuario" });
   }
+};
+
+exports.getAllColaborators = async (req, res) => {
+
+
+  try {
+    const result = await utilsModel.getAllColaborators();
+    res
+      .status(201)
+      .json({ message: "Colaborador encontrado com sucesso", result });
+  } catch (err) {
+    console.error("Erro ao procurar Usuario:", err);
+    res.status(500).json({ error: "Erro ao procurar Usuario" });
+  }
+};
+
+
+exports.getMyFriends = async (req, res) => {
+  const { aluno_id_fk } = req.query
+  
+  try {
+    const friends = await utilsModel.getMyFriends(aluno_id_fk);
+    res.status(200).json(friends);
+  } catch (err) {
+    console.error("Erro ao buscar os amigos:", err);
+    res.status(500).json({ error: "Erro ao buscar os amigos" });
+  }
 }
+
+exports.SendMessageFriends = async (req, res) => {
+  const { conteudo, from_user, to_user } = req.body;
+
+  // Verifique se os campos estão sendo enviados
+  if (!conteudo || !from_user || !to_user) {
+    console.error('Campos ausentes:', { conteudo, from_user, to_user });
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+  }
+
+  try {
+    const result = await utilsModel.SendMessageFriends(conteudo, from_user, to_user);
+
+    if (result.affectedRows > 0) {
+      return res.status(201).json({ message: 'Mensagem enviada com sucesso' });
+    } else {
+      console.error('Nenhuma linha foi afetada pelo INSERT.');
+      return res.status(400).json({ message: 'Não foi possível enviar a mensagem' });
+    }
+  } catch (err) {
+    console.error('Erro ao inserir as mensagens entre os amigos:', err);
+    return res.status(500).json({ error: 'Erro ao inserir as mensagens' });
+  }
+};
+
+exports.getMessageFriends = async (req, res) => {
+  const { from_user, to_user } = req.query;
+
+  if (!from_user || !to_user) {      
+    console.error('Campos ausentes:', { from_user, to_user });
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+  } 
+
+  try {
+    const result = await utilsModel.getMessageFriends(from_user, to_user);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error('Erro ao buscar as mensagens entre os amigos:', err);
+    res.status(500).json({ error: 'Erro ao buscar as mensagens' });
+  }
+};

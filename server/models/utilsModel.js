@@ -319,3 +319,94 @@ exports.updateXpColaborador = async (aluno_id_fk, xp) => {
     throw err;
   }
 }
+
+exports.getAllColaborators = async () => {
+  const query = `
+    SELECT 
+        c.aluno_id_fk,
+        a.nome AS nome_usuario
+    FROM 
+        tb_aluno_colaborador c
+    JOIN 
+        tb_alunos a
+    ON 
+        c.aluno_id_fk = a.aluno_id;
+  `;
+
+  try {
+    const [results] = await db.query(query);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar os colaboradores:", err);
+    throw err;
+  }
+}
+
+exports.getMyFriends = async (aluno_id_fk) => {
+  const query = `
+    SELECT 
+      a.nome AS nome_amigo, 
+      a.foto_perfil
+    FROM 
+      tb_amizade ta
+    JOIN 
+      tb_alunos a ON (a.aluno_id = ta.amigo1_id_fk OR a.aluno_id = ta.amigo2_id_fk)
+    WHERE 
+      (ta.amigo1_id_fk = ? OR ta.amigo2_id_fk = ?)
+      AND ta.request = 'aceito' 
+      AND a.aluno_id != ?; 
+  `;
+  
+  try {
+    const [results] = await db.query(query, [aluno_id_fk, aluno_id_fk, aluno_id_fk]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar os amigos:", err);
+    throw err;
+  }
+};
+
+exports.SendMessageFriends = async (conteudo, from_user, to_user) => {
+  const query = `
+    INSERT INTO tb_mensagem (conteudo, from_user, to_user, data_envio)
+    VALUES (?, ?, ?, NOW())
+  `;
+
+  try {
+    console.log('Executando query com dados:', { conteudo, from_user, to_user });
+    const [result] = await db.query(query, [conteudo, from_user, to_user]);
+
+    console.log('Resultado do INSERT:', result);
+    return result; 
+  } catch (err) {
+    console.error('Erro ao adicionar a mensagem:', err);
+    throw err;
+  }
+};
+
+exports.getMessageFriends = async (from_user, to_user) => {
+  const query = `
+    SELECT 
+      m.conteudo, 
+      m.from_user, 
+      m.to_user, 
+      m.data_envio
+    FROM 
+      tb_mensagem m
+    WHERE 
+      (m.from_user = ? AND m.to_user = ?) 
+      OR (m.from_user = ? AND m.to_user = ?)
+    ORDER BY 
+      m.data_envio ASC;
+  `;
+
+  try {
+    const [results] = await db.query(query, [from_user, to_user, to_user, from_user]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao buscar as mensagens:", err);
+    throw err;
+  }
+}
+
+

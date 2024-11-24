@@ -5,7 +5,7 @@ import axios from "axios";
 const Ranking = () => {
   const [CodEscolarInstituicao, SetCodEscolarInstituicao] = useState("");
   const [ranking, setRanking] = useState([]);
-  const [friendsRanking, setFriendsRanking] = useState([]);  // Novo estado para os amigos
+  const [friendsRanking, setFriendsRanking] = useState([]); // Novo estado para os amigos
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
@@ -66,7 +66,10 @@ const Ranking = () => {
           console.log("Ranking dos amigos:", response.data);
         })
         .catch((error) => {
-          console.error("Erro ao buscar o ranking dos amigos:", error.response || error);
+          console.error(
+            "Erro ao buscar o ranking dos amigos:",
+            error.response || error
+          );
         });
     }
   }, [CodEscolarInstituicao, aluno_id]);
@@ -87,11 +90,11 @@ const Ranking = () => {
               {ranking.map((item, index) => (
                 <li
                   key={item.aluno_id}
-                  className={`${styles.RankingItem} ${aluno_id === item.aluno_id ? styles.Highlighted : ''}`}
+                  className={`${styles.RankingItem} ${
+                    aluno_id === item.aluno_id ? styles.Highlighted : ""
+                  }`}
                 >
-                  <span className={styles.RankingPosition}>
-                    {index + 1}°
-                  </span>
+                  <span className={styles.RankingPosition}>{index + 1}°</span>
                   <img
                     src={`http://localhost:8081${item.foto_perfil}`}
                     alt={`${item.nome_aluno}`}
@@ -113,32 +116,32 @@ const Ranking = () => {
       </div>
 
       <div className={styles.ShowMyFriends}>
-        <h1>Meus amigos</h1>
-        {friendsRanking.length > 0 ? (
-          <ul className={styles.RankingList}>
-            {friendsRanking.map((item, index) => (
-              <li
-                key={item.aluno_id}
-                className={`${styles.RankingItem} ${aluno_id === item.aluno_id ? styles.Highlighted : ''}`}
-              >
-                <span className={styles.RankingPosition}>
-                  {index + 1}°
-                </span>
-                <img
-                  src={`http://localhost:8081${item.foto_perfil}`}
-                  alt={`${item.nome_aluno}`}
-                  className={styles.ProfileImage}
-                />
-                <div className={styles.RankingDetails}>
-                  <span className={styles.StudentName}>
-                    {item.nome_aluno}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Carregando amigos...</p>
+      <h1>Meus amigos</h1>
+        {friendsRanking.length > 0 && (
+          <div className={styles.ShowMyFriends}>
+            <ul className={styles.RankingList}>
+              {friendsRanking.map((item, index) => (
+                <li
+                  key={item.aluno_id}
+                  className={`${styles.RankingItem} ${
+                    aluno_id === item.aluno_id ? styles.Highlighted : ""
+                  }`}
+                >
+                  <span className={styles.RankingPosition}>{index + 1}°</span>
+                  <img
+                    src={`http://localhost:8081${item.foto_perfil}`}
+                    alt={`${item.nome_aluno}`}
+                    className={styles.ProfileImage}
+                  />
+                  <div className={styles.RankingDetails}>
+                    <span className={styles.StudentName}>
+                      {item.nome_aluno}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </div>

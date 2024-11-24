@@ -3,7 +3,6 @@ import styles from "./Feed.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ChatFeed from "./FeedComponents/ChatFeed";
-import Ranking from "./FeedComponents/Ranking";
 import { io } from "socket.io-client";
 import trofeu from "@assets/imgs/trofeu.png";
 
@@ -23,24 +22,70 @@ const Feed = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchFriendRequests = async () => {
-      if (!userInfo) return;
+  const fetchFriendRequests = async () => {
+    if (!userInfo) return;
 
-      setLoading(true);
+    setLoading(true);
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/prisma/getInvites?id_aluno=${userInfo.aluno_id}`
+      );
+      setFriendRequests(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar solicitações pendentes:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const acceptFriendRequest = async (request) => {
+      if (!userInfo) return
 
       try {
-        const response = await axios.get(
-          `http://localhost:8081/prisma/getInvites?id_aluno=${userInfo.aluno_id}`
-        );
-        setFriendRequests(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar solicitações pendentes:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+        const response = await axios.post(
+          `http://localhost:8081/prisma/acceptInvite?id_aluno=${userInfo.aluno_id}`
+        )
 
+        if(response.status === 200) {
+          setFriendRequests((prevRequests) => 
+            prevRequests.filter(
+              (req) => req.id_solicitante !== request.id_solicitante
+            )
+          )
+          console.log("Solicitação aceita com sucesso")
+        } else {
+          console.log("Error ao tentar aceitar")
+        }
+      } catch (err) {
+        console.error(err)
+      }
+  };
+  
+const rejectFriendRequest = async (idSolicitante) => {
+  if (!userInfo) return;
+
+  try {
+    const response = await axios.delete(
+      `http://localhost:8081/prisma/rejectInvite?id_aluno=${userInfo.aluno_id}`
+    )
+
+    if(response.status === 200) {
+      setFriendRequests(
+        (prevRequests) => 
+          prevRequests.filter((req) => req.id_enviado !== idSolicitante)
+      )
+      console.log("Reijeitada com sucesso!")
+    }else {
+      console.error("Erro ao recusar o pedido")
+    }
+  } catch (err) {
+    console.log(err)
+  }
+} 
+  
+
+  useEffect(() => {
     fetchFriendRequests();
     const intervalId = setInterval(fetchFriendRequests, 5000);
 
@@ -51,18 +96,17 @@ const Feed = () => {
     socket.on("oneQuestion", (user) => {
       if (user !== userInfo?.nome) {
         setQuestionAsked(user);
-        
+
         setTimeout(() => {
           setQuestionAsked(null);
         }, 10000);
       }
     });
-  
+
     return () => {
       socket.off("oneQuestion");
     };
   }, [userInfo]);
-  
 
   return (
     <div className={styles.containerFeed}>
@@ -87,11 +131,17 @@ const Feed = () => {
                 {friendRequests.map((request, index) => (
                   <li key={index} className={styles.requestItem}>
                     <span className={styles.requestSender}>
-                      {request.nome_enviado} enviou um pedido de amizade: 
-                      <button onClick={() => acceptFriendRequest(request)}>
+                      {request.nome_enviado} enviou um pedido de amizade:{" "}
+                      <button
+                        onClick={() => acceptFriendRequest(request)}
+                        className={styles.acceptButton}
+                      >
                         Aceitar
                       </button>
-                      <button onClick={() => rejectFriendRequest(request.id_enviado)}>
+                      <button
+                        onClick={() => rejectFriendRequest(request.id_enviado)}
+                        className={styles.rejectButton}
+                      >
                         Rejeitar
                       </button>
                     </span>

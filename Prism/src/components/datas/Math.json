@@ -1,236 +1,272 @@
 [
     {
-        "pergunta": "Qual é a soma de 15 e 12?",
-        "alternativas": ["24", "25", "26", "27"],
-        "resposta_correta": "27",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o valor de 2 elevado à potência de 5?",
-        "alternativas": ["16", "32", "64", "128"],
-        "resposta_correta": "32",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é o próximo número da sequência: 5, 10, 15, ...?",
-        "alternativas": ["20", "25", "30", "35"],
+        "pergunta": "Qual é a soma de 7 e 13?",
+        "alternativas": ["19", "20", "21", "22"],
         "resposta_correta": "20",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a área de um círculo com raio 7?",
-        "alternativas": ["49π", "14π", "21π", "35π"],
-        "resposta_correta": "49π",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Quantos dias tem um ano bissexto?",
-        "alternativas": ["365", "366", "367", "368"],
-        "resposta_correta": "366",
+        "pergunta": "Qual é o produto de 6 e 7?",
+        "alternativas": ["36", "42", "48", "49"],
+        "resposta_correta": "42",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a raiz quadrada de 144?",
-        "alternativas": ["10", "11", "12", "13"],
-        "resposta_correta": "12",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o valor de 3 + 5 x 2?",
-        "alternativas": ["11", "13", "15", "17"],
-        "resposta_correta": "13",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é o nome da figura geométrica com 4 lados iguais?",
-        "alternativas": ["Quadrado", "Retângulo", "Trapézio", "Losango"],
-        "resposta_correta": "Quadrado",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é a distância entre 50 e 200?",
-        "alternativas": ["100", "150", "200", "250"],
-        "resposta_correta": "150",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o valor de 15% de 300?",
-        "alternativas": ["30", "45", "60", "75"],
-        "resposta_correta": "45",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é o maior número primo abaixo de 30?",
-        "alternativas": ["23", "25", "29", "31"],
-        "resposta_correta": "29",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Quantos segundos há em um minuto?",
-        "alternativas": ["60", "120", "150", "180"],
-        "resposta_correta": "60",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é a fórmula para calcular a área de um triângulo?",
-        "alternativas": ["base x altura", "base x altura / 2", "lado²", "πr²"],
-        "resposta_correta": "base x altura / 2",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é o valor de π (pi) até a quarta casa decimal?",
-        "alternativas": ["3.1415", "3.1425", "3.1435", "3.1445"],
-        "resposta_correta": "3.1415",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é o próximo número na sequência: 1, 4, 9, 16, ...?",
-        "alternativas": ["18", "20", "25", "30"],
-        "resposta_correta": "25",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o valor de 100 dividido por 4?",
-        "alternativas": ["24", "25", "26", "27"],
-        "resposta_correta": "25",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é a área de um triângulo com base 10 e altura 5?",
-        "alternativas": ["25", "50", "75", "100"],
-        "resposta_correta": "25",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é a diferença entre 500 e 125?",
-        "alternativas": ["375", "425", "450", "475"],
-        "resposta_correta": "375",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o número que vem a seguir na sequência: 7, 14, 21, ...?",
-        "alternativas": ["28", "30", "32", "35"],
-        "resposta_correta": "28",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o valor de 50 dividido por 5?",
+        "pergunta": "Qual é o resultado de 81 dividido por 9?",
         "alternativas": ["8", "9", "10", "11"],
-        "resposta_correta": "10",
+        "resposta_correta": "9",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é o produto de 9 e 8?",
-        "alternativas": ["70", "72", "74", "76"],
-        "resposta_correta": "72",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o menor número ímpar maior que 10?",
-        "alternativas": ["11", "13", "15", "17"],
-        "resposta_correta": "11",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o próximo número da sequência: 2, 4, 8, 16, ...?",
-        "alternativas": ["18", "32", "36", "48"],
-        "resposta_correta": "32",
+        "pergunta": "Qual é a raiz quadrada de 256?",
+        "alternativas": ["14", "15", "16", "17"],
+        "resposta_correta": "16",
         "dificuldade": "Média"
     },
     {
-        "pergunta": "Qual é o valor de 5! (fatorial de 5)?",
-        "alternativas": ["120", "125", "130", "150"],
-        "resposta_correta": "120",
-        "dificuldade": "Difícil"
-    },
-    {
-        "pergunta": "Quantos vértices tem um cubo?",
-        "alternativas": ["6", "8", "10", "12"],
-        "resposta_correta": "8",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é a fórmula para calcular o volume de um cilindro?",
-        "alternativas": ["πr²h", "πrh", "2πr²h", "πr²"],
-        "resposta_correta": "πr²h",
+        "pergunta": "Qual é o próximo número na sequência: 3, 6, 12, 24, ...?",
+        "alternativas": ["30", "36", "48", "60"],
+        "resposta_correta": "48",
         "dificuldade": "Média"
     },
     {
-        "pergunta": "Qual é a soma de 32 e 47?",
-        "alternativas": ["72", "79", "80", "85"],
-        "resposta_correta": "79",
+        "pergunta": "Quantos lados tem um dodecágono?",
+        "alternativas": ["10", "12", "14", "16"],
+        "resposta_correta": "12",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é o valor de 4³ (quatro elevado à terceira potência)?",
+        "alternativas": ["32", "48", "64", "80"],
+        "resposta_correta": "64",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Quantos segundos há em 2 horas?",
+        "alternativas": ["3600", "5400", "7200", "9000"],
+        "resposta_correta": "7200",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Quantos metros há em 3 quilômetros?",
-        "alternativas": ["300", "3000", "30", "3"],
-        "resposta_correta": "3000",
+        "pergunta": "Qual é a fórmula do Teorema de Pitágoras?",
+        "alternativas": ["a² + b² = c²", "a² - b² = c²", "a + b = c", "a - b = c"],
+        "resposta_correta": "a² + b² = c²",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é o perímetro de um quadrado com lado de 5 cm?",
+        "alternativas": ["10 cm", "15 cm", "20 cm", "25 cm"],
+        "resposta_correta": "20 cm",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é o valor de 0.25 + 0.75?",
-        "alternativas": ["1", "1.5", "2", "0.5"],
+        "pergunta": "Quantos ângulos tem um pentágono?",
+        "alternativas": ["3", "4", "5", "6"],
+        "resposta_correta": "5",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é a soma dos ângulos internos de um triângulo?",
+        "alternativas": ["90 graus", "180 graus", "270 graus", "360 graus"],
+        "resposta_correta": "180 graus",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o valor de 2^6 (dois elevado à sexta potência)?",
+        "alternativas": ["32", "64", "128", "256"],
+        "resposta_correta": "64",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Quantas faces tem um cubo?",
+        "alternativas": ["4", "6", "8", "12"],
+        "resposta_correta": "6",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Se um carro percorre 90 km em 1,5 horas, qual é a sua velocidade média?",
+        "alternativas": ["50 km/h", "60 km/h", "70 km/h", "80 km/h"],
+        "resposta_correta": "60 km/h",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é a área de um triângulo com base 12 cm e altura 8 cm?",
+        "alternativas": ["48 cm²", "64 cm²", "96 cm²", "144 cm²"],
+        "resposta_correta": "48 cm²",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é a soma de 1/4 e 3/4?",
+        "alternativas": ["1/2", "1", "1,5", "2"],
         "resposta_correta": "1",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a fórmula para calcular a área de um círculo?",
-        "alternativas": ["2πr", "πr²", "2r", "πr"],
-        "resposta_correta": "πr²",
+        "pergunta": "Se um triângulo tem dois lados iguais, ele é classificado como:",
+        "alternativas": ["Equilátero", "Isósceles", "Escaleno", "Retângulo"],
+        "resposta_correta": "Isósceles",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o volume de um cubo com aresta de 3 cm?",
+        "alternativas": ["9 cm³", "18 cm³", "27 cm³", "36 cm³"],
+        "resposta_correta": "27 cm³",
         "dificuldade": "Média"
     },
     {
-        "pergunta": "Quantos lados tem um octógono?",
-        "alternativas": ["6", "8", "10", "12"],
+        "pergunta": "Qual é a porcentagem de 50 em relação a 200?",
+        "alternativas": ["20%", "25%", "30%", "40%"],
+        "resposta_correta": "25%",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é a soma de 12, 15 e 18?",
+        "alternativas": ["42", "45", "48", "51"],
+        "resposta_correta": "45",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Se um triângulo equilátero tem um lado de 6 cm, qual é o seu perímetro?",
+        "alternativas": ["12 cm", "18 cm", "24 cm", "30 cm"],
+        "resposta_correta": "18 cm",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o resultado de (10 + 5) x 2?",
+        "alternativas": ["20", "25", "30", "35"],
+        "resposta_correta": "30",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o valor de 10% de 450?",
+        "alternativas": ["40", "45", "50", "55"],
+        "resposta_correta": "45",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o próximo número da sequência: 2, 6, 18, 54, ...?",
+        "alternativas": ["108", "162", "216", "324"],
+        "resposta_correta": "162",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Quantos centímetros há em 1,2 metros?",
+        "alternativas": ["120", "125", "130", "135"],
+        "resposta_correta": "120",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é a soma dos ângulos internos de um hexágono?",
+        "alternativas": ["360 graus", "540 graus", "720 graus", "900 graus"],
+        "resposta_correta": "720 graus",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Quantos segundos há em meio dia?",
+        "alternativas": ["43200", "86400", "21600", "10800"],
+        "resposta_correta": "43200",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Se o raio de um círculo é 3 cm, qual é o comprimento aproximado da circunferência? (Use π ≈ 3,14)",
+        "alternativas": ["9,42 cm", "18,84 cm", "27,18 cm", "31,4 cm"],
+        "resposta_correta": "18,84 cm",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é a fração equivalente a 0,75?",
+        "alternativas": ["1/4", "1/3", "2/3", "3/4"],
+        "resposta_correta": "3/4",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Se um quadrado tem área de 49 cm², qual é o comprimento do lado?",
+        "alternativas": ["5 cm", "6 cm", "7 cm", "8 cm"],
+        "resposta_correta": "7 cm",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Se x + 7 = 15, qual é o valor de x?",
+        "alternativas": ["6", "7", "8", "9"],
         "resposta_correta": "8",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a soma dos ângulos internos de um quadrilátero?",
-        "alternativas": ["180 graus", "360 graus", "270 graus", "540 graus"],
-        "resposta_correta": "360 graus",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é o próximo número da sequência: 10, 15, 20, ...?",
-        "alternativas": ["22", "25", "30", "35"],
-        "resposta_correta": "25",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Quantos centímetros há em 1 metro?",
-        "alternativas": ["100", "1000", "10", "1"],
-        "resposta_correta": "100",
-        "dificuldade": "Fácil"
-    },
-    {
-        "pergunta": "Qual é a soma de 3³ e 2³?",
-        "alternativas": ["25", "30", "35", "40"],
-        "resposta_correta": "35",
+        "pergunta": "Qual é o resultado de 3^4 (três elevado à quarta potência)?",
+        "alternativas": ["27", "64", "81", "125"],
+        "resposta_correta": "81",
         "dificuldade": "Média"
     },
     {
-        "pergunta": "Qual é o número de diagonais em um hexágono?",
-        "alternativas": ["6", "9", "12", "15"],
-        "resposta_correta": "9",
-        "dificuldade": "Média"
-    },
-    {
-        "pergunta": "Qual é a área de um retângulo com comprimento 7 e largura 3?",
-        "alternativas": ["10", "20", "21", "25"],
-        "resposta_correta": "21",
+        "pergunta": "Quantos graus possui um ângulo reto?",
+        "alternativas": ["45 graus", "90 graus", "120 graus", "180 graus"],
+        "resposta_correta": "90 graus",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é o valor de 7³?",
-        "alternativas": ["343", "350", "357", "360"],
-        "resposta_correta": "343",
+        "pergunta": "Qual é o número primo entre os seguintes números: 21, 23, 25, 27?",
+        "alternativas": ["21", "23", "25", "27"],
+        "resposta_correta": "23",
         "dificuldade": "Média"
     },
     {
-        "pergunta": "Quantos metros há em 2,5 quilômetros?",
-        "alternativas": ["25", "250", "2500", "5000"],
-        "resposta_correta": "2500",
+        "pergunta": "Se uma pizza é dividida em 8 fatias iguais e você comeu 3, qual fração da pizza foi consumida?",
+        "alternativas": ["1/4", "3/8", "1/2", "5/8"],
+        "resposta_correta": "3/8",
         "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o valor de 7! (fatorial de 7)?",
+        "alternativas": ["720", "2520", "5040", "10080"],
+        "resposta_correta": "5040",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual é o resultado de 0,2 x 0,5?",
+        "alternativas": ["0,01", "0,1", "0,2", "0,25"],
+        "resposta_correta": "0,1",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é a área de um triângulo equilátero com lado de 6, dado que a fórmula é (lado²√3)/4?",
+        "alternativas": ["9√3", "12√3", "15√3", "18√3"],
+        "resposta_correta": "9√3",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual é o resultado de (2³ x 3²) ÷ 6?",
+        "alternativas": ["6", "9", "12", "18"],
+        "resposta_correta": "12",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual é a média dos números: 8, 12, 16 e 20?",
+        "alternativas": ["14", "15", "16", "17"],
+        "resposta_correta": "14",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Um círculo tem área de 25π cm². Qual é o raio?",
+        "alternativas": ["3 cm", "4 cm", "5 cm", "6 cm"],
+        "resposta_correta": "5 cm",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Quantas diagonais tem um octógono?",
+        "alternativas": ["16", "18", "20", "21"],
+        "resposta_correta": "20",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é o menor número inteiro maior que √50?",
+        "alternativas": ["6", "7", "8", "9"],
+        "resposta_correta": "8",
+        "dificuldade": "Média"
+    },
+    {
+        "pergunta": "Qual é a fórmula para calcular o volume de uma esfera?",
+        "alternativas": ["(4/3)πr³", "2πr²", "4πr²", "πr²h"],
+        "resposta_correta": "(4/3)πr³",
+        "dificuldade": "Difícil"
     }
 ]

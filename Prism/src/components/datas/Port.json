@@ -1,152 +1,317 @@
 [
     {
-        "pergunta": "Qual é a forma correta: 'eu vou ir' ou 'eu vou'?",
+        "pergunta": "Entre as formas 'eu vou ir' e 'eu vou', qual delas é considerada mais adequada na norma culta da língua portuguesa?",
         "alternativas": ["Eu vou ir", "Eu vou", "Eu ir", "Eu vai"],
         "resposta_correta": "Eu vou",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é o sinônimo de 'feliz'?",
+        "pergunta": "Qual termo abaixo pode ser usado como sinônimo para 'feliz' em contextos formais?",
         "alternativas": ["Triste", "Contente", "Raivoso", "Zangado"],
         "resposta_correta": "Contente",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é o antônimo de 'alto'?",
+        "pergunta": "Qual das opções representa o antônimo mais direto da palavra 'alto' em relação à altura?",
         "alternativas": ["Baixo", "Largo", "Forte", "Fraco"],
         "resposta_correta": "Baixo",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a forma correta: 'mais' ou 'mas'?",
-        "alternativas": ["Mais", "Mas", "Máis", "Mas'"],
-        "resposta_correta": "Mas",
+        "pergunta": "Em qual contexto se usa 'mas' ao invés de 'mais' na construção de frases em português?",
+        "alternativas": ["Quando é uma adversativa", "Quando se refere a quantidade", "Ambas as situações", "Nenhuma das situações"],
+        "resposta_correta": "Quando é uma adversativa",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual destas palavras é um adjetivo?",
+        "pergunta": "Qual dos itens a seguir representa um adjetivo na língua portuguesa?",
         "alternativas": ["Correr", "Bonito", "Mesa", "Sorrir"],
         "resposta_correta": "Bonito",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a forma correta: 'para mim' ou 'para eu'?",
-        "alternativas": ["Para mim", "Para eu", "Para mim mesmo", "Para eu mesmo"],
-        "resposta_correta": "Para mim",
+        "pergunta": "Quando é correto utilizar 'para mim' em vez de 'para eu' em uma frase?",
+        "alternativas": ["Quando não há verbo depois", "Quando há verbo depois", "Em qualquer situação", "Apenas em contextos informais"],
+        "resposta_correta": "Quando não há verbo depois",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é o plural de 'cidade'?",
+        "pergunta": "Ao formar o plural de 'cidade', qual das alternativas a seguir está correta?",
         "alternativas": ["Cidades", "Cidadess", "Cidadões", "Cidadens"],
         "resposta_correta": "Cidades",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual destas palavras é um advérbio?",
+        "pergunta": "Entre as palavras apresentadas, qual é um advérbio?",
         "alternativas": ["Rapidamente", "Carro", "Correr", "Bonito"],
         "resposta_correta": "Rapidamente",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é a forma correta: 'haja' ou 'aja'?",
+        "pergunta": "Qual das palavras a seguir representa a conjugação correta de 'haver' no sentido de existência no presente subjuntivo?",
         "alternativas": ["Haja", "Aja", "Raja", "Faja"],
         "resposta_correta": "Haja",
         "dificuldade": "Difícil"
     },
     {
-        "pergunta": "Qual é a conjugação correta do verbo 'ser' na 1ª pessoa do singular no presente?",
+        "pergunta": "Qual é a conjugação correta do verbo 'ser' na primeira pessoa do singular no presente do indicativo?",
         "alternativas": ["Sou", "É", "Foi", "Serei"],
         "resposta_correta": "Sou",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a forma correta: 'a gente vai' ou 'nós vamos'?",
+        "pergunta": "Na norma culta, qual forma expressa corretamente a ideia de nós realizarmos uma ação no futuro?",
         "alternativas": ["A gente vai", "Nós vai", "Nós vamos", "A gente vão"],
         "resposta_correta": "Nós vamos",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a forma correta: 'fui eu' ou 'eu fui'?",
-        "alternativas": ["Fui eu", "Eu fui", "Eu fui eu", "Fui eu fui"],
+        "pergunta": "Entre as opções a seguir, qual construção respeita as regras gramaticais da língua portuguesa?",
+        "alternativas": ["Fui eu quem foi", "Eu fui quem foi", "Eu fui", "Fui eu quem fui"],
         "resposta_correta": "Eu fui",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é o significado da palavra 'abrangente'?",
+        "pergunta": "O que significa a palavra 'abrangente' quando usada para descrever algo?",
         "alternativas": ["Limitado", "Extenso", "Exato", "Específico"],
         "resposta_correta": "Extenso",
         "dificuldade": "Difícil"
     },
     {
-        "pergunta": "Qual é o diminutivo de 'casa'?",
+        "pergunta": "Qual é o diminutivo gramaticalmente correto de 'casa'?",
         "alternativas": ["Casinha", "Casinhas", "Casa pequena", "Casitas"],
         "resposta_correta": "Casinha",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a forma correta: 'de mais' ou 'demais'?",
-        "alternativas": ["De mais", "Demais", "Demaiss", "De mais que"],
-        "resposta_correta": "Demais",
+        "pergunta": "Em que circunstância usamos 'demais' em vez de 'de mais' na escrita formal?",
+        "alternativas": ["Para intensidade ou excesso", "Para quantidade específica", "Sempre", "Nenhuma das anteriores"],
+        "resposta_correta": "Para intensidade ou excesso",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é o plural de 'leão'?",
+        "pergunta": "Qual das palavras representa o plural correto da palavra 'leão'?",
         "alternativas": ["Leões", "Leonios", "Leos", "Leãoes"],
         "resposta_correta": "Leões",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual destas frases está correta?",
+        "pergunta": "Entre as frases abaixo, qual utiliza corretamente a negação de acordo com a norma padrão?",
         "alternativas": ["Eu não sei nada.", "Eu não sei nada não.", "Eu nada sei.", "Nada eu sei."],
         "resposta_correta": "Eu não sei nada.",
         "dificuldade": "Difícil"
     },
     {
-        "pergunta": "Qual é o superlativo de 'bom'?",
+        "pergunta": "Qual das opções representa o superlativo absoluto sintético da palavra 'bom'?",
         "alternativas": ["Melhor", "Ótimo", "Excelente", "Bom demais"],
         "resposta_correta": "Ótimo",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é a forma correta: 'pouco' ou 'pouca'?",
+        "pergunta": "Qual palavra deve ser usada para descrever quantidade reduzida de forma geral?",
         "alternativas": ["Pouco", "Pouca", "Pouquinhos", "Poucos"],
         "resposta_correta": "Pouco",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é o sinônimo de 'rápido'?",
+        "pergunta": "Entre as palavras abaixo, qual é mais apropriada como sinônimo de 'rápido'?",
         "alternativas": ["Devagar", "Ágil", "Lento", "Demorado"],
         "resposta_correta": "Ágil",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é a forma correta: 'se não' ou 'senão'?",
-        "alternativas": ["Se não", "Senão", "Se não for", "Senão for"],
-        "resposta_correta": "Senão",
+        "pergunta": "Quando utilizar 'senão' ao invés de 'se não' na construção de uma frase?",
+        "alternativas": ["Para indicar condição", "Para indicar exceção ou alternativa", "Em ambas as situações", "Nunca"],
+        "resposta_correta": "Para indicar exceção ou alternativa",
         "dificuldade": "Difícil"
     },
     {
-        "pergunta": "Qual é a conjugação correta do verbo 'ter' na 3ª pessoa do plural no passado?",
+        "pergunta": "Qual é a conjugação correta do verbo 'ter' na terceira pessoa do plural no pretérito perfeito do indicativo?",
         "alternativas": ["Tiveram", "Tinha", "Tem", "Têm"],
         "resposta_correta": "Tiveram",
         "dificuldade": "Difícil"
     },
     {
-        "pergunta": "Qual destas palavras é um substantivo?",
+        "pergunta": "Entre as palavras a seguir, qual é classificada como substantivo?",
         "alternativas": ["Feliz", "Rapidamente", "Correr", "Mesa"],
         "resposta_correta": "Mesa",
         "dificuldade": "Fácil"
     },
     {
-        "pergunta": "Qual é a forma correta: 'mau' ou 'mal'?",
-        "alternativas": ["Mau", "Mal", "Mau é", "Mal é"],
-        "resposta_correta": "Mal",
+        "pergunta": "Qual das opções a seguir diferencia corretamente 'mau' de 'mal' em um contexto gramatical?",
+        "alternativas": ["Mau é contrário de bom", "Mal é contrário de ruim", "Mau é contrário de bem", "Mal é contrário de grande"],
+        "resposta_correta": "Mau é contrário de bom",
         "dificuldade": "Médio"
     },
     {
-        "pergunta": "Qual é o significado da palavra 'infinito'?",
+        "pergunta": "O termo 'infinito' é usado para descrever algo com qual característica principal?",
         "alternativas": ["Limitado", "Sem fim", "Contável", "Pequeno"],
         "resposta_correta": "Sem fim",
         "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual é a função da vírgula na frase: 'Ana, por favor, traga o relatório.'?",
+        "alternativas": [
+            "Separar itens de uma lista",
+            "Indicar vocativo",
+            "Marcar uma pausa longa",
+            "Indicar uma frase interrogativa"
+        ],
+        "resposta_correta": "Indicar vocativo",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual é o sujeito na frase: 'Os alunos estudaram para a prova.'?",
+        "alternativas": [
+            "Os alunos",
+            "Estudaram",
+            "Para a prova",
+            "Prova"
+        ],
+        "resposta_correta": "Os alunos",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual das opções apresenta corretamente uma oração subordinada adverbial causal?",
+        "alternativas": [
+            "Embora estivesse cansado, ele saiu.",
+            "Se você quiser, podemos ir juntos.",
+            "Já que choveu, a aula foi cancelada.",
+            "A menina que está ali é minha prima."
+        ],
+        "resposta_correta": "Já que choveu, a aula foi cancelada.",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual das palavras abaixo é um pronome indefinido?",
+        "alternativas": [
+            "Aquele",
+            "Alguém",
+            "Seu",
+            "Quem"
+        ],
+        "resposta_correta": "Alguém",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual é o predicado na frase: 'O gato preto dorme no sofá.'?",
+        "alternativas": [
+            "O gato preto",
+            "Dorme no sofá",
+            "No sofá",
+            "Preto dorme"
+        ],
+        "resposta_correta": "Dorme no sofá",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual é a classificação morfológica da palavra 'certamente' na frase: 'Ele certamente sabia a resposta.'?",
+        "alternativas": [
+            "Substantivo",
+            "Adjetivo",
+            "Advérbio",
+            "Pronome"
+        ],
+        "resposta_correta": "Advérbio",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual é a forma correta do verbo na frase: 'Se eu ___ tempo, irei ao cinema.'?",
+        "alternativas": [
+            "Tivesse",
+            "Ter",
+            "Teria",
+            "Terei"
+        ],
+        "resposta_correta": "Tivesse",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual é o significado da palavra 'resiliente'?",
+        "alternativas": [
+            "Que desiste facilmente",
+            "Capaz de se adaptar às adversidades",
+            "Que apresenta resistência física",
+            "De comportamento agressivo"
+        ],
+        "resposta_correta": "Capaz de se adaptar às adversidades",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual destas frases apresenta um erro de concordância verbal?",
+        "alternativas": [
+            "Os alunos estudaram bastante.",
+            "As crianças brinca no parque.",
+            "Ela trouxe os documentos necessários.",
+            "Nós viajaremos na semana que vem."
+        ],
+        "resposta_correta": "As crianças brinca no parque.",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual é o tipo de sujeito na frase: 'Choveu muito ontem.'?",
+        "alternativas": [
+            "Sujeito simples",
+            "Sujeito composto",
+            "Sujeito indeterminado",
+            "Sujeito inexistente"
+        ],
+        "resposta_correta": "Sujeito inexistente",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual das palavras abaixo representa um verbo de ligação?",
+        "alternativas": [
+            "Comer",
+            "Ser",
+            "Correr",
+            "Falar"
+        ],
+        "resposta_correta": "Ser",
+        "dificuldade": "Fácil"
+    },
+    {
+        "pergunta": "Qual é o significado da expressão 'ficar a ver navios'?",
+        "alternativas": [
+            "Aguardar algo que não acontece",
+            "Ficar atento aos detalhes",
+            "Observar um barco no porto",
+            "Esperar pacientemente"
+        ],
+        "resposta_correta": "Aguardar algo que não acontece",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual das frases está em voz passiva?",
+        "alternativas": [
+            "O professor explicou a matéria.",
+            "A matéria foi explicada pelo professor.",
+            "Os alunos estudam a lição.",
+            "A professora corrigiu as provas."
+        ],
+        "resposta_correta": "A matéria foi explicada pelo professor.",
+        "dificuldade": "Médio"
+    },
+    {
+        "pergunta": "Qual é o correto uso de crase na frase: 'Fui ___ escola visitar minha professora.'?",
+        "alternativas": [
+            "à",
+            "a",
+            "ao",
+            "às"
+        ],
+        "resposta_correta": "à",
+        "dificuldade": "Difícil"
+    },
+    {
+        "pergunta": "Qual é a diferença entre 'por que' e 'porque' em termos de uso?",
+        "alternativas": [
+            "'Por que' é usado para perguntas; 'porque' para respostas.",
+            "'Por que' é usado para respostas; 'porque' para perguntas.",
+            "Ambos têm o mesmo uso, dependendo do contexto.",
+            "Nenhuma das alternativas está correta."
+        ],
+        "resposta_correta": "'Por que' é usado para perguntas; 'porque' para respostas.",
+        "dificuldade": "Médio"
     }
 ]
