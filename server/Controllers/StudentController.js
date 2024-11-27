@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const db = require("../models/mysql/db");
 const StudentModel = require("../models/StudentModels");
 const bcrypt = require("bcrypt");
 const uploadSingleImage = require("../middlewares/Upload");
@@ -26,7 +27,7 @@ exports.createStudent = [
     try {
       // Hash da senha
       const hash = await bcrypt.hash(req.body.senha.toString(), 10);
-      const foto_perfil = req.file ? req.file.filename : "default_user.jpg";
+      const foto_perfil = req.file ? req.file.filename : "/images/default_user.jpg";
       const newStudent = {
         nome: req.body.nome,
         email: req.body.email,
@@ -82,6 +83,27 @@ exports.LoginStudents = async (req, res) => {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
+
+exports.deleteStudent = async (req, res) => {
+  const { studentId } = req.params;
+
+  try {
+    await db.query("DELETE FROM tb_forum WHERE aluno_id_fk = ?", [studentId]);
+
+    const result = await StudentModel.deleteStudent(studentId);
+
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: "Estudante deletado com sucesso", result: result });
+    } else {
+      return res.status(404).json({ message: "Aluno não encontrado" });
+    }
+  } catch (err) {
+    console.error("Erro ao deletar o estudante:", err);
+    return res.status(500).json({ message: "Erro ao deletar o estudante" });
+  }
+};
+
+
 
 exports.getStudents = async (req, res) => {
   try {

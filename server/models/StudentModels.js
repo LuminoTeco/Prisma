@@ -26,6 +26,19 @@ exports.createStudent = async (studentData) => {
   }
 };
 
+exports.deleteStudent = async (studentId) => {
+  const query = "DELETE FROM tb_alunos WHERE aluno_id = ?";
+
+  try {
+    const [results] = await db.query(query, [studentId]);
+    return results;
+  } catch (err) {
+    console.error("Erro ao deletar o estudante:", err);
+    throw err;
+  }
+};
+
+
 exports.LoginStudent = async (email) => {
   const query = "SELECT * FROM tb_alunos WHERE email = ?";
 

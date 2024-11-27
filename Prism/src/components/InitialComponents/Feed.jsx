@@ -43,7 +43,7 @@ const Feed = () => {
       if (!userInfo) return
 
       try {
-        const response = await axios.post(
+        const response = await axios.patch(
           `http://localhost:8081/prisma/acceptInvite?id_aluno=${userInfo.aluno_id}`
         )
 

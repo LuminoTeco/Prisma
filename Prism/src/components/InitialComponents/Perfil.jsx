@@ -156,104 +156,115 @@ const Perfil = () => {
       </div>
     ));
 
-  const renderAchievements = () =>
-    achievements.map((achievement, index) => {
-      const data = conquistaData[achievement] || {};
-      return (
-        <div key={index} className={styles.achievementItem}>
+    const renderAchievements = () => {
+      if (achievements.length === 0) {
+        return (
+          <div className={styles.noAchievements}>
+            <p>Você ainda não possui conquistas.</p>
+          </div>
+        );
+      }
+    
+      return achievements.map((achievement, index) => {
+        const data = conquistaData[achievement] || {};
+        return (
+          <div key={index} className={styles.achievementItem}>
+            <img
+              src={data.img || conquista_1}
+              alt={`Conquista: ${achievement}`}
+              className={styles.achievementImage}
+            />
+            <div>
+              <span>{achievement}</span>
+              <p>{data.description || "Descrição não disponível."}</p>
+            </div>
+          </div>
+        );
+      });
+    };
+    
+    return (
+      <div className={styles.container}>
+        <div className={styles.ContainerImageUser}>
+          <div className={styles.ContainerUtils}>
+            <img src={addUser} onClick={() => setIsModalOpen(true)} alt="Adicionar Usuário" />
+            <Link to="/colaborador">
+              <img src={stars} alt="Colaborador" />
+            </Link>
+          </div>
           <img
-            src={data.img || conquista_1}
-            alt={`Conquista: ${achievement}`}
-            className={styles.achievementImage}
+            src={`http://localhost:8081${values.foto_perfil}`}
+            alt={`${values.nome} perfil`}
+            className={styles.imgPhotoPerfil}
+            onClick={() => setIsEditPhotoModalOpen(true)}
           />
-          <div>
-            <span>{achievement}</span>
-            <p>{data.description || "Descrição não disponível."}</p>
+          <div className={styles.titleNameandNivel}>
+            <h1>{values.nome}</h1>
+            <sub>Nv. {values.nivel}</sub>
           </div>
-        </div>
-      );
-    });
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.ContainerImageUser}>
-        <div className={styles.ContainerUtils}>
-          <img src={addUser} onClick={() => setIsModalOpen(true)} alt="Adicionar Usuário" />
-          <Link to="/colaborador">
-            <img src={stars} alt="Colaborador" />
-          </Link>
-        </div>
-        <img
-          src={`http://localhost:8081${values.foto_perfil}`}
-          alt={`${values.nome} perfil`}
-          className={styles.imgPhotoPerfil}
-          onClick={() => setIsEditPhotoModalOpen(true)}
-        />
-        <div className={styles.titleNameandNivel}>
-          <h1>{values.nome}</h1>
-          <sub>Nv. {values.nivel}</sub>
-        </div>
-        <div className={styles.progressBarContainer}>
-          <div className={styles.progressBarSlide}>
-            <div
-              className={styles.Bar}
-              style={{ width: `${porcentagem}%` }}
-            ></div>
-          </div>
-          <span className={styles.metaXp}>{porcentagem}%</span>
-        </div>
-      </div>
-
-      {isColaborador && (
-        <div className={styles.ContainerProgressBarColaborador}>
-          <h1>Colaborador</h1>
-          <div className={styles.progressBarContainerColaborador}>
-            <div
-              className={styles.progressBarSlideColaborador}
-            >
+          <div className={styles.progressBarContainer}>
+            <div className={styles.progressBarSlide}>
               <div
-                className={styles.BarColaborador}
-                style={{ width: `${porcentagemColaborador}%` }}
+                className={styles.Bar}
+                style={{ width: `${porcentagem}%` }}
               ></div>
             </div>
-            <span className={styles.metaXpColaborador}>{porcentagemColaborador}%</span>
+            <span className={styles.metaXp}>{porcentagem}%</span>
           </div>
         </div>
-      )}
-
-      <div className={styles.containerInfoUsers}>
-        <div className={styles.ContainerAchivements}>
-          <h2>Conquistas</h2>
-          <div className={styles.achievementsGrid}>{renderAchievements()}</div>
-        </div>
-
-        <div className={styles.containerMessages}>
-          <div className={styles.Posts}>
-            <h1>Postagens</h1>
-            {renderMessages()}
+    
+        {isColaborador && (
+          <div className={styles.ContainerProgressBarColaborador}>
+            <h1>Colaborador</h1>
+            <div className={styles.progressBarContainerColaborador}>
+              <div
+                className={styles.progressBarSlideColaborador}
+              >
+                <div
+                  className={styles.BarColaborador}
+                  style={{ width: `${porcentagemColaborador}%` }}
+                ></div>
+              </div>
+              <span className={styles.metaXpColaborador}>{porcentagemColaborador}%</span>
+            </div>
+          </div>
+        )}
+    
+        <div className={styles.containerInfoUsers}>
+          <div className={styles.ContainerAchivements}>
+            <h2>Conquistas</h2>
+            <div className={styles.achievementsGrid}>
+              {renderAchievements()}
+            </div>
+          </div>
+    
+          <div className={styles.containerMessages}>
+            <div className={styles.Posts}>
+              <h1>Postagens</h1>
+              {renderMessages()}
+            </div>
           </div>
         </div>
+    
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <h2>Procurar Amigos</h2>
+          <p>Aqui você pode buscar amigos!</p>
+        </Modal>
+    
+        {isEditPhotoModalOpen && (
+          <div className={styles.modalBackdrop}>
+            <div className={styles.modalContent}>
+              <h2>Editar Foto de Perfil</h2>
+              <input type="file" onChange={handleFileChange} />
+              <button onClick={handleUpload}>Carregar Imagem</button>
+              <button onClick={() => setIsEditPhotoModalOpen(false)}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2>Procurar Amigos</h2>
-        <p>Aqui você pode buscar amigos!</p>
-      </Modal>
-
-      {isEditPhotoModalOpen && (
-        <div className={styles.modalBackdrop}>
-          <div className={styles.modalContent}>
-            <h2>Editar Foto de Perfil</h2>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload}>Carregar Imagem</button>
-            <button onClick={() => setIsEditPhotoModalOpen(false)}>
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+    );
+  }    
 
 export default Perfil;

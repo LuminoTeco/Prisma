@@ -117,7 +117,10 @@ const PrivateChat = () => {
 
   const renderMessages = () => {
     if (!selectedFriend) return <p>Selecione um amigo para iniciar a conversa.</p>;
-
+  
+    // Verifique se messages é um array válido
+    if (!Array.isArray(messages)) return <p>Carregando mensagens...</p>;
+  
     return (
       <div className={styles.messagesContainer}>
         {messages.map((msg, index) => (

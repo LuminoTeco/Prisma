@@ -11,6 +11,7 @@ router.get("/students/:turma_id_fk", StudentController.getStudents);
 router.get("/subjects/:aluno_id", StudentController.SelectSubject);
 router.get("/allinformation/:aluno_id", StudentController.allInformationUser);
 router.get("/searchStudents/:aluno_id", StudentController.allStudentsByNameInvite)
+router.delete('/students/:studentId', StudentController.deleteStudent);
 
 router.patch("/SubjectUpdate", StudentController.UpdateStudentSubject);
 router.patch(

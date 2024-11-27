@@ -72,6 +72,14 @@ CREATE TABLE tb_alunos (
     CONSTRAINT FK_disciplina_aluno FOREIGN KEY (disciplina_id_fk) REFERENCES tb_disciplina(disciplina_id)
 );
 
+SELECT * FROM tb_alunos;
+
+desc tb_alunos;
+
+DELETE FROM tb_alunos WHERE aluno_id = 5;
+
+ALTER TABLE tb_alunos MODIFY COLUMN foto_perfil VARCHAR(100) DEFAULT '/images/default_user.jpeg';
+
 CREATE TABLE tb_alunos_conquistas (
     aluno_id_fk INT NOT NULL,
     conquista_id_fk INT NOT NULL,

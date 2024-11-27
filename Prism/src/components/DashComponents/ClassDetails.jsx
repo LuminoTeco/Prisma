@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from "../CSS/ClassDetails.module.css"; // CSS Modules
+import styles from "../CSS/ClassDetails.module.css";
 import { useSpring, animated } from "@react-spring/web";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ClassDetails = () => {
-  const { id: turma_id_fk } = useParams(); // Pega turma_id_fk dos parâmetros
+  const { id: turma_id_fk } = useParams();
   const navigate = useNavigate();
   const [studentsData, setStudentsData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,9 +16,9 @@ const ClassDetails = () => {
     email: "",
     ano_serie: "",
     nivel: "",
-    turma_id_fk, // Definir direto no estado
-    instituicao_id_fk: localStorage.getItem("instituicao_id_fk") || "", // Puxa do localStorage
-    senha: "", // Adicione um campo para a senha
+    turma_id_fk,
+    instituicao_id_fk: localStorage.getItem("instituicao_id_fk") || "",
+    senha: "",
   });
   const [editMode, setEditMode] = useState(false);
   const [currentStudentId, setCurrentStudentId] = useState(null);
@@ -28,7 +28,9 @@ const ClassDetails = () => {
     const fetchStudents = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8081/prisma/students/${turma_id_fk}`);
+        const response = await axios.get(
+          `http://localhost:8081/prisma/students/${turma_id_fk}`
+        );
         setStudentsData(response.data.students);
       } catch (error) {
         console.error("Erro ao buscar dados dos alunos:", error);
@@ -46,28 +48,29 @@ const ClassDetails = () => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-      senha: name === "nome" ? generatePassword(value) : prevData.senha, // Atualiza a senha se o nome mudar
+      senha: name === "nome" ? generatePassword(value) : prevData.senha,
     }));
   };
 
   const generatePassword = (nome) => {
-    const firstTwoLetters = nome.slice(0, 6).toUpperCase(); 
-    return `${turma_id_fk}${firstTwoLetters}`; 
+    const firstTwoLetters = nome.slice(0, 6).toUpperCase();
+    return `${turma_id_fk}${firstTwoLetters}`;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Adiciona um log para verificar os dados que estão sendo enviados
     console.log("Dados enviados:", formData);
 
     try {
       let response;
       if (editMode) {
-        // Atualiza o aluno
         response = await toast.promise(
-          axios.put(`http://localhost:8081/prisma/students/${currentStudentId}`, formData),
+          axios.put(
+            `http://localhost:8081/prisma/students/${currentStudentId}`,
+            formData
+          ),
           {
             pending: "Atualizando aluno...",
             success: "Aluno atualizado com sucesso!",
@@ -75,7 +78,9 @@ const ClassDetails = () => {
           }
         );
         setStudentsData((prevStudents) =>
-          prevStudents.map((student) => (student.id === currentStudentId ? response.data : student))
+          prevStudents.map((student) =>
+            student.id === currentStudentId ? response.data : student
+          )
         );
       } else {
         // Adiciona novo aluno
@@ -88,11 +93,11 @@ const ClassDetails = () => {
           }
         );
         setStudentsData((prevStudents) => [...prevStudents, response.data]);
+        window.location.reload();
       }
       resetForm();
     } catch (error) {
       console.error("Erro ao salvar aluno:", error);
-      // Log adicional para verificar a resposta do erro
       if (error.response) {
         console.error("Detalhes do erro:", error.response.data);
       }
@@ -110,22 +115,16 @@ const ClassDetails = () => {
       nivel: "",
       turma_id_fk, // Mantém o valor fixo
       instituicao_id_fk: localStorage.getItem("instituicao_id_fk") || "", // Atualiza o valor
-      senha: "", // Reinicia a senha
+      senha: "",
     });
     setIsModalOpen(false);
     setEditMode(false);
     setCurrentStudentId(null);
   };
 
-  const handleEdit = (student) => {
-    setFormData(student);
-    setCurrentStudentId(student.id);
-    setEditMode(true);
-    setIsModalOpen(true);
-  };
-
   const handleDelete = async (studentId) => {
-    setLoading(true);
+    console.log(studentId);
+  
     try {
       await toast.promise(
         axios.delete(`http://localhost:8081/prisma/students/${studentId}`),
@@ -135,7 +134,11 @@ const ClassDetails = () => {
           error: "Erro ao excluir aluno.",
         }
       );
-      setStudentsData((prevStudents) => prevStudents.filter((student) => student.id !== studentId));
+  
+      // Atualiza a lista de alunos removendo o aluno deletado
+      setStudentsData((prevStudents) =>
+        prevStudents.filter((student) => student.aluno_id !== studentId)
+      );
     } catch (error) {
       console.error("Erro ao excluir aluno:", error);
       toast.error("Erro ao excluir aluno.");
@@ -143,19 +146,22 @@ const ClassDetails = () => {
       setLoading(false);
     }
   };
-
+  
   const modalAnimation = useSpring({
     opacity: isModalOpen ? 1 : 0,
     transform: isModalOpen ? "translateY(0)" : "translateY(-100%)",
-    config: { tension: 220, friction: 20 }, // Transição suave
+    config: { tension: 220, friction: 20 },
   });
-
+  
   return (
     <div>
       <ToastContainer />
       <h1>Detalhes da Turma</h1>
       <div className={styles.actions}>
-        <button onClick={() => setIsModalOpen(true)} className={styles.buttonCreate}>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className={styles.buttonCreate}
+        >
           Adicionar Aluno
         </button>
         <button onClick={() => navigate(-1)} className={styles.buttonBack}>
@@ -177,16 +183,22 @@ const ClassDetails = () => {
           </thead>
           <tbody>
             {studentsData.map((student) => (
-              <tr key={student.id}>
+              <tr key={student.aluno_id}>
                 <td>{student.nome}</td>
                 <td>{student.email}</td>
                 <td>{student.ano_serie}</td>
                 <td>{student.nivel}</td>
                 <td>
-                  <button onClick={() => handleEdit(student)} className={styles.buttonEdit}>
+                  <button
+                    onClick={() => handleEdit(student)}
+                    className={styles.buttonEdit}
+                  >
                     Alterar
                   </button>
-                  <button onClick={() => handleDelete(student.id)} className={styles.buttonDelete}>
+                  <button
+                    onClick={() => handleDelete(student.aluno_id)} 
+                    className={styles.buttonDelete}
+                  >
                     Excluir
                   </button>
                 </td>
@@ -256,8 +268,8 @@ const ClassDetails = () => {
                   type="text"
                   id="senha"
                   name="senha"
-                  value={formData.senha} // Mostra a senha gerada
-                  readOnly // Campo somente leitura
+                  value={formData.senha}
+                  readOnly
                 />
               </div>
               <button type="submit" className={styles.buttonSubmit}>
