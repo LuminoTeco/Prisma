@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Dash from "../../../../components/DashComponents/Dash";
 import TableClass from "../../../../components/DashComponents/TableClass";
-import Utils from "../../../../components/DashComponents/Utils";
 import styles from "../../CSS/Dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../../../Hooks/useAuth"; 
 
 const Dashboard = () => {
-  const [page, setPage] = useState("");
   const { isAuthenticated, isLoading } = useAuth(); 
   const navigate = useNavigate();
 
@@ -18,10 +15,6 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, [isAuthenticated, isLoading, navigate]);
-
-  const changePage = (newPage) => {
-    setPage(newPage);
-  };
 
   const handleLogout = async () => {
     try {
@@ -44,34 +37,16 @@ const Dashboard = () => {
     }
   };
 
-  const renderAtual = () => {
-    switch (page) {
-      case "dash":
-        return <Dash />;
-      case "usuario":
-        return <TableClass />;
-      case "util":
-        return <Utils />;
-      default:
-        return <Dash />;
-    }
-  };
-
   if (isLoading) {
     return <p>Carregando...</p>; 
   }
 
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
-        <div className={styles.buttons}>
-          <button onClick={() => changePage("dash")}>Quadros</button>
-          <button onClick={() => changePage("util")}>Utilidades</button>
-          <button onClick={() => changePage("usuario")}>Usuários</button>
-        </div>
-        <button onClick={handleLogout} className={styles.buttonLogout}>Sair</button>
-      </div>
-      <div className={styles.content}>{renderAtual()}</div>
+      <button className={styles.LogoutButton} onClick={() => handleLogout()}>
+        Sair  
+      </button>
+      <TableClass />
     </div>
   );
 };

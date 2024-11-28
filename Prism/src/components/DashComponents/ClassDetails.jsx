@@ -76,6 +76,7 @@ const ClassDetails = () => {
             success: "Aluno atualizado com sucesso!",
             error: "Erro ao atualizar aluno.",
           }
+          
         );
         setStudentsData((prevStudents) =>
           prevStudents.map((student) =>
@@ -83,7 +84,7 @@ const ClassDetails = () => {
           )
         );
       } else {
-        // Adiciona novo aluno
+        
         response = await toast.promise(
           axios.post(`http://localhost:8081/prisma/students`, formData),
           {
@@ -104,6 +105,7 @@ const ClassDetails = () => {
       toast.error("Erro ao salvar aluno.");
     } finally {
       setLoading(false);
+      window.location.reload()
     }
   };
 
@@ -113,7 +115,7 @@ const ClassDetails = () => {
       email: "",
       ano_serie: "",
       nivel: "",
-      turma_id_fk, // Mantém o valor fixo
+      turma_id_fk, 
       instituicao_id_fk: localStorage.getItem("instituicao_id_fk") || "", // Atualiza o valor
       senha: "",
     });
@@ -122,7 +124,16 @@ const ClassDetails = () => {
     setCurrentStudentId(null);
   };
 
+  const handleEdit = (student) => {
+    setFormData(student)
+    setCurrentStudentId(student.id)
+    setEditMode(true);
+    setIsModalOpen(true);
+
+  }
+
   const handleDelete = async (studentId) => {
+    setLoading(true);
     console.log(studentId);
   
     try {

@@ -22,17 +22,17 @@
 }
 
 .table th {
-    background-color: #007bff;
+    background-color: #ffbb00;
     color: white;
 }
 
 .table tr:hover {
-    background-color: #e0e0e0; 
+    background-color: #f1f1f1;
     cursor: pointer;
 }
 
 .createButton {
-    background-color: #007bff;
+    background-color: #1c00bd;
     color: white;
     border: none;
     border-radius: 5px;

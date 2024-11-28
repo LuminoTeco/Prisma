@@ -29,6 +29,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  flex-direction: column;
 }
 
 .modalContent {
@@ -37,6 +39,11 @@
   border-radius: 8px;
   width: 400px;
   position: relative;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .closeButton {
@@ -95,4 +102,15 @@
   border: none; 
   padding: 5px 10px; 
   cursor: pointer; 
+}
+
+.buttonSubmit {
+  background-color: #ffc400fb;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+
+  cursor: pointer;
 }
